@@ -7,3 +7,6 @@ const config = {
  password: process.env.SECRET_KEY,
  port: process.env.PORT
 }
+
+
+module.exports = config;

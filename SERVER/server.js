@@ -8,8 +8,6 @@ const {host, user, password, port} = config
 const dbConnect = `mongodb+srv://${user}:${password}@${host}`;
 mongoose.set("strictQuery", true);
 
-
-
 const app = express()
 
 const connectToMongo = async () => {
@@ -24,6 +22,6 @@ const connectToMongo = async () => {
 
 connectToMongo()
 
-app,listen(port, () => {
+app.listen(port, () => {
     console.log("API SERVER IS NOW RUNNING")
 })
