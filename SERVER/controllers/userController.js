@@ -1,6 +1,6 @@
 const user = require('../models/userSchema.js')
 const express = require ('express');
-const { create } = require('../models/userSchema.js');
+const bcrypt = require ('bcrypt')
 
 const registerUser = async (req,res) => {
 const {name, dob, email, password} = req.body;
@@ -10,10 +10,13 @@ if(!name || !dob  || !email || !password) {
     return res.status(400).json({error: "Please complete all fields"})
 }
 
-if (userExists) {
+if (userAlreadyExists) {
     return res.status(400).json({error: "User already exists"})
 }
 
+ // Hash password
+ const salt = await bcrypt.genSalt(10);
+ const hashedPassword = await bcrypt.hash(password, salt);
 
 //create user 
 
@@ -23,7 +26,7 @@ try {
         name,
         dob,
         email,
-        password,
+        password: hashedPassword,
 
 
     })

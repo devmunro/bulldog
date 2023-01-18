@@ -1,4 +1,4 @@
-const expire = require ('express');
+const express = require ('express');
 const registerUser = require('../controllers/userController');
 
 
@@ -6,7 +6,7 @@ const registerUser = require('../controllers/userController');
 
     const userRouter = express();
 
-    userRouter.post("signup", registerUser)
+    userRouter.post("/signup", registerUser)
 
     return userRouter
 }
