@@ -1,4 +1,5 @@
 import express from "express"
+import { getAllExercises } from "../controllers/exerciseController.js"
 
 
 export const exerciseRoutes = () => {
