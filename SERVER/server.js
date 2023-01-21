@@ -30,5 +30,5 @@ app.use("/api", UserRouter());
 app.use("/api/exercises", exerciseRoutes());
 
 app.listen(port, () => {
-  console.log("API SERVER IS NOW RUNNING");
+  console.log(`API SERVER IS NOW RUNNING on port: ${port}`);
 });
