@@ -5,6 +5,7 @@ import passport from "passport";
 import cors from "cors";
 import {config} from "./config/config.js";
 import {UserRouter} from "./routes/userRoutes.js"
+import { exerciseRoutes } from "./routes/exerciseRoutes.js";
 
 const { host, user, password, port } = config;
 
@@ -26,6 +27,7 @@ connectToMongo();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/api", UserRouter());
+app.use("/api/exercises", exerciseRoutes());
 
 app.listen(port, () => {
   console.log("API SERVER IS NOW RUNNING");
