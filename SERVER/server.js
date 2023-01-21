@@ -1,11 +1,12 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
-const passport = require("passport");
-const cors = require("cors");
-const config = require("./config/config.js");
+import express from "express";
+import bodyParser from "body-parser";
+import mongoose from "mongoose";
+import passport from "passport";
+import cors from "cors";
+import {config} from "./config/config.js";
+import {UserRouter} from "./routes/userRoutes.js"
+
 const { host, user, password, port } = config;
-const UserRouter = require("./routes/userRoutes.js");
 
 const dbConnect = `mongodb+srv://${user}:${password}@${host}`;
 mongoose.set("strictQuery", true);
