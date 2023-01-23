@@ -1,8 +1,7 @@
-const user = require('../models/userSchema.js')
-const express = require ('express');
-const bcrypt = require ('bcrypt')
+import {user} from "../models/userSchema.js"
+import brcypt from "bcrypt"
 
-const registerUser = async (req,res) => {
+export const registerUser = async (req,res) => {
 const {name, dob, email, password} = req.body;
 const userAlreadyExists = await user.findOne({email});
 
@@ -43,4 +42,3 @@ try {
 
 }
 
-module.exports = registerUser
