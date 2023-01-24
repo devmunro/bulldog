@@ -2,6 +2,6 @@ import React from 'react'
 
 export default function Sidebar() {
   return (
-    <div>dasdsadasdsadsad</div>
+    <div className="flex w-full bg-black">dasdsadasdsadsad</div>
   )
 }
