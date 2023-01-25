@@ -8,8 +8,8 @@ import { ChartBarIcon } from "@heroicons/react/24/solid";
 
 export default function Sidebar() {
   return (
-    <div className="w-[20%] h-screen flex-col text-gray-400 bg-black">
-      <h1 className="text-white p-5 text-center font-bold">BULLDOG</h1>
+    <div className=" min-w-[228px] h-screen flex-col text-gray-400 bg-black">
+      <h1 className="text-white m-6 text-center font-bold">BULLDOG</h1>
       <ul className="mt-10 ml-5 space-y-3 text-sm text-left [&>*]:p-2  [&>*]:rounded-l-2xl [&>*]:flex">
         <li className="hover:bg-[#2B2946] hover:text-white">
           <ComputerDesktopIcon className="h-6 w-6 text-white-500 mx-2" />
