@@ -1,16 +1,14 @@
-import { Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Dashboard from "./Components/Dashboard";
 import Home from "./Components/Home";
 
 function App() {
   return (
     <div className="App">
-      
-        <Routes>
+      <Routes>
         <Route path="/" element={<Home />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-        </Routes>
-      
+        <Route path="/dashboard/*" element={<Dashboard />} />
+      </Routes>
     </div>
   );
 }

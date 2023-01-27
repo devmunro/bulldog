@@ -7,7 +7,7 @@ const apiKey = process.env.NINJA_API_KEY;
 export const getExercisesByType = ( req, res) => {
     const type = req.query.type;
     console.log(type)
-    const url = 'https://api.api-ninjas.com/v1/exercises?type=' + type;
+    const url = 'https://api.api-ninjas.com/v1/exercises?type=cardio';
     const headers = {
         'X-Api-Key': apiKey
     };
