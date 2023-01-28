@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 
 export default function Sidebar() {
   return (
-    <div className=" min-w-[228px] h-screen flex-col text-gray-400 bg-black">
+    <div className=" min-w-[228px] fixed min-h-full flex-col text-gray-400 bg-black">
       <h1 className="text-white m-6 text-center font-bold">BULLDOG</h1>
       <ul className="mt-10 ml-5 space-y-3 text-sm text-left [&>*]:p-2  [&>*]:rounded-l-2xl [&>*]:flex">
         <li className="hover:bg-[#2B2946] hover:text-white">

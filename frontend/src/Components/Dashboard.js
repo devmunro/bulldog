@@ -8,7 +8,7 @@ import Overview from "./Overview";
 
 export default function Dashboard() {
   return (
-    <div className="bg-[#2B2946] h-screen flex w-screen">
+    <div className="bg-[#2B2946] h-full flex w-screen">
       <Sidebar />
       <div className="flex-col w-full">
         <Navbar />
