@@ -16,18 +16,24 @@ export default function Workout() {
   ];
   const [exerciseList, setExerciseList] = useState();
   const [loading, setLoading] = useState(true);
+  const [chosenCategory, setChosenCategory] = useState("cardio")
 
   useEffect(() => {
-    const exercies = async () => {
-      await dispatch(fetchExercise()).then((response) => {
-        console.log(response.payload);
-        setExerciseList(response.payload);
-        setLoading(false);
-      });
+    const fetchData = async (a) => {
+      setLoading(true);
+      const response = await dispatch(fetchExercise(a));
+      console.log(a)
+     console.log(response)
+      setExerciseList(response.payload);
+      setLoading(false);
     };
-    exercies();
-  }, [dispatch]);
+    fetchData(chosenCategory)
+  }, [chosenCategory, dispatch]);
 
+  const handleCategory = (e) => {
+    e.preventDefault()
+    setChosenCategory(e.target.value)
+  }
   //
   return (
     <div>
@@ -35,7 +41,7 @@ export default function Workout() {
        <h2 className="font-bold">Catergories</h2>
        <ul className="flex gap-2 w-full ">
         {catergories.map((item) => {
-          return (<li className=" w-full">{item}</li>);
+          return (<button onClick={handleCategory} value={item} className=" w-full">{item}</button>);
         })}
         </ul>
       </div>
