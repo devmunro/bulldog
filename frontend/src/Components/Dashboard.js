@@ -10,7 +10,7 @@ export default function Dashboard() {
   return (
     <div className="bg-[#2B2946] h-full flex w-screen">
       <Sidebar />
-      <div className="flex-col w-full">
+      <div className="flex-col w-full ml-20">
         <Navbar />
         <Routes>
           <Route path="/" element={<Overview />} />
