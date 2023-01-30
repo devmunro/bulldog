@@ -8,12 +8,11 @@ export default function Workout() {
 
   const categories = [
     { name: "cardio", image: "006-treadmill.png" },
-    { name: "olympic weightlifting", image: "" },
-    { name: "plyometrics", image: "002-gym-shoes.png" },
-    { name: "powerlifting", image: "003-weightlifting.png" },
-    { name: "strength", image: "001-workout.png" },
-    { name: "stretching", image: "004-dumbbell.png" },
-    { name: "strongman", image: "005-arm.png" },
+    { name: "back", image: "002-gym-shoes.png" },
+    { name: "chest", image: "003-weightlifting.png" },
+    { name: "legs", image: "001-workout.png" },
+    { name: "shoulders", image: "004-dumbbell.png" },
+    { name: "arms", image: "005-arm.png" },
   ];
 
   const [exerciseList, setExerciseList] = useState();
@@ -34,25 +33,28 @@ export default function Workout() {
 
   const handleCategory = (e) => {
     e.preventDefault();
+    console.log(e.target.value)
     setChosenCategory(e.target.value);
   };
   //
   return (
     <div>
-      <div className="bg-black text-white max-w-full m-2">
-        <h2 className="font-bold">Catergories</h2>
+      <div className=" text-white max-w-full mb-6">
+        <h2 className="font-bold mx-4">Catergories</h2>
         <ul className="flex gap-2 w-full ">
           {categories.map((item) => {
             return (
-              <div>
+              <div className=" w-full bg-[#2B2946] p-2 m-2 text-center rounded-xl border-x-2 border-x-slate-50 hover:border-white hover:border-2 	">
+               
                 <button
                   onClick={handleCategory}
                   value={item.name}
-                  className=" w-full"
+                  
                 >
+                   <FirebaseStorage imageBase={item.image} />
                   {item.name}
+
                 </button>
-                <FirebaseStorage imageBase={item.image}/>
               </div>
             );
           })}
@@ -63,13 +65,13 @@ export default function Workout() {
           exerciseList.map((exercise) => {
             return (
               <ul
-                key={exercise.name}
+                key={exercise.id}
                 className="text-white bg-[#2B2946] w-[30%] m-2 p-4"
               >
+                <img src={exercise.gifUrl} alt={exercise.name}/>
                 <li>{exercise.name}</li>
-                <li>{exercise.type}</li>
-                <li>{exercise.difficulty}</li>
-                <li>{exercise.instructions}</li>
+                <li>{exercise.equipment}</li>
+
               </ul>
             );
           })}
