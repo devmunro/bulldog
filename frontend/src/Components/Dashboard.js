@@ -3,7 +3,7 @@ import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
 
 import { Routes, Route } from "react-router-dom";
-import Workout from "./Workout";
+import Exercises from "./Exercises";
 import Overview from "./Overview";
 
 export default function Dashboard() {
@@ -14,7 +14,7 @@ export default function Dashboard() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Overview />} />
-          <Route path="/workout" element={<Workout />} />
+          <Route path="/exerciselist" element={<Exercises />} />
         </Routes>
       </div>
     </div>
