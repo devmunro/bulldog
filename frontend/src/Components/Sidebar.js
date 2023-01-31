@@ -43,7 +43,7 @@ export default function Sidebar() {
             </li>
 
             <li className="hover:bg-[#2B2946] hover:text-white">
-              <Link to="/dashboard/workout" className="flex">
+              <Link to="/dashboard/exerciselist" className="flex">
                 <TrophyIcon className="h-6 w-6 text-white-500 mx-2" />
                 Workout
               </Link>
@@ -68,7 +68,7 @@ export default function Sidebar() {
           </li>
 
           <li className="hover:bg-[#2B2946] hover:text-white">
-            <Link to="/dashboard/workout">
+            <Link to="/dashboard/exerciselist">
               <TrophyIcon className="h-6 w-6 text-white-500 mx-2" />
             </Link>
           </li>
