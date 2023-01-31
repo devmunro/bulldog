@@ -43,7 +43,7 @@ try {
         dob: createUser.dob,
         name: createUser.name,
         email: createUser.email,
-        workout: [],
+        workouts: [],
         token: generateToken(createUser.id)
     })
 }catch(error) {
@@ -53,3 +53,23 @@ try {
 
 }
 
+//##### LOGIN USER ####
+export const loginUser = async (req, res) => {
+    const { email, password } = req.body;
+  
+     const findUser = await user.findOne({ email });
+  
+    if (findUser && (await bcrypt.compare(password, findUser.password))) {
+      res.json({
+        id: findUser.id,
+        name: findUser.name,
+        email: findUser.email,
+        workouts: findUser.workouts,
+        token: generateToken(findUser._id),
+        
+      });
+      console.log("logged in");
+    } else {
+      return res.status(400).json("Invalid user data");
+    }
+  };
