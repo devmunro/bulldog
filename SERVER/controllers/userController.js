@@ -1,5 +1,14 @@
 import {user} from "../models/userSchema.js"
-import brcypt from "bcrypt"
+import bcrypt from "bcrypt"
+import jwt from "jsonwebtoken";
+import dotenv from 'dotenv'
+
+dotenv.config(); 
+
+//generate token
+const generateToken = (userId) => {
+    return jwt.sign({ userId }, process.env.JWT_SECRET_KEY, { expiresIn: "7d" });
+  };
 
 export const registerUser = async (req,res) => {
 const {name, dob, email, password} = req.body;
@@ -34,6 +43,8 @@ try {
         dob: createUser.dob,
         name: createUser.name,
         email: createUser.email,
+        workout: [],
+        token: generateToken(createUser.id)
     })
 }catch(error) {
 
