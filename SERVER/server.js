@@ -6,6 +6,8 @@ import cors from "cors";
 import {config} from "./config/config.js";
 import {UserRouter} from "./routes/userRoutes.js"
 import { exerciseRoutes } from "./routes/exerciseRoutes.js";
+import path from "path";
+
 
 const { host, user, password, port } = config;
 
@@ -28,6 +30,16 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/api", UserRouter());
 app.use("/api/exercises", exerciseRoutes());
+
+//Serve frontend
+
+if(process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join('../frontend/build')));
+ app.get('*', (req,res) => (
+  res.sendFile(path.resolve('../', 'frontend', 'build', 'index.html'))
+ ))
+}
+
 
 app.listen(port, () => {
   console.log(`API SERVER IS NOW RUNNING on port: ${port}`);
