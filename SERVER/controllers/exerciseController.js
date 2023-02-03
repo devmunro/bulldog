@@ -9,8 +9,8 @@ export const getExercisesByType = ( req, res) => {
     console.log(type)
     const url = 'https://exercisedb.p.rapidapi.com/exercises/bodyPart/' + type;
     const headers = {
-    'X-RapidAPI-Key': 'b63b748399msh0e8f15af5bd6b11p1a177cjsn902b57c82e46',
-    'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'
+    'X-RapidAPI-Key': process.env.X_API_KEY,
+    'X-RapidAPI-Host': process.env.X_API_HOST
     };
     axios.get(url, {headers: headers})
     .then(response => {

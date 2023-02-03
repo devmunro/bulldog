@@ -22,9 +22,11 @@ import mongoose from "mongoose"
             required: true,
         },
         
+        workouts: [{ type: mongoose.Types.ObjectId, ref: 'Workout' }]
 
 
     },
+
     { timestamps: true }
 
 
