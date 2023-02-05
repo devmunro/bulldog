@@ -7,6 +7,7 @@ import {config} from "./config/config.js";
 import {UserRouter} from "./routes/userRoutes.js"
 import { exerciseRoutes } from "./routes/exerciseRoutes.js";
 import path from "path";
+import { WorkoutRouter } from "./routes/workoutRoutes.js";
 
 
 const { host, user, password, port } = config;
@@ -30,6 +31,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/api", UserRouter());
 app.use("/api/exercises", exerciseRoutes());
+app.use("/api/workout", WorkoutRouter());
 
 //Serve frontend
 
