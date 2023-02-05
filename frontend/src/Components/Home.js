@@ -7,7 +7,7 @@ export default function Home() {
     <div className="h-screen">
       <div className="bg-[#2B2946] h-1/2"></div>
       <div className="bg-black h-1/2"></div>
-      <div className="bg-white inset-40 ring-4 shadow-2xl flex	">
+      <div className="absolute bg-white inset-40 ring-4 shadow-2xl flex	">
         <RegisterForm />
         <LoginForm />
       </div>
