@@ -45,7 +45,7 @@ const RegisterForm = () => {
   useEffect(() => {
     
     if(error) {
-        alert(error)
+        console.log(error)
     }
   
     if(success)

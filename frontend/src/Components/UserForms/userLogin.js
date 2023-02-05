@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { clearState, registerUser } from "../../features/userSlice";
+import { clearState, loginUser } from "../../features/userSlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -26,16 +26,25 @@ const LoginForm = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(loginData);
+    userLogin(loginData);
   };
 
   //  pass data to redux
-  const userRegistration = async (data) => {};
+  const userLogin = async (data) => {
+    try {
+        const user = await dispatch(loginUser(data));
+      } catch (error) {
+        console.error(error);
+        console.log(error.message)
+        alert(error.message);
+      }
+    
+  
+  };
+
 
   useEffect(() => {
-    if (error) {
-      alert(error);
-    }
-
+  
     if (success) {
       navigate("/dashboard");
     }

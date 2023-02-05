@@ -4,7 +4,7 @@ import axios from "axios";
 //API LINK
 const API_URL = "/api/";
 
-// fetch Exercises
+// register user
 export const registerUser = createAsyncThunk(
   "auth/regUser",
   async (userdata) => {
@@ -16,6 +16,16 @@ export const registerUser = createAsyncThunk(
     }
   }
 );
+
+// login user
+export const loginUser = createAsyncThunk("auth/logUser", async (userdata) => {
+  try {
+    const response = await axios.post(`${API_URL}login`, userdata);
+    return response.data;
+  } catch (error) {
+    throw new Error(error);
+  }
+});
 
 export const userSlice = createSlice({
   name: "auth",
@@ -43,6 +53,18 @@ export const userSlice = createSlice({
       state.success = true;
     },
     [registerUser.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.error;
+    },
+    [loginUser.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [loginUser.fulfilled]: (state, action) => {
+      state.userData = action.payload;
+      state.loading = false;
+      state.success = true;
+    },
+    [loginUser.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.error;
     },
