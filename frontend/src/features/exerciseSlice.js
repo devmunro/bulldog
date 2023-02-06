@@ -17,6 +17,22 @@ export const fetchExercise = createAsyncThunk(
   }
 );
 
+export const createWorkout = createAsyncThunk("exercise/createWorkout",
+async (name) => {
+
+  try {
+
+    const response = await axios.post(`${API_URL}workout/createworkout`, name)
+    return response.data
+  
+  }catch(error) {
+
+    console.log(error)
+  }
+}
+
+)
+
 export const exerciseSlice = createSlice({
   name: "exercise",
   initialState: [],
