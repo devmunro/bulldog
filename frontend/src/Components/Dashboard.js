@@ -16,7 +16,7 @@ export default function Dashboard() {
         <Routes>
           <Route path="/" element={<Overview />} />
           <Route path="/exerciselist" element={<Exercises />} />
-          <Route path="/exerciselist" element={<Workout />} />
+          <Route path="/workout" element={<Workout />} />
         </Routes>
       </div>
     </div>
