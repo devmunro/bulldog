@@ -69,7 +69,8 @@ export const loginUser = async (req, res) => {
   // Compare provided password with the hashed password in the database
   const isMatch = await bcrypt.compare(password, findUser.password);
   if (!isMatch) {
-    return res.status(400).json({ error: "Password is incorrect" });
+    console.log("password incorrect")
+    return res.status(403).json({ error: "Password is incorrect" });
   }
 
   // Generate JWT token

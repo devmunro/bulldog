@@ -1,4 +1,5 @@
 import express from "express"
+import {createWorkout} from  "../controllers/workoutController.js"
 
 
  export const WorkoutRouter =() => {

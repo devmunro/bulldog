@@ -1,16 +1,21 @@
-import React from 'react'
-import RegisterForm from './UserForms/userRegistration'
+import React, { useState } from "react";
+import LoginForm from "./UserForms/userLogin";
+import RegisterForm from "./UserForms/userRegistration";
 
 export default function Home() {
-  return (
-    <div className='h-screen' >
-      
-      <div className="bg-[#2B2946] h-1/2" ></div>
-      <div className="bg-black h-1/2"></div>
-      <div className='absolute bg-white inset-40 ring-4 shadow-2xl	'>
+  const [showform, setShowForm] = useState(true);
+  const handleClick = (e) => {
+    e.preventDefault();
 
-        <RegisterForm/>
+    setShowForm(!showform);
+  };
+
+  return (
+    <div className="h-screen flex items-center justify-center ">
+         <div className="w-1/2 lg:w-1/3 ring-4 rounded-t-xl shadow-2xl  ">
+        {!showform && <RegisterForm handleClick={handleClick} />}
+        {showform && <LoginForm handleClick={handleClick} />}
       </div>
     </div>
-  )
+  );
 }
