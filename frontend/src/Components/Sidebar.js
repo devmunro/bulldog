@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {
+  BookOpenIcon,
   ChevronDoubleLeftIcon,
   ChevronDoubleRightIcon,
   ComputerDesktopIcon,
@@ -44,6 +45,12 @@ export default function Sidebar() {
 
             <li className="hover:bg-[#2B2946] hover:text-white">
               <Link to="/dashboard/exerciselist" className="flex">
+                <BookOpenIcon className="h-6 w-6 text-white-500 mx-2" />
+                Exercises
+              </Link>
+            </li>
+            <li className="hover:bg-[#2B2946] hover:text-white">
+              <Link to="/dashboard/workout" className="flex">
                 <TrophyIcon className="h-6 w-6 text-white-500 mx-2" />
                 Workout
               </Link>
@@ -69,6 +76,11 @@ export default function Sidebar() {
 
           <li className="hover:bg-[#2B2946] hover:text-white">
             <Link to="/dashboard/exerciselist">
+              <BookOpenIcon className="h-6 w-6 text-white-500 mx-2" />
+            </Link>
+          </li>
+          <li className="hover:bg-[#2B2946] hover:text-white">
+            <Link to="/dashboard/workout">
               <TrophyIcon className="h-6 w-6 text-white-500 mx-2" />
             </Link>
           </li>
