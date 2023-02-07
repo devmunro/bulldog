@@ -5,6 +5,7 @@ import Navbar from "./Navbar";
 import { Routes, Route } from "react-router-dom";
 import Exercises from "./Exercises";
 import Overview from "./Overview";
+import Workout from "./workout/Workout";
 
 export default function Dashboard() {
   return (
@@ -15,6 +16,7 @@ export default function Dashboard() {
         <Routes>
           <Route path="/" element={<Overview />} />
           <Route path="/exerciselist" element={<Exercises />} />
+          <Route path="/workout" element={<Workout />} />
         </Routes>
       </div>
     </div>
