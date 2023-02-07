@@ -22,7 +22,7 @@ export default function Dashboard() {
         <Routes>
           <Route path="/" element={<Overview user={userData} />} />
           <Route path="/exerciselist" element={<Exercises />} />
-          <Route path="/workout" element={<Workout />} />
+          <Route path="/workout" element={<Workout user={userData}/>} />
         </Routes>
       </div>
     </div>

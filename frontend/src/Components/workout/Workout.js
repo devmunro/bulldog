@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createWorkout } from "../../features/exerciseSlice";
 
-export default function Workout() {
+export default function Workout({user}) {
   const dispatch = useDispatch();
 
   const [workoutCreateBox, setWorkoutCreateBox] = useState(false);
@@ -17,11 +17,14 @@ export default function Workout() {
     setName(e.target.value);
   };
 
-
+console.log(typeof user.id)
   //handle submit
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    
    const workoutForm = {
+        "userID": user.id,
         "name": name
     }
     dispatch(createWorkout(workoutForm));
