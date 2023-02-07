@@ -4,7 +4,7 @@ import ExerciseCatergories from "./exerciseCatergories";
 export default function Exercises() {
   const [exerciseList, setExerciseList] = useState();
   const [loading, setLoading] = useState(true);
- 
+
   //
   return (
     <div>

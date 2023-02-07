@@ -22,7 +22,7 @@ import mongoose from "mongoose"
             required: true,
         },
         
-        workouts: [{ type: mongoose.Types.ObjectId, ref: 'Workout' }]
+        workouts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Workout' }]
 
 
     },

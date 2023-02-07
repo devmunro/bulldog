@@ -1,18 +1,27 @@
 import { Workout } from "../models/workoutSchema.js";
-
+import { user } from "../models/userSchema.js";
 
 export const createWorkout = async (req, res) => {
-  const { name } = req.body;
-console.log(name)
+  const { userID, name } = req.body;
 
   try {
     const createUserWorkout = await Workout.create({
-      name: name,
+      userID,
+      name,
     });
+
+    //adds workout id to user who created it
+    const userInfo = await user.findById(userID);
+
+    userInfo.workouts.push(createUserWorkout._id);
+
+    await userInfo.save();
+
     res.status(201).json({
+      id: createUserWorkout._id,
       name: createUserWorkout.name,
     });
   } catch (error) {
-    res.status(400).json({ error: "workout not created" });
+    res.status(400).json({ error });
   }
 };

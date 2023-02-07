@@ -2,10 +2,10 @@ import mongoose from "mongoose"
 
 const workoutSchema = new mongoose.Schema(
   {
-    user: {
+    userID: {
       type: mongoose.Schema.Types.ObjectId, // link to user
       ref: "User",
-      // required: true,
+      required: true,     
     },
     name: {
       type: String,

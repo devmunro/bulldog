@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createWorkout } from "../../features/exerciseSlice";
 
-export default function Workout() {
+export default function Workout({ user }) {
   const dispatch = useDispatch();
 
   const [workoutCreateBox, setWorkoutCreateBox] = useState(false);
@@ -16,15 +16,20 @@ export default function Workout() {
   const handleInputChange = (e) => {
     setName(e.target.value);
   };
-
-
+  console.log(user);
+  console.log(user.workouts);
   //handle submit
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-   const workoutForm = {
-        "name": name
-    }
-    dispatch(createWorkout(workoutForm));
+
+    const workoutForm = {
+      userID: user.id,
+      name: name,
+    };
+
+    const currentWorkout = await dispatch(createWorkout(workoutForm));
+
+    console.log(currentWorkout.payload);
   };
   return (
     <div className="bg-white">
