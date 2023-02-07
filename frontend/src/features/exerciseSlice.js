@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+
 //API LINK
 const API_URL = "/api/";
 
@@ -18,10 +19,23 @@ export const fetchExercise = createAsyncThunk(
 );
 
 export const createWorkout = createAsyncThunk("exercise/createWorkout", async (workoutCreateData) => {
+
+
   try {
     const response = await axios.post(`${API_URL}workout/createworkout`, workoutCreateData);
-   
-   console.log("test")
+   if(response) {
+const currentUser = JSON.parse(localStorage.getItem("user"))
+console.log(currentUser)
+
+// Update the user workout
+const updatedUser = {
+  ...currentUser,
+  workouts: currentUser.workouts.concat(response.data),
+};
+localStorage.setItem("user", JSON.stringify(updatedUser));
+
+console.log(response.data)
+   }
     return response.data;
   
   } catch (error) {

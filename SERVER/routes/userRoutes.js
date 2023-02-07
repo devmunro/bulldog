@@ -1,5 +1,5 @@
 import express from "express"
-import {registerUser} from "../controllers/userController.js"
+import {getUserWorkouts, registerUser} from "../controllers/userController.js"
 import { loginUser } from "../controllers/userController.js";
 
  export const UserRouter =() => {
@@ -8,6 +8,7 @@ import { loginUser } from "../controllers/userController.js";
 
     userRouter.post("/signup", registerUser)
     userRouter.post("/login", loginUser);
+    userRouter.get("/getUserWorkouts", getUserWorkouts);
 
     return userRouter
 }

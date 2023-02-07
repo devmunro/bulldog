@@ -69,7 +69,7 @@ export const loginUser = async (req, res) => {
   // Compare provided password with the hashed password in the database
   const isMatch = await bcrypt.compare(password, findUser.password);
   if (!isMatch) {
-    console.log("password incorrect")
+    console.log("password incorrect");
     return res.status(403).json({ error: "Password is incorrect" });
   }
 
@@ -88,5 +88,22 @@ export const loginUser = async (req, res) => {
     console.log("logged in");
   } else {
     return res.status(400).json("Invalid user data");
+  }
+};
+
+// get user workouts
+
+export const getUserWorkouts = async (req, res) => {
+  const { userID } = req.body;
+  console.log(req.body)
+  try {
+    console.log(userID)
+    const findUser = await user.findById({userID});
+console.log(findUser, "stuff")
+    res.json({
+      workouts: findUser.workouts,
+    });
+  } catch (error) {
+    console.log("cant get workouts");
   }
 };
