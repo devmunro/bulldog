@@ -21,6 +21,9 @@ export const registerUser = createAsyncThunk(
 export const loginUser = createAsyncThunk("auth/logUser", async (userdata) => {
   try {
     const response = await axios.post(`${API_URL}login`, userdata);
+    if (response.data) {
+      localStorage.setItem("user", JSON.stringify(response.data));
+    }
     return response.data;
   } catch (error) {
     throw new Error(error);
@@ -30,7 +33,7 @@ export const loginUser = createAsyncThunk("auth/logUser", async (userdata) => {
 export const userSlice = createSlice({
   name: "auth",
   initialState: {
-    userData: null,
+    userData: JSON.parse(localStorage.getItem("user")) || null,
     loading: false,
     error: null,
     success: false,
