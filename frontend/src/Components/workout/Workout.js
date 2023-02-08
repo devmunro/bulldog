@@ -16,8 +16,7 @@ export default function Workout({ user }) {
   const handleInputChange = (e) => {
     setName(e.target.value);
   };
-  console.log(user);
-  console.log(user.workouts);
+
   //handle submit
   const handleSubmit = async (e) => {
     e.preventDefault();
