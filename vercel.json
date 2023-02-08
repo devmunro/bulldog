@@ -14,8 +14,13 @@
 
     "rewrites": [
         {
+          "source": "/api/(.*)",
+          "destination": "/SERVER/server.js"
+        },
+        {
           "source": "/(.*)",
-          "destination": "/frontend/build"
+          "destination": "/frontend/build/index.html"
         }
       ]
+      
   }

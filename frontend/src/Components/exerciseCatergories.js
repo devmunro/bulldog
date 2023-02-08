@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { fetchExercise } from "../features/exerciseSlice";
 import FirebaseStorage from "../images/firebaseStorage";
 
-export default function ExerciseCatergories({setLoading, setExerciseList}) {
+export default function ExerciseCatergories({ setLoading, setExerciseList }) {
   const categories = [
     { name: "cardio", image: "006-treadmill.png" },
     { name: "back", image: "002-gym-shoes.png" },
@@ -22,13 +22,11 @@ export default function ExerciseCatergories({setLoading, setExerciseList}) {
     const fetchData = async (a) => {
       setLoading(true);
       const response = await dispatch(fetchExercise(a));
-      console.log(a);
-      console.log(response);
       setExerciseList(response.payload);
       setLoading(false);
     };
     fetchData(chosenCategory);
-  }, [chosenCategory, dispatch]);
+  }, [chosenCategory, dispatch, setExerciseList, setLoading]);
 
   const handleCategory = (e) => {
     e.preventDefault();
