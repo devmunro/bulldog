@@ -13,9 +13,9 @@
   
 
     "rewrites": [
-      {
-        "source": "/(.*)",
-        "destination": "/SERVER/server.js"
-      }
-    ]
+        {
+          "source": "/(.*)",
+          "destination": "/frontend/build"
+        }
+      ]
   }
