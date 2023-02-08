@@ -3,12 +3,11 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import passport from "passport";
 import cors from "cors";
-import {config} from "./config/config.js";
-import {UserRouter} from "./routes/userRoutes.js"
+import { config } from "./config/config.js";
+import { UserRouter } from "./routes/userRoutes.js";
 import { exerciseRoutes } from "./routes/exerciseRoutes.js";
 import path from "path";
 import { WorkoutRouter } from "./routes/workoutRoutes.js";
-
 
 const { host, user, password, port } = config;
 
@@ -36,15 +35,16 @@ app.use("/api/workout", WorkoutRouter());
 //Serve frontend
 
 // static files (build of your frontend)
-if(process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join('../frontend/build')));
- app.get('*', (req,res) => (
-  res.sendFile(path.resolve('../frontend', 'build', 'index.html'))
-
- ))
+if (process.env.NODE_ENV === "production") {
+  app.use(
+    express.static(path.join(process.cwd(), "../bulldog/frontend/build"))
+  );
+  app.get("*", (req, res) =>
+    res.sendFile(
+      path.resolve(process.cwd(), "../bulldog/frontend", "build", "index.html")
+    )
+  );
 }
-
-
 
 app.listen(port, () => {
   console.log(`API SERVER IS NOW RUNNING on port: ${port}`);
