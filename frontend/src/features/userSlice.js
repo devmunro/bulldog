@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 //API LINK
-const API_URL = "/api/";
+const API_URL = process.env.REACT_APP_API_URL;
 
 // register user
 export const registerUser = createAsyncThunk(
