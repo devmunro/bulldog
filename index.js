@@ -7,7 +7,6 @@ import { config } from "./config/config.js";
 import { UserRouter } from "./routes/userRoutes.js";
 import { exerciseRoutes } from "./routes/exerciseRoutes.js";
 import { WorkoutRouter } from "./routes/workoutRoutes.js";
-
 import path from "path";
 
 const { host, user, password, port } = config;
@@ -29,6 +28,8 @@ const connectToMongo = async () => {
 connectToMongo();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
+
 app.use("/api", UserRouter());
 app.use("/api/exercises", exerciseRoutes());
 app.use("/api/workout", WorkoutRouter());
