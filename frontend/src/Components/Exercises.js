@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ExerciseCatergories from "./exerciseCatergories";
+import Loading from "./Loading";
 
 export default function Exercises() {
   const [exerciseList, setExerciseList] = useState();
@@ -24,6 +25,7 @@ export default function Exercises() {
               </ul>
             );
           })}
+          {loading && <Loading/>}
       </section>
     </div>
   );
