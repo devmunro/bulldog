@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 //API LINK
-const API_URL = "https://bulldog-hx233d6wy-devmunro.vercel.app/api/";
+const API_URL = "https://bulldog-hgm2skpmm-devmunro.vercel.app/api/";
 
 // register user
 export const registerUser = createAsyncThunk(
