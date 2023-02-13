@@ -33,6 +33,12 @@ app.use("/api", UserRouter());
 app.use("/api/exercises", exerciseRoutes());
 app.use("/api/workout", WorkoutRouter());
 
+app.use(
+  cors({
+    allowedHeaders: ["content-type"]
+  })
+);
+
 //Serve frontend for static files
 
 if (process.env.NODE_ENV === "production") {
