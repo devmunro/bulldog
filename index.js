@@ -28,13 +28,7 @@ const connectToMongo = async () => {
 connectToMongo();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(
-  cors({
-    origin: "https://bulldog-two.vercel.app",
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type"],
-  })
-);
+
 app.use("/api", UserRouter());
 app.use("/api/exercises", exerciseRoutes());
 app.use("/api/workout", WorkoutRouter());
