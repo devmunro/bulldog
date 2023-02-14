@@ -27,7 +27,7 @@ const RegisterForm = ({ handleClick }) => {
   //handle submit
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(formData);
+  
     userRegistration(formData);
   };
 

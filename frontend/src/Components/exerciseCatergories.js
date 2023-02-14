@@ -20,7 +20,6 @@ export default function ExerciseCatergories({ setLoading, setExerciseList }) {
 
   useEffect(() => {
     const fetchData = async (a) => {
-      setLoading(true);
       const response = await dispatch(fetchExercise(a));
       setExerciseList(response.payload);
       setLoading(false);
@@ -30,7 +29,7 @@ export default function ExerciseCatergories({ setLoading, setExerciseList }) {
 
   const handleCategory = (e) => {
     e.preventDefault();
-    console.log(e.target.value);
+
     setChosenCategory(e.target.value);
   };
 

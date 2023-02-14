@@ -35,14 +35,7 @@ export const registerUser = async (req, res) => {
       email,
       password: hashedPassword,
     });
-    res.status(201).json({
-      id: createUser.id,
-      dob: createUser.dob,
-      name: createUser.name,
-      email: createUser.email,
-      workouts: [],
-      token: generateToken(createUser.id),
-    });
+    res.status(204);
   } catch (error) {
     res.status(400).json({ error: "user not created" });
   }
@@ -78,28 +71,28 @@ export const loginUser = async (req, res) => {
 
   if (findUser && (await bcrypt.compare(password, findUser.password))) {
     res.json({
-      id: findUser.id,
-      dob: findUser.dob,
-      name: findUser.name,
-      email: findUser.email,
-      workouts: findUser.workouts,
-      token,
+      token: generateToken(findUser._id),
     });
-    console.log("logged in");
   } else {
     return res.status(400).json("Invalid user data");
   }
 };
 
+//GET USER PROFILE
+
+export const getUser = async (req, res) => {
+  res.status(200).json(req.user);
+};
+
 // get user workouts
 
 export const getUserWorkouts = async (req, res) => {
-  const { userID } = req.body;
-  console.log(req.body)
+  const { _id } = req.body;
+  console.log(req.body);
   try {
-    console.log(userID)
-    const findUser = await user.findById({userID});
-console.log(findUser, "stuff")
+    console.log(userID);
+    const findUser = await user.findById({ userID });
+    console.log(findUser, "stuff");
     res.json({
       workouts: findUser.workouts,
     });
