@@ -3,7 +3,7 @@ import axios from "axios";
 
 
 //API LINK
-const API_URL = "https://bulldog-git-master-devmunro.vercel.app/api/";
+const API_URL = "/api/";
 
 // fetch Exercises
 export const fetchExercise = createAsyncThunk(
@@ -25,7 +25,7 @@ export const createWorkout = createAsyncThunk("exercise/createWorkout", async (w
     const response = await axios.post(`${API_URL}workout/createworkout`, workoutCreateData);
    if(response) {
 const currentUser = JSON.parse(localStorage.getItem("user"))
-console.log(currentUser)
+
 
 // Update the user workout
 const updatedUser = {

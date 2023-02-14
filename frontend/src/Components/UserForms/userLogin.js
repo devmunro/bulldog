@@ -13,7 +13,7 @@ const LoginForm = ({ handleClick }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { user, loading, error, success } = useSelector((state) => state.auth);
+  const { loading, error, success } = useSelector((state) => state.auth);
 
   const handleInputChange = (event) => {
     setLoginData({
@@ -25,29 +25,31 @@ const LoginForm = ({ handleClick }) => {
   //handle submit
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(loginData);
+
     userLogin(loginData);
   };
 
   //  pass data to redux
   const userLogin = async (data) => {
     try {
-      const user = await dispatch(loginUser(data));
+      await dispatch(loginUser(data));
     } catch (error) {
       console.error(error);
-      console.log(error.message);
-      alert(error.message);
+    
+
     }
   };
 
   useEffect(() => {
     if (success) {
       navigate("/dashboard");
+      dispatch(clearState());
     }
 
-    dispatch(clearState());
-  }, [dispatch, error, success, navigate]);
-
+    if (error) {
+      console.error(error);
+    }
+  }, [dispatch, loading, success, error, navigate]);
   return (
     <div className="flex-col items-center flex bg-[#2B2946]">
       <h2 className="text-xl mt-4 font-bold text-white">Login</h2>

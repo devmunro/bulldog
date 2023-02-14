@@ -8,11 +8,14 @@ export default function Workout({ user }) {
   const [workoutCreateBox, setWorkoutCreateBox] = useState(false);
   const [name, setName] = useState("");
 
+
+  //adds section in order to create a workout
   const handleCreateWorkoutClick = (e) => {
     e.preventDefault();
     setWorkoutCreateBox(!workoutCreateBox);
   };
 
+  //to be able to write workout name
   const handleInputChange = (e) => {
     setName(e.target.value);
   };
@@ -28,7 +31,6 @@ export default function Workout({ user }) {
 
     const currentWorkout = await dispatch(createWorkout(workoutForm));
 
-    console.log(currentWorkout.payload);
   };
   return (
     <div className="bg-white">

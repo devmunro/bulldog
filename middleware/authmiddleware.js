@@ -1,27 +1,39 @@
 import dotenv from "dotenv";
+import jwt from "jsonwebtoken";
+import { user } from "../models/userSchema.js";
 
 dotenv.config();
 
-const secret = process.env.JWT_SECRET_KEY;
 
-const authMiddleware = (req, res, next) => {
-  const token = req.headers.authorization;
+export const protectRoute = async (req, res, next) => {
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
+  ) {
+    try {
+        let token = req.headers.authorization.split(" ")[1];
+console.log(token)
+      // Verify token
+      console.log("verifing start")
+      const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
 
-  if (!token) {
-    return res.status(401).send({ message: "Unauthorized" });
-  }
+      console.log('decoded', decoded);
 
-  try {
-    // Verify the token
-    const decoded = jwt.verify(token, secret);
+      // Get user from the token
+      const founduser = await user.findById(decoded.userId).select("-password");
 
-    // Attach the decoded token to the request object
-    req.user = decoded;
+      console.log('user', founduser);
 
-    next();
-  } catch (error) {
-    return res.status(401).send({ message: "Unauthorized" });
+      if (!founduser) {
+        throw new Error('User not found');
+      }
+
+      req.user = founduser;
+
+      next();
+    } catch (error) {
+      console.error(error);
+      return res.status(401).send({ message: "NOT authorized " });
+    }
   }
 };
-
-module.exports = authMiddleware;
