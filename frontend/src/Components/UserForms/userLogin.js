@@ -35,8 +35,6 @@ const LoginForm = ({ handleClick }) => {
       await dispatch(loginUser(data));
     } catch (error) {
       console.error(error);
-    
-
     }
   };
 
@@ -44,10 +42,6 @@ const LoginForm = ({ handleClick }) => {
     if (success) {
       navigate("/dashboard");
       dispatch(clearState());
-    }
-
-    if (error) {
-      console.error(error);
     }
   }, [dispatch, loading, success, error, navigate]);
   return (
