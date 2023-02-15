@@ -20,15 +20,13 @@ export const fetchExercise = createAsyncThunk(
 export const createWorkout = createAsyncThunk(
   "exercise/createWorkout",
   async (workoutCreateData) => {
-
-    console.log(workoutCreateData)
+    console.log(workoutCreateData);
     try {
       const response = await axios.post(
         `${API_URL}workout/createworkout`,
         workoutCreateData
       );
 
-     
       if (response) {
         const currentUser = JSON.parse(localStorage.getItem("user"));
 
@@ -48,6 +46,20 @@ export const createWorkout = createAsyncThunk(
   }
 );
 
+export const findWorkout = createAsyncThunk(
+  "exercise/findWorkout",
+  async (workoutIDs) => {
+    try {
+      const response = await axios.get(`${API_URL}workout/findworkout`, {
+        params: { ids: workoutIDs },
+      });
+
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
 export const exerciseSlice = createSlice({
   name: "exercise",
   initialState: [],

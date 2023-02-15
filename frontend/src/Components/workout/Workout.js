@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { createWorkout } from "../../features/exerciseSlice";
+import { createWorkout, findWorkout } from "../../features/exerciseSlice";
 
 export default function Workout({ user }) {
   const dispatch = useDispatch();
@@ -14,6 +14,7 @@ export default function Workout({ user }) {
     e.preventDefault();
     setWorkoutCreateBox(!workoutCreateBox);
   };
+  console.log(user.workouts)
 
   //to be able to write workout name
   const handleInputChange = (e) => {
@@ -29,7 +30,9 @@ export default function Workout({ user }) {
       name: name,
     };
 
-    const currentWorkout = await dispatch(createWorkout(workoutForm));
+    await dispatch(createWorkout(workoutForm));
+
+    await dispatch(findWorkout(user.workouts))
 
   };
   return (
@@ -58,6 +61,10 @@ export default function Workout({ user }) {
             />
             <button>Submit</button>
           </form>
+          {user.workouts > 0 && user.workouts.map(workout => {
+  return workout;
+})}
+
         </div>
       )}
     </div>
