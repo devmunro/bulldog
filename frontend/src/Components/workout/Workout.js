@@ -25,7 +25,7 @@ export default function Workout({ user }) {
     e.preventDefault();
 
     const workoutForm = {
-      userID: user.id,
+      userID: user._id,
       name: name,
     };
 

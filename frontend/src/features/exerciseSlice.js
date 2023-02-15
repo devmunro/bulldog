@@ -20,13 +20,15 @@ export const fetchExercise = createAsyncThunk(
 export const createWorkout = createAsyncThunk(
   "exercise/createWorkout",
   async (workoutCreateData) => {
+
+    console.log(workoutCreateData)
     try {
       const response = await axios.post(
         `${API_URL}workout/createworkout`,
         workoutCreateData
       );
 
-      console.log(workoutCreateData)
+     
       if (response) {
         const currentUser = JSON.parse(localStorage.getItem("user"));
 
