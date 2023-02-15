@@ -33,7 +33,10 @@ app.use("/api", UserRouter());
 app.use("/api/exercises", exerciseRoutes());
 app.use("/api/workout", WorkoutRouter());
 
-app.use(cors());
+app.use(cors({
+  origin: ['https://bulldog-two.vercel.app'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE']
+}));
 
 app.listen(port, () => {
   console.log(`API SERVER IS NOW RUNNING on port: ${port}`);
