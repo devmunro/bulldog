@@ -18,9 +18,10 @@ const app = express();
 
 
 app.use(cors({
-  origin: process.env.BULLDOG_SERVER, 
+  origin: "https://bulldog-two.vercel.app",
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true
 }));
 
 const connectToMongo = async () => {
