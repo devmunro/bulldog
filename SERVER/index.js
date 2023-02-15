@@ -16,6 +16,13 @@ mongoose.set("strictQuery", true);
 
 const app = express();
 
+
+app.use(cors({
+  origin: "http://localhost:3000", // replace with your frontend URL
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+}));
+
 const connectToMongo = async () => {
   try {
     await mongoose.connect(dbConnect);
