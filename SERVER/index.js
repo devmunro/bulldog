@@ -18,7 +18,7 @@ const app = express();
 
 
 app.use(cors({
-  origin: "http://localhost:3000", // replace with your frontend URL
+  origin: process.env.BULLDOG_SERVER, 
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
 }));
