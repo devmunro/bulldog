@@ -18,11 +18,12 @@ const app = express();
 
 
 app.use(cors({
-  origin: "https://bulldog-two.vercel.app",
+  origin: ["https://bulldog-two.vercel.app", "http://localhost:3000"],
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true
 }));
+
 
 const connectToMongo = async () => {
   try {
