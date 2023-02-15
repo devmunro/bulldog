@@ -3,7 +3,7 @@ import axios from "axios";
 
 
 //API LINK
-const API_URL = process.env.REACT_APP_API_BASE_URL;
+const API_URL = "https://bulldog-server.onrender.com/api/";
 
 
 // fetch Exercises
