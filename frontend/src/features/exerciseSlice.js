@@ -3,7 +3,8 @@ import axios from "axios";
 
 
 //API LINK
-const API_URL = "/api/";
+const API_URL = process.env.REACT_APP_API_BASE_URL;
+
 
 // fetch Exercises
 export const fetchExercise = createAsyncThunk(

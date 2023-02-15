@@ -33,16 +33,8 @@ app.use("/api", UserRouter());
 app.use("/api/exercises", exerciseRoutes());
 app.use("/api/workout", WorkoutRouter());
 
+app.use(cors());
 
-//Serve frontend for static files
-
-if (process.env.NODE_ENV === "production") {
-  const root = process.cwd();
-  app.use(express.static(path.join(root, "frontend", "build")));
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(root, "frontend", "build", "index.html"));
-  });
-}
 app.listen(port, () => {
   console.log(`API SERVER IS NOW RUNNING on port: ${port}`);
 });
