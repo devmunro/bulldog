@@ -38,6 +38,29 @@ export default function Exercises() {
                       .join(", ")}
                   </li>
                 </ul>
+                <form className="flex items-end  ">
+                  <fieldset className="mx-2  border-r-2 border-white ">
+                    <label>SETS</label>
+                    <input
+                      placeholder="5"
+                      className="w-12 h-12 mx-4 text-center text-2xl"
+                    ></input>
+                  </fieldset>
+                  <fieldset className="mx-2  border-r-2 border-white ">
+                    <label>REPS</label>
+                    <input
+                      placeholder="5"
+                      className="w-12 h-12 mx-4 text-center text-2xl"
+                    ></input>
+                  </fieldset>{" "}
+                  <fieldset className="mx-2  border-r-2 border-white ">
+                    <label>WEIGHT</label>
+                    <input
+                      placeholder="5"
+                      className="w-12 h-12 mx-4 text-center text-2xl"
+                    ></input>
+                  </fieldset>
+                </form>
                 <div className="space-y-4">
                   <FirebaseStorage imageBase={exercise.img} />
                   <button className="bg-white text-black p-2">
