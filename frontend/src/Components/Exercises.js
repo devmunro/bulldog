@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { addExercise } from "../features/exerciseSlice";
 import FirebaseStorage from "../images/firebaseStorage";
 import ExerciseCatergories from "./exerciseCatergories";
 import Loading from "./Loading";
@@ -6,6 +8,7 @@ import Loading from "./Loading";
 export default function Exercises() {
   const [exerciseList, setExerciseList] = useState();
   const [loading, setLoading] = useState(true);
+  
 
   const [exerciseDetails, setExerciseDetails] = useState({
     exerciseID: "",
@@ -16,18 +19,25 @@ export default function Exercises() {
 
   const [exerciseInputs, setExerciseInputs] = useState({});
 
+  const dispatch = useDispatch()
+
   //handle add to workout
 
-  const handleAddToWorkout = (id) => {
+  const handleAddToWorkout = async (id) => {
     setExerciseDetails({
       exerciseID: id,
       exerciseSets: exerciseInputs[id]?.sets ?? 3,
       exerciseReps: exerciseInputs[id]?.reps ?? 8,
       exerciseWeight: exerciseInputs[id]?.weight ?? 10,
     });
-
-    console.log(exerciseDetails)
   };
+
+
+  useEffect(() => {
+    if (exerciseDetails.exerciseID) {
+      dispatch(addExercise(exerciseDetails));
+    }
+  }, [exerciseDetails, dispatch]);
 
   //handlechange for inputs
   const handleChange = (id) => (e) => {

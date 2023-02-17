@@ -37,3 +37,13 @@ export const findworkouts = async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 };
+
+
+
+export const addExercise = async (req, res) => {
+ 
+const {exerciseID, exerciseSets, exerciseReps, exerciseWeight} = req.body
+
+console.log(exerciseWeight);
+
+};
