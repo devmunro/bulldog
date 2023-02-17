@@ -9,10 +9,10 @@ export default function Workout({ user }) {
   const [name, setName] = useState("");
   const [userWorkouts, setUserWorkouts] = useState([]);
 
-  const workoutList = useSelector(state => state.exercise);
+  const defaultWorkout = useSelector(state => state.fitness.defaultWorkout);
 
 
-console.log(workoutList)
+console.log(defaultWorkout)
   //adds section in order to create a workout
   const handleCreateWorkoutClick = (e) => {
     e.preventDefault();

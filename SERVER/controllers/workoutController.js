@@ -46,4 +46,5 @@ const {exerciseID, exerciseSets, exerciseReps, exerciseWeight} = req.body
 
 console.log(exerciseWeight);
 
+
 };

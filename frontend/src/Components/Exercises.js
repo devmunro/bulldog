@@ -1,5 +1,5 @@
 import { useState,useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addExercise } from "../features/exerciseSlice";
 import FirebaseStorage from "../images/firebaseStorage";
 import ExerciseCatergories from "./exerciseCatergories";
@@ -8,6 +8,9 @@ import Loading from "./Loading";
 export default function Exercises() {
   const [exerciseList, setExerciseList] = useState();
   const [loading, setLoading] = useState(true);
+
+  const defaultWorkout = useSelector(state => state.fitness.defaultWorkout);
+
   
 
   const [exerciseDetails, setExerciseDetails] = useState({

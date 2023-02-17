@@ -7,11 +7,11 @@ const API_URL = process.env.REACT_APP_API_BASE_URL;
 // fetch Exercises
 export const fetchExercise = createAsyncThunk(
   "exercise/fetchCards",
-  
+
   async (category) => {
     try {
       const response = await axios.get(`${API_URL}exercises?type=${category}`);
-      
+
       return response.data;
     } catch (error) {
       console.log(error);
@@ -40,7 +40,8 @@ export const createWorkout = createAsyncThunk(
 
         console.log(response.data);
       }
-      return response.data;
+      localStorage.setItem("defaultWorkout", JSON.stringify(response.data.id));
+      return { workout: response.data.id, data: response.data };
     } catch (error) {
       console.log(error);
     }
@@ -67,24 +68,27 @@ export const addExercise = createAsyncThunk(
   "exercise/addExercise",
   async (exercise) => {
     console.log(exercise);
-    
-try {
-  const response = await axios.put(`${API_URL}workout/addexercise`, exercise);
-  
-} catch (error) {
-  
-}
 
+    try {
+      const response = await axios.put(
+        `${API_URL}workout/addexercise`,
+        exercise
+      );
+    } catch (error) {}
   }
 );
 
 export const exerciseSlice = createSlice({
   name: "exercise",
   initialState: {
-    workoutList: [],
+    defaultWorkout: JSON.parse(localStorage.getItem("defaultWorkout")) || "",
   },
 
   reducers: {},
-  
+  extraReducers: (builder) => {
+    builder.addCase(createWorkout.fulfilled, (state, action) => {
+      state.defaultWorkout = action.payload.workout;
+    });
+  },
 });
 export default exerciseSlice.reducer;
