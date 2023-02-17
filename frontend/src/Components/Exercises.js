@@ -14,14 +14,15 @@ export default function Exercises() {
         setExerciseList={setExerciseList}
         setLoading={setLoading}
       />
-      <section className="flex flex-wrap max-w-full bg-black">
+      <section className="flex flex-wrap  w-[95%] bg-black">
         {!loading &&
           exerciseList.map((exercise) => {
             return (
-              <div className=" w-full flex justify-between text-white bg-[#2B2946] m-2 p-4">
+              <div className="w-full flex-wrap">
+              <div className=" flex justify-between text-white bg-[#2B2946] m-2 p-4">
                 <ul
                   key={exercise.id}
-                  className="text-sm flex-col flex justify-between"
+                  className=" w-1/3 text-sm flex-col flex justify-between"
                 >
                   <li className="mb-4 text-3xl">{exercise.name}</li>
 
@@ -61,12 +62,13 @@ export default function Exercises() {
                     ></input>
                   </fieldset>
                 </form>
-                <div className="space-y-4">
-                  <FirebaseStorage imageBase={exercise.img} />
-                  <button className="bg-white text-black p-2">
+                <div className="space-y-4  flex items-end ">
+                  {/* <FirebaseStorage imageBase={exercise.img} /> */}
+                  <button className="bg-white text-black p-2 h-16 ">
                     Add to workout
                   </button>
                 </div>
+              </div>
               </div>
             );
           })}
