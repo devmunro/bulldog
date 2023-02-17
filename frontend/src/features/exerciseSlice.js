@@ -2,14 +2,16 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 //API LINK
-const API_URL = "https://bulldog-server.onrender.com/api/";
+const API_URL = "/api/";
 
 // fetch Exercises
 export const fetchExercise = createAsyncThunk(
   "exercise/fetchCards",
+  
   async (category) => {
     try {
       const response = await axios.get(`${API_URL}exercises?type=${category}`);
+      
       return response.data;
     } catch (error) {
       console.log(error);
@@ -20,7 +22,6 @@ export const fetchExercise = createAsyncThunk(
 export const createWorkout = createAsyncThunk(
   "exercise/createWorkout",
   async (workoutCreateData) => {
-    console.log(workoutCreateData);
     try {
       const response = await axios.post(
         `${API_URL}workout/createworkout`,
@@ -48,10 +49,11 @@ export const createWorkout = createAsyncThunk(
 
 export const findWorkout = createAsyncThunk(
   "exercise/findWorkout",
-  async (workoutIDs) => {
+  async (userID) => {
+    console.log(userID);
     try {
-      const response = await axios.get(`${API_URL}workout/findworkout`, {
-        params: { ids: workoutIDs },
+      const response = await axios.get(`${API_URL}workout/findworkouts`, {
+        params: { userID },
       });
 
       return response.data;
@@ -62,7 +64,11 @@ export const findWorkout = createAsyncThunk(
 );
 export const exerciseSlice = createSlice({
   name: "exercise",
-  initialState: [],
-});
+  initialState: {
+    workoutList: [],
+  },
 
+  reducers: {},
+  
+});
 export default exerciseSlice.reducer;

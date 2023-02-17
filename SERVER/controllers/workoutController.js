@@ -25,3 +25,15 @@ export const createWorkout = async (req, res) => {
     res.status(400).json({ error });
   }
 };
+
+export const findworkouts = async (req, res) => {
+  try {
+    const { userID } = req.query;
+    console.log("here", userID);
+    const workouts = await Workout.find({ userID: userID });
+    res.status(200).json(workouts);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Server error" });
+  }
+};

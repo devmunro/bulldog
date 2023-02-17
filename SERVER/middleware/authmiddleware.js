@@ -4,28 +4,23 @@ import { user } from "../models/userSchema.js";
 
 dotenv.config();
 
-
 export const protectRoute = async (req, res, next) => {
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith("Bearer")
   ) {
     try {
-        let token = req.headers.authorization.split(" ")[1];
-console.log(token)
-      // Verify token
-      console.log("verifing start")
-      const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+      let token = req.headers.authorization.split(" ")[1];
 
-      console.log('decoded', decoded);
+      // Verify token
+
+      const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
 
       // Get user from the token
       const founduser = await user.findById(decoded.userId).select("-password");
 
-      console.log('user', founduser);
-
       if (!founduser) {
-        throw new Error('User not found');
+        throw new Error("User not found");
       }
 
       req.user = founduser;

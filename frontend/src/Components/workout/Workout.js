@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { createWorkout, findWorkout } from "../../features/exerciseSlice";
 
 export default function Workout({ user }) {
@@ -7,14 +7,17 @@ export default function Workout({ user }) {
 
   const [workoutCreateBox, setWorkoutCreateBox] = useState(false);
   const [name, setName] = useState("");
+  const [userWorkouts, setUserWorkouts] = useState([]);
+
+  const workoutList = useSelector(state => state.exercise);
 
 
+console.log(workoutList)
   //adds section in order to create a workout
   const handleCreateWorkoutClick = (e) => {
     e.preventDefault();
     setWorkoutCreateBox(!workoutCreateBox);
   };
-  console.log(user.workouts)
 
   //to be able to write workout name
   const handleInputChange = (e) => {
@@ -32,9 +35,18 @@ export default function Workout({ user }) {
 
     await dispatch(createWorkout(workoutForm));
 
-    await dispatch(findWorkout(user.workouts))
-
+    findUserWorkouts();
   };
+
+  const findUserWorkouts = useCallback(async () => {
+    const response = await dispatch(findWorkout(user._id)); // Pass workout IDs as an array
+    setUserWorkouts(response.payload);
+  }, [dispatch, user]);
+
+  useEffect(() => {
+    findUserWorkouts();
+  }, [findUserWorkouts]);
+
   return (
     <div className="bg-white">
       <button
@@ -61,12 +73,18 @@ export default function Workout({ user }) {
             />
             <button>Submit</button>
           </form>
-          {user.workouts > 0 && user.workouts.map(workout => {
-  return workout;
-})}
-
         </div>
       )}
+      {userWorkouts &&
+        userWorkouts.map((workout) => {
+          return (
+            <ul>
+              {" "}
+              <li className="text-gray-500 p-4">{workout.name}</li>
+              <li className="text-gray-500 p-4">{workout._id}</li>;
+            </ul>
+          );
+        })}
     </div>
   );
 }

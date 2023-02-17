@@ -13,24 +13,17 @@ export default function Dashboard() {
   const { user, token, loading } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+
   //check if authorised
   useEffect(() => {
-    if (token === null ) {
+    if (token === null) {
       navigate("/");
-
     }
-
-   
   }, [navigate, token]);
 
   //find user
   useEffect(() => {
- 
-      dispatch(getUserDetails());
-
-     
-    
+    dispatch(getUserDetails());
   }, [dispatch]);
 
   return (
