@@ -38,13 +38,29 @@ export const findworkouts = async (req, res) => {
   }
 };
 
-
-
 export const addExercise = async (req, res) => {
- 
-const {exerciseID, exerciseSets, exerciseReps, exerciseWeight} = req.body
+  const {
+    exerciseID,
+    exerciseSets,
+    exerciseReps,
+    exerciseWeight,
+    selectedWorkout,
+  } = req.body;
 
-console.log(exerciseWeight);
+  console.log(selectedWorkout);
+  const selectedFullWorkout = await Workout.findById(selectedWorkout);
 
+  console.log(selectedFullWorkout);
+
+  selectedFullWorkout.exercises.push({
+    exercise: exerciseID,
+    sets: exerciseSets,
+    reps: exerciseReps,
+    weight: exerciseWeight,
+  });
+
+  await selectedFullWorkout.save();
+
+  res.status(200).send("Exercise added to workout");
 
 };

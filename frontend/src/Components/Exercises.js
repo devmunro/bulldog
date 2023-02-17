@@ -11,7 +11,7 @@ export default function Exercises() {
 
   const defaultWorkout = useSelector(state => state.fitness.defaultWorkout);
 
-  
+  console.log(defaultWorkout)
 
   const [exerciseDetails, setExerciseDetails] = useState({
     exerciseID: "",
@@ -32,6 +32,7 @@ export default function Exercises() {
       exerciseSets: exerciseInputs[id]?.sets ?? 3,
       exerciseReps: exerciseInputs[id]?.reps ?? 8,
       exerciseWeight: exerciseInputs[id]?.weight ?? 10,
+      selectedWorkout: defaultWorkout
     });
   };
 
