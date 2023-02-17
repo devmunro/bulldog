@@ -84,19 +84,4 @@ export const getUser = async (req, res) => {
   res.status(200).json(req.user);
 };
 
-// get user workouts
 
-export const getUserWorkouts = async (req, res) => {
-  const { _id } = req.body;
-  console.log(req.body);
-  try {
-    console.log(userID);
-    const findUser = await user.findById({ userID });
-    console.log(findUser, "stuff");
-    res.json({
-      workouts: findUser.workouts,
-    });
-  } catch (error) {
-    console.log("cant get workouts");
-  }
-};
