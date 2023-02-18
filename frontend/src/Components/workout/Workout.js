@@ -90,9 +90,10 @@ export default function Workout({ user }) {
         </div>
       )}
       {currentWorkout && (
-        <div>
-          <h2 className="text-gray-500 p-4">{currentWorkout.name}</h2>
-          <h2 className="text-gray-500 p-4">{currentWorkout._id}</h2>
+        <div className="text-black p-4">
+          <h2 className="font-bold">Current Workout</h2>
+          <h2>{currentWorkout.name}</h2>
+          <h2>{currentWorkout._id}</h2>
 
           {currentWorkout.exercises.map((exercise) => {
             return (
@@ -106,17 +107,22 @@ export default function Workout({ user }) {
           })}
         </div>
       )}
+      <div className="text-gray-500 p-4">
+        <h2 className="font-bold">Other Workouts</h2>
+        {userWorkouts &&
+          userWorkouts.map((workout) => {
+            if (workout._id !== defaultWorkout) {
+              // Check if workout has the same ID as default workout
 
-      {userWorkouts &&
-        userWorkouts.map((workout) => {
-          return (
-            <ul>
-              {" "}
-              <li className="text-gray-500 p-4">{workout.name}</li>
-              <li className="text-gray-500 p-4">{workout._id}</li>;
-            </ul>
-          );
-        })}
+              return (
+                <ul>
+                  {" "}
+                  <li className="">{workout.name}</li>
+                </ul>
+              );
+            }
+          })}
+      </div>
     </div>
   );
 }
