@@ -80,16 +80,37 @@ export const findSingleWorkout = createAsyncThunk(
   }
 );
 
-
-export const addExercise = createAsyncThunk(
-  "exercise/addExercise",
-  async (exercise) => {
+export const setDefaultWorkout = createAsyncThunk(
+  "exercise/setDefaultWorkout",
+  async (userWorkoutID) => {
+    console.log(userWorkoutID);
     try {
       const response = await axios.put(
-        `${API_URL}workout/addexercise`,
-        exercise
+        `${API_URL}workout/setdefaultworkout`,
+        userWorkoutID
       );
-    } catch (error) {}
+
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+export const getDefaultWorkout = createAsyncThunk(
+  "exercise/getDefaultWorkout",
+  async (userID) => {
+    console.log(userID);
+    try {
+      const response = await axios.get(
+        `${API_URL}workout/getdefaultworkout`,
+        userID
+      );
+
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
   }
 );
 
@@ -97,12 +118,27 @@ export const exerciseSlice = createSlice({
   name: "exercise",
   initialState: {
     defaultWorkout: JSON.parse(localStorage.getItem("defaultWorkout")) || "",
+    loading: false,
   },
 
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(createWorkout.fulfilled, (state, action) => {
       state.defaultWorkout = action.payload.workout;
+    });
+    builder.addCase(findWorkout.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(findWorkout.fulfilled, (state, action) => {
+      state.loading = false;
+      state.userWorkouts = action.payload;
+    });
+    builder.addCase(findSingleWorkout.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(findSingleWorkout.fulfilled, (state, action) => {
+      state.loading = false;
+      state.userWorkouts = action.payload;
     });
   },
 });
