@@ -80,6 +80,19 @@ export const findSingleWorkout = createAsyncThunk(
   }
 );
 
+
+export const addExercise = createAsyncThunk(
+  "exercise/addExercise",
+  async (exercise) => {
+    try {
+      const response = await axios.put(
+        `${API_URL}workout/addexercise`,
+        exercise
+      );
+    } catch (error) {}
+  }
+);
+
 export const setDefaultWorkout = createAsyncThunk(
   "exercise/setDefaultWorkout",
   async (userWorkoutID) => {
@@ -127,18 +140,20 @@ export const exerciseSlice = createSlice({
       state.defaultWorkout = action.payload.workout;
     });
     builder.addCase(findWorkout.pending, (state, action) => {
-      state.loading = true;
+      state.loading = true
     });
     builder.addCase(findWorkout.fulfilled, (state, action) => {
-      state.loading = false;
-      state.userWorkouts = action.payload;
+      state.loading = false
+      state.userWorkouts = action.payload; 
+
     });
     builder.addCase(findSingleWorkout.pending, (state, action) => {
-      state.loading = true;
+      state.loading = true
     });
     builder.addCase(findSingleWorkout.fulfilled, (state, action) => {
-      state.loading = false;
-      state.userWorkouts = action.payload;
+      state.loading = false
+      state.userWorkouts = action.payload; 
+
     });
   },
 });
