@@ -38,6 +38,19 @@ export const findworkouts = async (req, res) => {
   }
 };
 
+
+export const findSingleWorkout = async (req, res) => {
+  try {
+    const { workoutID } = req.query;
+  
+    const workouts = await Workout.findById(workoutID);
+    res.status(200).json(workouts);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
 export const addExercise = async (req, res) => {
   const {
     exerciseID,

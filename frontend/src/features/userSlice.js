@@ -58,6 +58,7 @@ export const logout = () => {
   // Clear the localStorage items for user and token
   localStorage.removeItem("user");
   localStorage.removeItem("token");
+  localStorage.removeItem("defaultWorkout");
 
   return {
     type: "LOGOUT",

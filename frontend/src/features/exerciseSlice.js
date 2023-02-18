@@ -64,6 +64,23 @@ export const findWorkout = createAsyncThunk(
   }
 );
 
+export const findSingleWorkout = createAsyncThunk(
+  "exercise/findSingleWorkout",
+  async (workoutID) => {
+    console.log(workoutID);
+    try {
+      const response = await axios.get(`${API_URL}workout/findsingleworkout`, {
+        params: { workoutID },
+      });
+
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+
 export const addExercise = createAsyncThunk(
   "exercise/addExercise",
   async (exercise) => {

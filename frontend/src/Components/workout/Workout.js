@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createWorkout, findWorkout } from "../../features/exerciseSlice";
+import {
+  createWorkout,
+  findSingleWorkout,
+  findWorkout,
+} from "../../features/exerciseSlice";
 
 export default function Workout({ user }) {
   const dispatch = useDispatch();
@@ -8,11 +12,10 @@ export default function Workout({ user }) {
   const [workoutCreateBox, setWorkoutCreateBox] = useState(false);
   const [name, setName] = useState("");
   const [userWorkouts, setUserWorkouts] = useState([]);
+  const [currentWorkout, setCurrentWorkout] = useState();
 
-  const defaultWorkout = useSelector(state => state.fitness.defaultWorkout);
+  const defaultWorkout = useSelector((state) => state.fitness.defaultWorkout);
 
-
-console.log(defaultWorkout)
   //adds section in order to create a workout
   const handleCreateWorkoutClick = (e) => {
     e.preventDefault();
@@ -47,6 +50,17 @@ console.log(defaultWorkout)
     findUserWorkouts();
   }, [findUserWorkouts]);
 
+  useEffect(() => {
+    const getCurrentWorkout = async () => {
+      const getWorkout = await dispatch(findSingleWorkout(defaultWorkout));
+      console.log(getWorkout.payload);
+      setCurrentWorkout(getWorkout.payload);
+    };
+
+    getCurrentWorkout();
+  }, [defaultWorkout, dispatch]);
+
+  console.log(currentWorkout);
   return (
     <div className="bg-white">
       <button
@@ -75,6 +89,24 @@ console.log(defaultWorkout)
           </form>
         </div>
       )}
+      {currentWorkout && (
+        <div>
+          <h2 className="text-gray-500 p-4">{currentWorkout.name}</h2>
+          <h2 className="text-gray-500 p-4">{currentWorkout._id}</h2>
+
+          {currentWorkout.exercises.map((exercise) => {
+            return (
+              <ul key={exercise._id}>
+                <li className="text-gray-500 p-4">{exercise._id}</li>
+                <li className="text-gray-500 p-4">{exercise.sets}</li>
+                <li className="text-gray-500 p-4">{exercise.reps}</li>
+                <li className="text-gray-500 p-4">{exercise.weight}</li>
+              </ul>
+            );
+          })}
+        </div>
+      )}
+
       {userWorkouts &&
         userWorkouts.map((workout) => {
           return (
