@@ -38,11 +38,10 @@ export const findworkouts = async (req, res) => {
   }
 };
 
-
 export const findSingleWorkout = async (req, res) => {
   try {
     const { workoutID } = req.query;
-  
+
     const workouts = await Workout.findById(workoutID);
     res.status(200).json(workouts);
   } catch (error) {
@@ -75,5 +74,24 @@ export const addExercise = async (req, res) => {
   await selectedFullWorkout.save();
 
   res.status(200).send("Exercise added to workout");
+};
+
+//###SET A WORKOUT TO DEFAULT###
+export const setDefaultWorkout = async (req, res) => {
+  const { userID, workoutID } = req.body;
+
+  const matchedUser = await user.findById(userID);
+
+  matchedUser.defaultWorkout.push({
+    defaultWorkout: workoutID,
+  });
+
+  await matchedUser.save();
+
+  res.status(200).send("Current workout Selected");
 
 };
+
+//###GET CURRENT WORKOUT
+
+export const getDefaultWorkout = (req, res) => {};

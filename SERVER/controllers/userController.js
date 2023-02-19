@@ -35,7 +35,8 @@ export const registerUser = async (req, res) => {
       email,
       password: hashedPassword,
     });
-    res.status(204);
+    return res.status(201).json({ message: "User created successfully" });
+
   } catch (error) {
     res.status(400).json({ error: "user not created" });
   }

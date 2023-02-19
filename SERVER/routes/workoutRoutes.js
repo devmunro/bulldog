@@ -1,5 +1,5 @@
 import express from "express"
-import {createWorkout, findworkouts, addExercise, findSingleWorkout} from  "../controllers/workoutController.js"
+import {createWorkout, findworkouts, addExercise, findSingleWorkout, setDefaultWorkout, getDefaultWorkout} from  "../controllers/workoutController.js"
 
 
  export const WorkoutRouter =() => {
@@ -10,6 +10,8 @@ import {createWorkout, findworkouts, addExercise, findSingleWorkout} from  "../c
     workoutRouter.get("/findworkouts", findworkouts) //
     workoutRouter.get("/findsingleworkout", findSingleWorkout) //
     workoutRouter.put("/addexercise", addExercise) //
+    workoutRouter.put("/setdefaultworkout", setDefaultWorkout) //
+    workoutRouter.get("/getdefaultworkout", getDefaultWorkout) //
 
     return workoutRouter
 }

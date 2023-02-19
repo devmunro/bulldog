@@ -75,52 +75,53 @@ export const userSlice = createSlice({
     success: false,
   },
 
-  reducers: {
-    clearState: (state) => {
+  reducers: (builder) => {
+    builder.addCase(clearState, (state) => {
       state.error = null;
       state.loading = false;
       state.success = false;
-    },
+    });
   },
-  extraReducers: {
-    [registerUser.pending]: (state) => {
-      state.loading = true;
-    },
-    [registerUser.fulfilled]: (state) => {
-      state.loading = false;
-      state.success = true;
-    },
-    [registerUser.rejected]: (state, action) => {
-      state.loading = false;
-      state.error = action.error;
-    },
-    [loginUser.pending]: (state) => {
-      state.loading = true;
-    },
-    [loginUser.fulfilled]: (state, action) => {
-      state.loading = false;
-      state.success = true;
-      state.token = JSON.parse(localStorage.getItem("token"));
-    },
-    [loginUser.rejected]: (state, action) => {
-      state.loading = false;
-      state.error = action.error;
-    },
-    [getUserDetails.pending]: (state) => {
-      state.loading = true;
-    },
-    [getUserDetails.fulfilled]: (state, action) => {
-      state.loading = false;
-      state.user = action.payload.user;
-    },
-    [getUserDetails.rejected]: (state, action) => {
-      state.loading = false;
-      state.error = action.error;
-    },
-    [logout]: (state) => {
-      state.user = null;
-      state.token = null;
-    },
+  extraReducers: (builder) => {
+    builder
+      .addCase(registerUser.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(registerUser.fulfilled, (state) => {
+        state.loading = false;
+        state.success = true;
+      })
+      .addCase(registerUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error;
+      })
+      .addCase(loginUser.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.token = JSON.parse(localStorage.getItem("token"));
+      })
+      .addCase(loginUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error;
+      })
+      .addCase(getUserDetails.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getUserDetails.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload.user;
+      })
+      .addCase(getUserDetails.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error;
+      })
+      .addCase(logout, (state) => {
+        state.user = null;
+        state.token = null;
+      });
   },
 });
 

@@ -25,29 +25,12 @@ const RegisterForm = ({ handleClick }) => {
   };
 
   //handle submit
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-  
-    userRegistration(formData);
-  };
 
-  //  pass data to redux
-  const userRegistration = async (formdata) => {
     const userData = await dispatch(registerUser(formData));
     console.log(userData);
   };
-
-  useEffect(() => {
-    if (error) {
-      console.log(error);
-    }
-
-    if (success) {
-      navigate("/dashboard");
-    }
-
-    dispatch(clearState());
-  }, [dispatch, error, success, navigate]);
 
   return (
     <div className="flex-col items-center flex bg-[#2B2946]">
@@ -111,17 +94,15 @@ const RegisterForm = ({ handleClick }) => {
           Submit
         </button>
       </form>
-      
+
       <p className="bg-white w-full text-center">
         Already have an account?
         <span>
           <button onClick={handleClick} className="px-2 italic">
-          
             Click Here
           </button>
         </span>
       </p>
-      
     </div>
   );
 };
