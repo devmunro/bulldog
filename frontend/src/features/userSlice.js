@@ -74,13 +74,12 @@ export const userSlice = createSlice({
     error: null,
     success: false,
   },
-
-  reducers: (builder) => {
-    builder.addCase(clearState, (state) => {
+  reducers: {
+    clearState: (state) => {
       state.error = null;
       state.loading = false;
       state.success = false;
-    });
+    },
   },
   extraReducers: (builder) => {
     builder

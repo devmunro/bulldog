@@ -39,9 +39,15 @@ const LoginForm = ({ handleClick }) => {
   };
 
   useEffect(() => {
+    return () => {
+      dispatch(clearState());
+    };
+  }, [dispatch]);
+
+  useEffect(() => {
     if (success) {
       navigate("/dashboard");
-      dispatch(clearState());
+  
     }
   }, [dispatch, loading, success, error, navigate]);
   return (

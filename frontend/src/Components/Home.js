@@ -6,7 +6,7 @@ export default function Home() {
   const [showform, setShowForm] = useState(true);
   const handleClick = (e) => {
     e.preventDefault();
-
+console.log("here")
     setShowForm(!showform);
   };
 

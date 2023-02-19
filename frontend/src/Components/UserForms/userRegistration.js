@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { clearState, registerUser } from "../../features/userSlice";
+import { registerUser, clearState } from "../../features/userSlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -12,7 +12,7 @@ const RegisterForm = ({ handleClick }) => {
     password: "",
   });
 
-  const { user, loading, error, success } = useSelector((state) => state.auth);
+  const {loading, error, success } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -29,8 +29,20 @@ const RegisterForm = ({ handleClick }) => {
     event.preventDefault();
 
     const userData = await dispatch(registerUser(formData));
-    console.log(userData);
+    console.log(userData.payload.message);
+    if(userData.payload.message === "User created successfully" ) {
+      console.log("here")
+      handleClick(event)
+    }
   };
+
+    // clear state on unmount
+    useEffect(() => {
+      return () => {
+        dispatch(clearState());
+      };
+    }, [dispatch]);
+  
 
   return (
     <div className="flex-col items-center flex bg-[#2B2946]">
