@@ -14,6 +14,7 @@ export const createWorkout = async (req, res) => {
     const userInfo = await user.findById(userID);
 
     userInfo.workouts.push(createUserWorkout._id);
+    userInfo.defaultWorkout = createUserWorkout._id;
 
     await userInfo.save();
 
@@ -37,6 +38,8 @@ export const findworkouts = async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 };
+
+// get default workout
 
 export const findSingleWorkout = async (req, res) => {
   try {
@@ -82,16 +85,10 @@ export const setDefaultWorkout = async (req, res) => {
 
   const matchedUser = await user.findById(userID);
 
-  matchedUser.defaultWorkout.push({
-    defaultWorkout: workoutID,
-  });
+  matchedUser.defaultWorkout = workoutID;
 
   await matchedUser.save();
 
-  res.status(200).send("Current workout Selected");
-
+  res.status(200).json({workoutID});
 };
 
-//###GET CURRENT WORKOUT
-
-export const getDefaultWorkout = (req, res) => {};

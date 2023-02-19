@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const currentUser = JSON.parse(localStorage.getItem("user"));
+
 //API LINK
 const API_URL = process.env.REACT_APP_API_BASE_URL;
 
@@ -40,6 +42,7 @@ export const createWorkout = createAsyncThunk(
 
         console.log(response.data);
       }
+
       localStorage.setItem("defaultWorkout", JSON.stringify(response.data.id));
       return { workout: response.data.id, data: response.data };
     } catch (error) {
@@ -48,6 +51,7 @@ export const createWorkout = createAsyncThunk(
   }
 );
 
+//find all workouts
 export const findWorkout = createAsyncThunk(
   "exercise/findWorkout",
   async (userID) => {
@@ -64,6 +68,7 @@ export const findWorkout = createAsyncThunk(
   }
 );
 
+//find dfault workout
 export const findSingleWorkout = createAsyncThunk(
   "exercise/findSingleWorkout",
   async (workoutID) => {
@@ -72,6 +77,8 @@ export const findSingleWorkout = createAsyncThunk(
       const response = await axios.get(`${API_URL}workout/findsingleworkout`, {
         params: { workoutID },
       });
+      localStorage.setItem("defaultWorkout", JSON.stringify(response.data.id));
+
 
       return response.data;
     } catch (error) {
@@ -79,7 +86,6 @@ export const findSingleWorkout = createAsyncThunk(
     }
   }
 );
-
 
 export const addExercise = createAsyncThunk(
   "exercise/addExercise",
@@ -102,24 +108,11 @@ export const setDefaultWorkout = createAsyncThunk(
         `${API_URL}workout/setdefaultworkout`,
         userWorkoutID
       );
-
-      return response.data;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-);
-
-export const getDefaultWorkout = createAsyncThunk(
-  "exercise/getDefaultWorkout",
-  async (userID) => {
-    console.log(userID);
-    try {
-      const response = await axios.get(
-        `${API_URL}workout/getdefaultworkout`,
-        userID
+      console.log(response);
+      localStorage.setItem(
+        "defaultWorkout",
+        JSON.stringify(response.data.workoutID)
       );
-
       return response.data;
     } catch (error) {
       console.log(error);
@@ -130,7 +123,7 @@ export const getDefaultWorkout = createAsyncThunk(
 export const exerciseSlice = createSlice({
   name: "exercise",
   initialState: {
-    defaultWorkout: JSON.parse(localStorage.getItem("defaultWorkout")) || "",
+    defaultWorkout: "",
     loading: false,
   },
 
@@ -140,20 +133,21 @@ export const exerciseSlice = createSlice({
       state.defaultWorkout = action.payload.workout;
     });
     builder.addCase(findWorkout.pending, (state, action) => {
-      state.loading = true
+      state.loading = true;
     });
     builder.addCase(findWorkout.fulfilled, (state, action) => {
-      state.loading = false
-      state.userWorkouts = action.payload; 
-
+      state.loading = false;
+      state.userWorkouts = action.payload;
     });
     builder.addCase(findSingleWorkout.pending, (state, action) => {
-      state.loading = true
+      state.loading = true;
     });
     builder.addCase(findSingleWorkout.fulfilled, (state, action) => {
-      state.loading = false
-      state.userWorkouts = action.payload; 
-
+      state.loading = false;
+      state.userWorkouts = action.payload;
+    });
+    builder.addCase(setDefaultWorkout.fulfilled, (state, action) => {
+      state.defaultWorkout = action.payload.workout;
     });
   },
 });

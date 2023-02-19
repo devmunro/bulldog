@@ -10,14 +10,15 @@ import Loading from "../Loading";
 
 export default function Workout({ user }) {
   const dispatch = useDispatch();
+  console.log(user.defaultWorkout);
 
   const [workoutCreateBox, setWorkoutCreateBox] = useState(false);
   const [name, setName] = useState("");
   const [userWorkouts, setUserWorkouts] = useState([]);
-  const [currentWorkout, setCurrentWorkout] = useState();
 
   const { defaultWorkout, loading } = useSelector((state) => state.fitness);
-
+  const [currentWorkout, setCurrentWorkout] = useState();
+  console.log(defaultWorkout);
   //### WORKOUT CREATION ###
   //adds section in order to create a workout
   const handleCreateWorkoutClick = (e) => {
@@ -48,37 +49,32 @@ export default function Workout({ user }) {
   const findUserWorkouts = useCallback(async () => {
     const response = await dispatch(findWorkout(user._id)); // Pass workout IDs as an array
     setUserWorkouts(response.payload);
+    const defaultWorkoutResponse = await dispatch(
+      findSingleWorkout(user.defaultWorkout)
+    );
+    setCurrentWorkout(defaultWorkoutResponse.payload);
   }, [dispatch, user]);
 
   useEffect(() => {
     findUserWorkouts();
   }, [findUserWorkouts]);
 
-  //### FIND CURRENT WORKOUT
-  useEffect(() => {
-    const getCurrentWorkout = async () => {
-      const getWorkout = await dispatch(findSingleWorkout(defaultWorkout));
-      console.log(getWorkout.payload);
-      setCurrentWorkout(getWorkout.payload);
-    };
-
-    getCurrentWorkout();
-  }, [defaultWorkout, dispatch]);
-
-  // set current workout
-  const handleSetDefault = (e) => {
+  //### SET CURRENT WORKOUT
+  const handleSetDefault = async (e) => {
     e.preventDefault(e);
 
     const userDetails = {
       userID: user._id,
       workoutID: e.target.value,
     };
-    console.log(userDetails);
-    setUserCurrentWorkout(userDetails);
-  };
 
-  const setUserCurrentWorkout = async (userDetails) => {
-    dispatch(setDefaultWorkout(userDetails));
+    await dispatch(setDefaultWorkout(userDetails));
+    const defaultWorkoutResponse = await dispatch(
+      findSingleWorkout(userDetails.workoutID)
+    );
+
+    console.log(defaultWorkoutResponse);
+    setCurrentWorkout(defaultWorkoutResponse.payload);
   };
 
   return (
