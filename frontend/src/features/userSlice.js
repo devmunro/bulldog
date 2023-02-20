@@ -44,7 +44,9 @@ export const getUserDetails = createAsyncThunk("auth/getDetails", async () => {
     const response = await axios.get(`${API_URL}profile`, { headers });
 
     if (response.data) {
-      localStorage.setItem("user", JSON.stringify(response.data));
+      localStorage.setItem("user", JSON.stringify(response.data))
+      localStorage.setItem("defaultWorkout", JSON.stringify(response.data.defaultWorkout));
+      console.log(localStorage.getItem("defaultWorkout"))
       return { user: response.data };
     }
   } catch (error) {

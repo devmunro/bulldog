@@ -6,9 +6,9 @@ const currentUser = JSON.parse(localStorage.getItem("user"));
 //API LINK
 const API_URL = process.env.REACT_APP_API_BASE_URL;
 
-// fetch Exercises
+// fetch Exercises3
 export const fetchExercise = createAsyncThunk(
-  "exercise/fetchCards",
+  "fitness/fetchCards",
 
   async (category) => {
     try {
@@ -22,7 +22,7 @@ export const fetchExercise = createAsyncThunk(
 );
 
 export const createWorkout = createAsyncThunk(
-  "exercise/createWorkout",
+  "fitness/createWorkout",
   async (workoutCreateData) => {
     try {
       const response = await axios.post(
@@ -43,7 +43,6 @@ export const createWorkout = createAsyncThunk(
         console.log(response.data);
       }
 
-      localStorage.setItem("defaultWorkout", JSON.stringify(response.data.id));
       return { workout: response.data.id, data: response.data };
     } catch (error) {
       console.log(error);
@@ -53,13 +52,14 @@ export const createWorkout = createAsyncThunk(
 
 //find all workouts
 export const findWorkout = createAsyncThunk(
-  "exercise/findWorkout",
+  "fitness/findWorkout",
   async (userID) => {
     console.log(userID);
     try {
       const response = await axios.get(`${API_URL}workout/findworkouts`, {
         params: { userID },
       });
+      console.log(response.data);
 
       return response.data;
     } catch (error) {
@@ -68,27 +68,10 @@ export const findWorkout = createAsyncThunk(
   }
 );
 
-//find dfault workout
-export const findSingleWorkout = createAsyncThunk(
-  "exercise/findSingleWorkout",
-  async (workoutID) => {
-    console.log(workoutID);
-    try {
-      const response = await axios.get(`${API_URL}workout/findsingleworkout`, {
-        params: { workoutID },
-      });
-      localStorage.setItem("defaultWorkout", JSON.stringify(response.data.id));
 
-
-      return response.data;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-);
-
+// add exercise to current workout
 export const addExercise = createAsyncThunk(
-  "exercise/addExercise",
+  "fitness/addExercise",
   async (exercise) => {
     try {
       const response = await axios.put(
@@ -99,8 +82,25 @@ export const addExercise = createAsyncThunk(
   }
 );
 
+//find dfault workout
+export const findSingleWorkout = createAsyncThunk(
+  "fitness/findSingleWorkout",
+  async (workoutID) => {
+    try {
+      const response = await axios.get(`${API_URL}workout/findsingleworkout`, {
+        params: { workoutID },
+      });
+console.log(response)
+      return response.data
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+//set default workout
 export const setDefaultWorkout = createAsyncThunk(
-  "exercise/setDefaultWorkout",
+  "fitness/setDefaultWorkout",
   async (userWorkoutID) => {
     console.log(userWorkoutID);
     try {
@@ -109,11 +109,9 @@ export const setDefaultWorkout = createAsyncThunk(
         userWorkoutID
       );
       console.log(response);
-      localStorage.setItem(
-        "defaultWorkout",
-        JSON.stringify(response.data.workoutID)
-      );
-      return response.data;
+
+      localStorage.setItem("defaultWorkout", response.data.workoutID);
+      return { defaultWorkout: response.data.workoutID };
     } catch (error) {
       console.log(error);
     }
@@ -121,16 +119,16 @@ export const setDefaultWorkout = createAsyncThunk(
 );
 
 export const exerciseSlice = createSlice({
-  name: "exercise",
+  name: "fitness",
   initialState: {
-    defaultWorkout: "",
+    defaultWorkout: localStorage.getItem("defaultWorkout") || "none",
     loading: false,
   },
 
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(createWorkout.fulfilled, (state, action) => {
-      state.defaultWorkout = action.payload.workout;
+      state.defaultWorkout = action.payload.defaultWorkout;
     });
     builder.addCase(findWorkout.pending, (state, action) => {
       state.loading = true;
@@ -147,7 +145,9 @@ export const exerciseSlice = createSlice({
       state.userWorkouts = action.payload;
     });
     builder.addCase(setDefaultWorkout.fulfilled, (state, action) => {
-      state.defaultWorkout = action.payload.workout;
+      console.log("Default workout set to:", action.payload.defaultWorkout);
+
+      state.defaultWorkout = action.payload.defaultWorkout;
     });
   },
 });

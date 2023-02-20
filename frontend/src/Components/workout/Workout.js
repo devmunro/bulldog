@@ -10,15 +10,15 @@ import Loading from "../Loading";
 
 export default function Workout({ user }) {
   const dispatch = useDispatch();
-  console.log(user.defaultWorkout);
 
   const [workoutCreateBox, setWorkoutCreateBox] = useState(false);
   const [name, setName] = useState("");
   const [userWorkouts, setUserWorkouts] = useState([]);
-
   const { defaultWorkout, loading } = useSelector((state) => state.fitness);
+  console.log(userWorkouts);
+  console.log(localStorage.getItem("defaultWorkout"));
   const [currentWorkout, setCurrentWorkout] = useState();
-  console.log(defaultWorkout);
+
   //### WORKOUT CREATION ###
   //adds section in order to create a workout
   const handleCreateWorkoutClick = (e) => {
@@ -46,36 +46,35 @@ export default function Workout({ user }) {
   };
 
   //### FIND ALL USER WORKOUTS
-  const findUserWorkouts = useCallback(async () => {
+  async function findUserWorkouts() {
     const response = await dispatch(findWorkout(user._id)); // Pass workout IDs as an array
     setUserWorkouts(response.payload);
+    console.log(response.payload);
     const defaultWorkoutResponse = await dispatch(
-      findSingleWorkout(user.defaultWorkout)
+      findSingleWorkout(defaultWorkout)
     );
     setCurrentWorkout(defaultWorkoutResponse.payload);
-  }, [dispatch, user]);
+  }
 
   useEffect(() => {
     findUserWorkouts();
-  }, [findUserWorkouts]);
+  }, []);
 
   //### SET CURRENT WORKOUT
   const handleSetDefault = async (e) => {
     e.preventDefault(e);
 
+    const workoutID = e.target.value;
     const userDetails = {
       userID: user._id,
-      workoutID: e.target.value,
+      workoutID: workoutID,
     };
 
     await dispatch(setDefaultWorkout(userDetails));
-    const defaultWorkoutResponse = await dispatch(
-      findSingleWorkout(userDetails.workoutID)
-    );
-
-    console.log(defaultWorkoutResponse);
+    const defaultWorkoutResponse = await dispatch(findSingleWorkout(workoutID));
     setCurrentWorkout(defaultWorkoutResponse.payload);
   };
+
 
   return (
     <div>
@@ -128,8 +127,9 @@ export default function Workout({ user }) {
           <div className="text-gray-500 p-4">
             <h2 className="font-bold">Other Workouts</h2>
             {userWorkouts &&
+              currentWorkout &&
               userWorkouts.map((workout) => {
-                if (workout._id !== defaultWorkout) {
+                if (workout._id !== currentWorkout._id) {
                   // Check if workout has the same ID as default workout
 
                   return (
