@@ -62,10 +62,20 @@ export const logout = () => {
   localStorage.removeItem("token");
   localStorage.removeItem("defaultWorkout");
 
+  // delete the user token from the server
+  const userToken = JSON.parse(localStorage.getItem("token"));
+  const headers = { Authorization: `Bearer ${userToken}` };
+  axios.delete(`${API_URL}logout`, { headers });
+
+  if (!localStorage.getItem("user") && !localStorage.getItem("token")) {
+    console.log("User has been logged out");
+  }
+
   return {
     type: "LOGOUT",
   };
 };
+
 
 export const userSlice = createSlice({
   name: "auth",
@@ -91,6 +101,8 @@ export const userSlice = createSlice({
       .addCase(registerUser.fulfilled, (state) => {
         state.loading = false;
         state.success = true;
+        localStorage.removeItem("token"); // remove old user token
+
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.loading = false;

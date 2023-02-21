@@ -23,9 +23,11 @@ export default function Dashboard() {
 
   //find user
   useEffect(() => {
-    dispatch(getUserDetails());
-  }, [dispatch]);
-
+    if (token !== null) {
+      dispatch(getUserDetails());
+    }
+  }, [dispatch, token]);
+  
   return (
     <div className="bg-[#2B2946] h-full flex w-full">
       <Sidebar />

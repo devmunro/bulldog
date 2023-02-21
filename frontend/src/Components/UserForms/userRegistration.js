@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-const RegisterForm = ({ handleClick }) => {
+const RegisterForm = () => {
   const [formData, setFormData] = useState({
     name: "",
     dob: "",
@@ -12,7 +12,7 @@ const RegisterForm = ({ handleClick }) => {
     password: "",
   });
 
-  const {loading, error, success } = useSelector((state) => state.auth);
+  const { loading, error, success } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -30,19 +30,22 @@ const RegisterForm = ({ handleClick }) => {
 
     const userData = await dispatch(registerUser(formData));
     console.log(userData.payload.message);
-    if(userData.payload.message === "User created successfully" ) {
-      console.log("here")
-      handleClick(event)
+    if (userData.payload.message === "User created successfully") {
+      console.log("User created");
+      navigate("/");
     }
   };
 
-    // clear state on unmount
-    useEffect(() => {
-      return () => {
-        dispatch(clearState());
-      };
-    }, [dispatch]);
-  
+  // clear state on unmount
+  useEffect(() => {
+    return () => {
+      dispatch(clearState());
+    };
+  }, [dispatch]);
+
+  const handleClick = () => {
+    navigate("/");
+  };
 
   return (
     <div className="flex-col items-center flex bg-[#2B2946]">

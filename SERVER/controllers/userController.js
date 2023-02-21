@@ -7,7 +7,7 @@ dotenv.config();
 
 //generate token
 const generateToken = (userId) => {
-  return jwt.sign({ userId }, process.env.JWT_SECRET_KEY, { expiresIn: "7d" });
+  return jwt.sign({ userId }, process.env.JWT_SECRET_KEY, { expiresIn: "30d" });
 };
 
 export const registerUser = async (req, res) => {
@@ -68,7 +68,6 @@ export const loginUser = async (req, res) => {
   }
 
   // Generate JWT token
-  const token = generateToken(findUser._id);
 
   if (findUser && (await bcrypt.compare(password, findUser.password))) {
     res.json({
