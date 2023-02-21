@@ -14,6 +14,9 @@ export default function Dashboard() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  console.log("User state:", user);
+  console.log("Token state:", token);
+
   //check if authorised
   useEffect(() => {
     if (token === null) {
@@ -23,9 +26,11 @@ export default function Dashboard() {
 
   //find user
   useEffect(() => {
-    dispatch(getUserDetails());
-  }, [dispatch]);
-
+    if (token !== null) {
+      dispatch(getUserDetails());
+    }
+  }, [token]);
+  
   return (
     <div className="bg-[#2B2946] h-full flex w-full">
       <Sidebar />

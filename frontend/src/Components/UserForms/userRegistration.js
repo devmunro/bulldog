@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { clearState, registerUser } from "../../features/userSlice";
+import { registerUser, clearState } from "../../features/userSlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-const RegisterForm = ({ handleClick }) => {
+const RegisterForm = () => {
   const [formData, setFormData] = useState({
     name: "",
     dob: "",
@@ -12,7 +12,7 @@ const RegisterForm = ({ handleClick }) => {
     password: "",
   });
 
-  const { user, loading, error, success } = useSelector((state) => state.auth);
+  const { loading, error, success } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -25,29 +25,27 @@ const RegisterForm = ({ handleClick }) => {
   };
 
   //handle submit
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-  
-    userRegistration(formData);
-  };
 
-  //  pass data to redux
-  const userRegistration = async (formdata) => {
     const userData = await dispatch(registerUser(formData));
-    console.log(userData);
+    console.log(userData.payload.message);
+    if (userData.payload.message === "User created successfully") {
+      console.log("User created");
+      navigate("/");
+    }
   };
 
+  // clear state on unmount
   useEffect(() => {
-    if (error) {
-      console.log(error);
-    }
+    return () => {
+      dispatch(clearState());
+    };
+  }, [dispatch]);
 
-    if (success) {
-      navigate("/dashboard");
-    }
-
-    dispatch(clearState());
-  }, [dispatch, error, success, navigate]);
+  const handleClick = () => {
+    navigate("/");
+  };
 
   return (
     <div className="flex-col items-center flex bg-[#2B2946]">
@@ -111,17 +109,15 @@ const RegisterForm = ({ handleClick }) => {
           Submit
         </button>
       </form>
-      
+
       <p className="bg-white w-full text-center">
         Already have an account?
         <span>
           <button onClick={handleClick} className="px-2 italic">
-          
             Click Here
           </button>
         </span>
       </p>
-      
     </div>
   );
 };

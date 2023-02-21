@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-const LoginForm = ({ handleClick }) => {
+const LoginForm = () => {
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
@@ -13,7 +13,7 @@ const LoginForm = ({ handleClick }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { loading, error, success } = useSelector((state) => state.auth);
+  const { loading, error, success, user } = useSelector((state) => state.auth);
 
   const handleInputChange = (event) => {
     setLoginData({
@@ -39,11 +39,23 @@ const LoginForm = ({ handleClick }) => {
   };
 
   useEffect(() => {
+    return () => {
+      dispatch(clearState());
+    };
+  }, [dispatch]);
+
+  useEffect(() => {
     if (success) {
       navigate("/dashboard");
-      dispatch(clearState());
     }
   }, [dispatch, loading, success, error, navigate]);
+
+  const handleClick = () => {
+    navigate("/register");
+  };
+
+  console.log("state:", user)
+  console.log("local:",localStorage.getItem("user"))
   return (
     <div className="flex-col items-center flex bg-[#2B2946]">
       <h2 className="text-xl mt-4 font-bold text-white">Login</h2>
@@ -81,7 +93,6 @@ const LoginForm = ({ handleClick }) => {
         Don't have an account?
         <span>
           <button onClick={handleClick} className="px-2 italic">
-            {" "}
             Click Here
           </button>
         </span>

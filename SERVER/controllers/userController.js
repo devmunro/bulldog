@@ -7,7 +7,7 @@ dotenv.config();
 
 //generate token
 const generateToken = (userId) => {
-  return jwt.sign({ userId }, process.env.JWT_SECRET_KEY, { expiresIn: "7d" });
+  return jwt.sign({ userId }, process.env.JWT_SECRET_KEY, { expiresIn: "30d" });
 };
 
 export const registerUser = async (req, res) => {
@@ -35,7 +35,7 @@ export const registerUser = async (req, res) => {
       email,
       password: hashedPassword,
     });
-    res.status(204);
+    return res.status(201).json({ message: "User created successfully" });
   } catch (error) {
     res.status(400).json({ error: "user not created" });
   }
@@ -67,7 +67,6 @@ export const loginUser = async (req, res) => {
   }
 
   // Generate JWT token
-  const token = generateToken(findUser._id);
 
   if (findUser && (await bcrypt.compare(password, findUser.password))) {
     res.json({
@@ -84,4 +83,9 @@ export const getUser = async (req, res) => {
   res.status(200).json(req.user);
 };
 
-
+//LOGOUT USER
+export const logout = (req, res) => {
+  const headers = req.headers;
+  delete headers.authorization;
+  res.status(200).json({ message: "User has been logged out" });
+};

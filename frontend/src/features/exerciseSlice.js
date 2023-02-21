@@ -2,16 +2,16 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 //API LINK
-const API_URL = "/api/";
+const API_URL = process.env.REACT_APP_API_BASE_URL;
 
-// fetch Exercises
+// fetch Exercises3
 export const fetchExercise = createAsyncThunk(
-  "exercise/fetchCards",
-  
+  "fitness/fetchCards",
+
   async (category) => {
     try {
       const response = await axios.get(`${API_URL}exercises?type=${category}`);
-      
+
       return response.data;
     } catch (error) {
       console.log(error);
@@ -20,7 +20,7 @@ export const fetchExercise = createAsyncThunk(
 );
 
 export const createWorkout = createAsyncThunk(
-  "exercise/createWorkout",
+  "fitness/createWorkout",
   async (workoutCreateData) => {
     try {
       const response = await axios.post(
@@ -38,23 +38,26 @@ export const createWorkout = createAsyncThunk(
         };
         localStorage.setItem("user", JSON.stringify(updatedUser));
 
-        console.log(response.data);
+        console.log("new workout", response.data);
       }
-      return response.data;
+      localStorage.setItem("defaultWorkout", JSON.stringify(response.data.id));
+      return { workout: response.data.id, data: response.data };
     } catch (error) {
       console.log(error);
     }
   }
 );
 
+//find all workouts
 export const findWorkout = createAsyncThunk(
-  "exercise/findWorkout",
+  "fitness/findWorkout",
   async (userID) => {
     console.log(userID);
     try {
       const response = await axios.get(`${API_URL}workout/findworkouts`, {
         params: { userID },
       });
+      console.log(response.data);
 
       return response.data;
     } catch (error) {
@@ -62,13 +65,89 @@ export const findWorkout = createAsyncThunk(
     }
   }
 );
+
+// add exercise to current workout
+export const addExercise = createAsyncThunk(
+  "fitness/addExercise",
+  async (exercise) => {
+    try {
+      const response = await axios.put(
+        `${API_URL}workout/addexercise`,
+        exercise
+      );
+    } catch (error) {}
+  }
+);
+
+//find dfault workout
+export const findSingleWorkout = createAsyncThunk(
+  "fitness/findSingleWorkout",
+  async (workoutID) => {
+    console.log(workoutID);
+    try {
+      const response = await axios.get(`${API_URL}workout/findsingleworkout`, {
+        params: { workoutID },
+      });
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+//set default workout
+export const setDefaultWorkout = createAsyncThunk(
+  "fitness/setDefaultWorkout",
+  async (userWorkoutID) => {
+    console.log(userWorkoutID);
+    try {
+      const response = await axios.put(
+        `${API_URL}workout/setdefaultworkout`,
+        userWorkoutID
+      );
+      console.log(response);
+
+      localStorage.setItem(
+        "defaultWorkout",
+        JSON.stringify(response.data.workoutID)
+      );
+      return { defaultWorkout: response.data.workoutID };
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
 export const exerciseSlice = createSlice({
-  name: "exercise",
+  name: "fitness",
   initialState: {
-    workoutList: [],
+    defaultWorkout: JSON.parse(localStorage.getItem("defaultWorkout")),
+    loading: false,
   },
 
   reducers: {},
-  
+  extraReducers: (builder) => {
+    builder.addCase(createWorkout.fulfilled, (state, action) => {
+      state.defaultWorkout = action.payload.workout;
+    });
+    builder.addCase(findWorkout.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(findWorkout.fulfilled, (state, action) => {
+      state.loading = false;
+      state.userWorkouts = action.payload;
+    });
+    builder.addCase(findSingleWorkout.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(findSingleWorkout.fulfilled, (state, action) => {
+      state.loading = false;
+      state.userWorkouts = action.payload;
+    });
+    builder.addCase(setDefaultWorkout.fulfilled, (state, action) => {
+      state.defaultWorkout = action.payload.defaultWorkout;
+    });
+  },
 });
 export default exerciseSlice.reducer;
