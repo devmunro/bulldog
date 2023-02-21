@@ -47,22 +47,11 @@ export default function Workout({ user }) {
   async function findUserWorkouts() {
     if (user.workouts <= 0) {
       console.log("none");
-      return
+      return;
     }
-console.log(user.workouts)
+    console.log(user.workouts);
     const response = await dispatch(findWorkout(user._id)); // Pass workout IDs as an array
     setUserWorkouts(response.payload);
-    console.log(response.payload);
-console.log(defaultWorkout)
-    if (defaultWorkout === undefined) {
-      console.log("no default workout yet");
-      return
-    }
-
-    const defaultWorkoutResponse = await dispatch(
-      findSingleWorkout(defaultWorkout)
-    );
-    setCurrentWorkout(defaultWorkoutResponse.payload);
   }
 
   useEffect(() => {
@@ -82,11 +71,19 @@ console.log(defaultWorkout)
     await dispatch(setDefaultWorkout(userDetails));
     if (defaultWorkout === undefined) {
       console.log("no default workout yet");
-      return
+      return;
     }
     const defaultWorkoutResponse = await dispatch(findSingleWorkout(workoutID));
     setCurrentWorkout(defaultWorkoutResponse.payload);
   };
+
+  useEffect(() => {
+    if (defaultWorkout) {
+      dispatch(findSingleWorkout(defaultWorkout)).then((response) => {
+        setCurrentWorkout(response.payload);
+      });
+    }
+  }, [defaultWorkout, dispatch]);
 
   return (
     <div>

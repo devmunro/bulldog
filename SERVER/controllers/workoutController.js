@@ -44,7 +44,7 @@ export const findworkouts = async (req, res) => {
 export const findSingleWorkout = async (req, res) => {
   try {
     const { workoutID } = req.query;
-
+console.log(workoutID)
     const workouts = await Workout.findById(workoutID);
     res.status(200).json(workouts);
   } catch (error) {

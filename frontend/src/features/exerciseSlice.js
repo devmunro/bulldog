@@ -38,9 +38,9 @@ export const createWorkout = createAsyncThunk(
         };
         localStorage.setItem("user", JSON.stringify(updatedUser));
 
-        console.log(response.data);
+        console.log("new workout", response.data);
       }
-
+      localStorage.setItem("defaultWorkout", JSON.stringify(response.data.id));
       return { workout: response.data.id, data: response.data };
     } catch (error) {
       console.log(error);
@@ -83,6 +83,7 @@ export const addExercise = createAsyncThunk(
 export const findSingleWorkout = createAsyncThunk(
   "fitness/findSingleWorkout",
   async (workoutID) => {
+    console.log(workoutID);
     try {
       const response = await axios.get(`${API_URL}workout/findsingleworkout`, {
         params: { workoutID },
@@ -107,7 +108,10 @@ export const setDefaultWorkout = createAsyncThunk(
       );
       console.log(response);
 
-      localStorage.setItem("defaultWorkout", response.data.workoutID);
+      localStorage.setItem(
+        "defaultWorkout",
+        JSON.stringify(response.data.workoutID)
+      );
       return { defaultWorkout: response.data.workoutID };
     } catch (error) {
       console.log(error);
@@ -118,13 +122,15 @@ export const setDefaultWorkout = createAsyncThunk(
 export const exerciseSlice = createSlice({
   name: "fitness",
   initialState: {
-    defaultWorkout: localStorage.getItem("defaultWorkout"),
+    defaultWorkout: JSON.parse(localStorage.getItem("defaultWorkout")),
     loading: false,
   },
 
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(createWorkout.fulfilled, (state, action) => {});
+    builder.addCase(createWorkout.fulfilled, (state, action) => {
+      state.defaultWorkout = action.payload.workout;
+    });
     builder.addCase(findWorkout.pending, (state, action) => {
       state.loading = true;
     });
@@ -140,8 +146,6 @@ export const exerciseSlice = createSlice({
       state.userWorkouts = action.payload;
     });
     builder.addCase(setDefaultWorkout.fulfilled, (state, action) => {
-      console.log("Default workout set to:", action.payload.defaultWorkout);
-
       state.defaultWorkout = action.payload.defaultWorkout;
     });
   },
