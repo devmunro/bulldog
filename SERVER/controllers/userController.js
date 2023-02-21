@@ -36,7 +36,6 @@ export const registerUser = async (req, res) => {
       password: hashedPassword,
     });
     return res.status(201).json({ message: "User created successfully" });
-
   } catch (error) {
     res.status(400).json({ error: "user not created" });
   }
@@ -84,4 +83,9 @@ export const getUser = async (req, res) => {
   res.status(200).json(req.user);
 };
 
-
+//LOGOUT USER
+export const logout = (req, res) => {
+  const headers = req.headers;
+  delete headers.authorization;
+  res.status(200).json({ message: "User has been logged out" });
+};

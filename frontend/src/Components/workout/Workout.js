@@ -15,8 +15,6 @@ export default function Workout({ user }) {
   const [name, setName] = useState("");
   const [userWorkouts, setUserWorkouts] = useState([]);
   const { defaultWorkout, loading } = useSelector((state) => state.fitness);
-  console.log(userWorkouts);
-  console.log(localStorage.getItem("defaultWorkout"));
   const [currentWorkout, setCurrentWorkout] = useState();
 
   //### WORKOUT CREATION ###
@@ -47,9 +45,20 @@ export default function Workout({ user }) {
 
   //### FIND ALL USER WORKOUTS
   async function findUserWorkouts() {
+    if (user.workouts <= 0) {
+      console.log("none");
+      return
+    }
+console.log(user.workouts)
     const response = await dispatch(findWorkout(user._id)); // Pass workout IDs as an array
     setUserWorkouts(response.payload);
     console.log(response.payload);
+console.log(defaultWorkout)
+    if (defaultWorkout === undefined) {
+      console.log("no default workout yet");
+      return
+    }
+
     const defaultWorkoutResponse = await dispatch(
       findSingleWorkout(defaultWorkout)
     );
@@ -71,10 +80,13 @@ export default function Workout({ user }) {
     };
 
     await dispatch(setDefaultWorkout(userDetails));
+    if (defaultWorkout === undefined) {
+      console.log("no default workout yet");
+      return
+    }
     const defaultWorkoutResponse = await dispatch(findSingleWorkout(workoutID));
     setCurrentWorkout(defaultWorkoutResponse.payload);
   };
-
 
   return (
     <div>
@@ -124,6 +136,7 @@ export default function Workout({ user }) {
               })}
             </div>
           )}
+          {!currentWorkout && <div>No current workout</div>}
           <div className="text-gray-500 p-4">
             <h2 className="font-bold">Other Workouts</h2>
             {userWorkouts &&

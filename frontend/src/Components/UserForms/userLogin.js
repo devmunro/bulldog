@@ -13,7 +13,7 @@ const LoginForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { loading, error, success } = useSelector((state) => state.auth);
+  const { loading, error, success, user } = useSelector((state) => state.auth);
 
   const handleInputChange = (event) => {
     setLoginData({
@@ -53,6 +53,9 @@ const LoginForm = () => {
   const handleClick = () => {
     navigate("/register");
   };
+
+  console.log("state:", user)
+  console.log("local:",localStorage.getItem("user"))
   return (
     <div className="flex-col items-center flex bg-[#2B2946]">
       <h2 className="text-xl mt-4 font-bold text-white">Login</h2>

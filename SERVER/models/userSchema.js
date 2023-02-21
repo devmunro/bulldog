@@ -27,7 +27,6 @@ const userSchema = new mongoose.Schema(
     defaultWorkout: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Workout",
-      default: null,
     },
   },
 

@@ -1,8 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const currentUser = JSON.parse(localStorage.getItem("user"));
-
 //API LINK
 const API_URL = process.env.REACT_APP_API_BASE_URL;
 
@@ -68,7 +66,6 @@ export const findWorkout = createAsyncThunk(
   }
 );
 
-
 // add exercise to current workout
 export const addExercise = createAsyncThunk(
   "fitness/addExercise",
@@ -90,8 +87,8 @@ export const findSingleWorkout = createAsyncThunk(
       const response = await axios.get(`${API_URL}workout/findsingleworkout`, {
         params: { workoutID },
       });
-console.log(response)
-      return response.data
+      console.log(response);
+      return response.data;
     } catch (error) {
       console.log(error);
     }
@@ -121,15 +118,13 @@ export const setDefaultWorkout = createAsyncThunk(
 export const exerciseSlice = createSlice({
   name: "fitness",
   initialState: {
-    defaultWorkout: localStorage.getItem("defaultWorkout") || "none",
+    defaultWorkout: localStorage.getItem("defaultWorkout"),
     loading: false,
   },
 
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(createWorkout.fulfilled, (state, action) => {
-      state.defaultWorkout = action.payload.defaultWorkout;
-    });
+    builder.addCase(createWorkout.fulfilled, (state, action) => {});
     builder.addCase(findWorkout.pending, (state, action) => {
       state.loading = true;
     });

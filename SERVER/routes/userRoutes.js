@@ -1,6 +1,6 @@
 import express from "express";
 import { registerUser } from "../controllers/userController.js";
-import { loginUser, getUser } from "../controllers/userController.js";
+import { loginUser, getUser, logout } from "../controllers/userController.js";
 import { protectRoute } from "../middleware/authmiddleware.js";
 
 export const UserRouter = () => {
@@ -9,6 +9,7 @@ export const UserRouter = () => {
   userRouter.post("/signup", registerUser);
   userRouter.post("/login", loginUser);
   userRouter.get("/profile", protectRoute, getUser);
+  userRouter.delete("/logout", logout);
 
   return userRouter;
 };

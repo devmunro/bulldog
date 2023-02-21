@@ -44,10 +44,15 @@ export const getUserDetails = createAsyncThunk("auth/getDetails", async () => {
     const response = await axios.get(`${API_URL}profile`, { headers });
 
     if (response.data) {
-      localStorage.setItem("user", JSON.stringify(response.data))
-      localStorage.setItem("defaultWorkout", JSON.stringify(response.data.defaultWorkout));
-      console.log(localStorage.getItem("defaultWorkout"))
+      localStorage.setItem("user", JSON.stringify(response.data));
+      localStorage.setItem(
+        "defaultWorkout",
+        JSON.stringify(response.data.defaultWorkout)
+      );
+
       return { user: response.data };
+    } else {
+      return null;
     }
   } catch (error) {
     throw new Error(error);
@@ -56,8 +61,11 @@ export const getUserDetails = createAsyncThunk("auth/getDetails", async () => {
 
 // LOGOUT
 
-export const logout = () => {
+export const logout = createAsyncThunk("auth/logout", async () => {
   // Clear the localStorage items for user and token
+  
+  console.log("Clearing localStorage data...");
+
   localStorage.removeItem("user");
   localStorage.removeItem("token");
   localStorage.removeItem("defaultWorkout");
@@ -65,17 +73,15 @@ export const logout = () => {
   // delete the user token from the server
   const userToken = JSON.parse(localStorage.getItem("token"));
   const headers = { Authorization: `Bearer ${userToken}` };
-  axios.delete(`${API_URL}logout`, { headers });
 
-  if (!localStorage.getItem("user") && !localStorage.getItem("token")) {
+  try {
+    await axios.delete(`${API_URL}logout`, { headers });
     console.log("User has been logged out");
+    return;
+  } catch (error) {
+    console.log(error);
   }
-
-  return {
-    type: "LOGOUT",
-  };
-};
-
+});
 
 export const userSlice = createSlice({
   name: "auth",
@@ -102,7 +108,6 @@ export const userSlice = createSlice({
         state.loading = false;
         state.success = true;
         localStorage.removeItem("token"); // remove old user token
-
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.loading = false;
@@ -131,9 +136,11 @@ export const userSlice = createSlice({
         state.loading = false;
         state.error = action.error;
       })
-      .addCase(logout, (state) => {
+      .addCase(logout.fulfilled, (state) => {
         state.user = null;
         state.token = null;
+        localStorage.removeItem('user'); // remove user data from local storage
+        localStorage.removeItem('token'); // remove user token from local storage
       });
   },
 });
