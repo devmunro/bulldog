@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addExercise } from "../features/exerciseSlice";
-import FirebaseStorage from "../images/firebaseStorage";
+import { MagnifyingGlassCircleIcon } from "@heroicons/react/24/solid";
 import ExerciseCatergories from "./exerciseCatergories";
 import Loading from "./Loading";
 
@@ -21,6 +21,7 @@ export default function Exercises() {
   });
 
   const [exerciseInputs, setExerciseInputs] = useState({});
+  const [searchTerm, setSearchTerm] = useState("");
 
   const dispatch = useDispatch();
 
@@ -54,12 +55,39 @@ export default function Exercises() {
       },
     }));
   };
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleClick = () => {
+    console.log(`Searching for "${searchTerm}"`);
+
+    const searchExercises = exerciseList.filter((word) => {
+      return word.name.includes(searchTerm);
+    });
+setExerciseList(searchExercises)
+    console.log(searchExercises)
+  };
   return (
     <div className="m-2">
       <ExerciseCatergories
         setExerciseList={setExerciseList}
         setLoading={setLoading}
       />
+      {/* SEARCH BAR */}
+      <div className="w-1/2 flex">
+        <MagnifyingGlassCircleIcon className="w-10 h-full fill-inherit" />
+        <input
+          className="px-2  w-1/2 rounded-2xl bg-[#19192C] text-[#7B7B8F] "
+          placeholder="Search for an exercise"
+          onChange={handleSearchChange}
+          value={searchTerm}
+        />
+        <button onClick={handleClick} className="mx-2">
+          Search
+        </button>
+      </div>
       {/* // TABLE */}
       <table className="table-auto w-full text-white text-justify align-middle">
         <thead>
@@ -89,18 +117,18 @@ export default function Exercises() {
                       .map((type) => type.toUpperCase())
                       .join(", ")}
                   </td>
-                
-                {/* Exercise EQUIPMENT */}
-               
+
+                  {/* Exercise EQUIPMENT */}
+
                   <td>
                     {" "}
                     {exercise.equipment
                       .map((type) => type.toUpperCase())
                       .join(", ")}
                   </td>
-               
-                {/* SETS  */}
-              
+
+                  {/* SETS  */}
+
                   <td>
                     <input
                       placeholder="3"
@@ -110,9 +138,9 @@ export default function Exercises() {
                       onChange={handleChange(exercise._id)}
                     ></input>
                   </td>
-              
-                {/* REPS */}
-             
+
+                  {/* REPS */}
+
                   <td>
                     <input
                       placeholder="8"
@@ -122,9 +150,9 @@ export default function Exercises() {
                       onChange={handleChange(exercise._id)}
                     ></input>
                   </td>
-             
-                {/* WEIGHTS KG */}
-               
+
+                  {/* WEIGHTS KG */}
+
                   <td>
                     <input
                       placeholder="10"
@@ -134,9 +162,9 @@ export default function Exercises() {
                       onChange={handleChange(exercise._id)}
                     ></input>
                   </td>
-             
-                {/* ADD TO WORKOUT BUTTTON */}
-              
+
+                  {/* ADD TO WORKOUT BUTTTON */}
+
                   <td className="justify-center">
                     <button
                       className="bg-white text-black p-2 h-10 "
