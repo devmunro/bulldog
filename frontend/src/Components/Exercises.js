@@ -55,98 +55,102 @@ export default function Exercises() {
     }));
   };
   return (
-    <div>
+    <div className="m-2">
       <ExerciseCatergories
         setExerciseList={setExerciseList}
         setLoading={setLoading}
       />
-      <section className="">
+      {/* // TABLE */}
+      <table className="table-auto w-full text-white text-justify align-middle">
+        <thead>
+          <tr className="[&>*]:p-4">
+            <th className="w-1/4">Name</th>
+            <th>Type</th>
+            <th>Equipment</th>
+            <th>Sets</th>
+            <th>Reps</th>
+            <th>Weight(KG)</th>
+            <th>Add to Workout</th>
+          </tr>
+        </thead>
+
         {!loading &&
           exerciseList.map((exercise) => {
             return (
+              <tbody className="even:bg-[#7B7B8F] odd:bg-black ">
+                {/* EXERCISE NAME */}
+                <tr className="space-y-4 space-x-2 [&>*]:p-4">
+                  <td>{exercise.name}</td>
 
-              // TABLE
-              <table className="table-fixed text-white">
-                <thead>
-                  <tr>
-                    <th className="">Name</th>
-                    <th>Type</th>
-                    <th>Equipment</th>
-                    <th>Sets</th>
-                    <th>Reps</th>
-                    <th>Weight(KG)</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    {/* EXERCISE NAME */}
-                    <td>{exercise.name}</td>
+                  {/* Exercise BODY TYPE */}
 
-                    {/* Exercise BODY TYPE */}
-
-                    <td>
-                      {exercise.body_type
-                        .map((type) => type.toUpperCase())
-                        .join(", ")}
-                    </td>
-
-                    {/* Exercise EQUIPMENT */}
-                    <td>
-                      {" "}
-                      {exercise.equipment
-                        .map((type) => type.toUpperCase())
-                        .join(", ")}
-                    </td>
-
-                    {/* SETS  */}
-                    <td>
-                      <input
-                        placeholder="3"
-                        className="w-12 h-12 mx-4 text-center text-2xl text-black"
-                        value={exerciseInputs[exercise._id]?.sets ?? 3}
-                        name="sets"
-                        onChange={handleChange(exercise._id)}
-                      ></input>
-                    </td>
-
-                    {/* REPS */}
-                    <td>
-                      <input
-                        placeholder="8"
-                        className="w-12 h-12 mx-4 text-center text-2xl text-black"
-                        value={exerciseInputs[exercise._id]?.reps ?? 8}
-                        name="reps"
-                        onChange={handleChange(exercise._id)}
-                      ></input>
-                    </td>
-
-                    {/* WEIGHTS KG */}
-                    <td>
-                      <input
-                        placeholder="10"
-                        className="w-12 h-12 mx-4 text-center text-2xl text-black"
-                        value={exerciseInputs[exercise._id]?.weight ?? 10}
-                        name="weight"
-                        onChange={handleChange(exercise._id)}
-                      ></input>
-                    </td>
-
-                    {/* ADD TO WORKOUT BUTTTON */}
-                    <td>
-                      <button
-                        className="bg-white text-black p-2 h-16 "
-                        onClick={() => handleAddToWorkout(exercise._id)}
-                      >
-                        Add to workout
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                  <td>
+                    {exercise.body_type
+                      .map((type) => type.toUpperCase())
+                      .join(", ")}
+                  </td>
+                
+                {/* Exercise EQUIPMENT */}
+               
+                  <td>
+                    {" "}
+                    {exercise.equipment
+                      .map((type) => type.toUpperCase())
+                      .join(", ")}
+                  </td>
+               
+                {/* SETS  */}
+              
+                  <td>
+                    <input
+                      placeholder="3"
+                      className="w-12 h-12  text-center text-xl text-black bg-slate-400 focus:bg-slate-100"
+                      value={exerciseInputs[exercise._id]?.sets ?? 3}
+                      name="sets"
+                      onChange={handleChange(exercise._id)}
+                    ></input>
+                  </td>
+              
+                {/* REPS */}
+             
+                  <td>
+                    <input
+                      placeholder="8"
+                      className="w-12 h-12 text-center text-xl text-black bg-slate-400 focus:bg-slate-100"
+                      value={exerciseInputs[exercise._id]?.reps ?? 8}
+                      name="reps"
+                      onChange={handleChange(exercise._id)}
+                    ></input>
+                  </td>
+             
+                {/* WEIGHTS KG */}
+               
+                  <td>
+                    <input
+                      placeholder="10"
+                      className="w-12 h-12 text-center text-xl text-black bg-slate-400 focus:bg-slate-100"
+                      value={exerciseInputs[exercise._id]?.weight ?? 10}
+                      name="weight"
+                      onChange={handleChange(exercise._id)}
+                    ></input>
+                  </td>
+             
+                {/* ADD TO WORKOUT BUTTTON */}
+              
+                  <td className="justify-center">
+                    <button
+                      className="bg-white text-black p-2 h-10 "
+                      onClick={() => handleAddToWorkout(exercise._id)}
+                    >
+                      Add
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
             );
           })}
         {loading && <Loading />}
-      </section>
+      </table>
     </div>
   );
 }
