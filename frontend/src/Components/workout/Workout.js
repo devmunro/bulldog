@@ -86,9 +86,9 @@ export default function Workout({ user }) {
   }, [defaultWorkout, dispatch]);
 
   return (
-    <div>
+    <div className="bg-[#2B2946] h-screen flex justify-center px-4 w-full">
       {loading === false && (
-        <div className="bg-white">
+        <div className="w-full">
           <button
             onClick={handleCreateWorkoutClick}
             className="border-2 border-gray-400 px-2 m-2"
@@ -116,7 +116,7 @@ export default function Workout({ user }) {
             </div>
           )}
           {currentWorkout && (
-            <div className="text-black p-4">
+            <div className="bg-black text-white w-full p-4">
               <h2 className="font-bold">Current Workout</h2>
               <h2>{currentWorkout.name}</h2>
               <h2>{currentWorkout._id}</h2>
