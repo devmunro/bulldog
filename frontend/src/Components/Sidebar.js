@@ -18,7 +18,7 @@ export default function Sidebar() {
   };
 
   return (
-    <div className="min-h-full fixed flex-col text-gray-400 bg-black">
+    <div className="min-h-screen flex-col text-gray-400 bg-black">
       <div className="flex justify-between">
         {!hideSidebar && (
           <h1 className="text-white mt-6 ml-10 px-2 font-bold">BULLDOG</h1>
@@ -34,7 +34,7 @@ export default function Sidebar() {
       </div>
 
       {!hideSidebar && (
-        <div className="min-w-[228px]">
+        <div className="min-w-[228px] ">
           <ul className="mt-10 ml-5 space-y-3 text-sm text-left [&>*]:p-2  [&>*]:rounded-l-2xl [&>*]:flex">
             <li className="hover:bg-[#2B2946] hover:text-white">
               <Link to="/dashboard" className="flex">
@@ -67,7 +67,7 @@ export default function Sidebar() {
         </div>
       )}
       {hideSidebar && (
-        <ul className=" mt-10 space-y-3 text-sm text-left [&>*]:p-2  [&>*]:rounded-2xl">
+        <ul className="mt-10 space-y-3 text-sm text-left [&>*]:p-2  [&>*]:rounded-2xl">
           <li className="hover:bg-[#2B2946] hover:text-white">
             <Link to="/dashboard">
               <ComputerDesktopIcon className="h-6 w-6 text-white-500 mx-2" />

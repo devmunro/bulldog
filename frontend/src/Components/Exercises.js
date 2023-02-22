@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addExercise } from "../features/exerciseSlice";
 import FirebaseStorage from "../images/firebaseStorage";
@@ -9,9 +9,9 @@ export default function Exercises() {
   const [exerciseList, setExerciseList] = useState();
   const [loading, setLoading] = useState(true);
 
-  const defaultWorkout = useSelector(state => state.fitness.defaultWorkout);
+  const defaultWorkout = useSelector((state) => state.fitness.defaultWorkout);
 
-  console.log(defaultWorkout)
+  console.log(defaultWorkout);
 
   const [exerciseDetails, setExerciseDetails] = useState({
     exerciseID: "",
@@ -22,7 +22,7 @@ export default function Exercises() {
 
   const [exerciseInputs, setExerciseInputs] = useState({});
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   //handle add to workout
 
@@ -32,10 +32,9 @@ export default function Exercises() {
       exerciseSets: exerciseInputs[id]?.sets ?? 3,
       exerciseReps: exerciseInputs[id]?.reps ?? 8,
       exerciseWeight: exerciseInputs[id]?.weight ?? 10,
-      selectedWorkout: defaultWorkout
+      selectedWorkout: defaultWorkout,
     });
   };
-
 
   useEffect(() => {
     if (exerciseDetails.exerciseID) {
@@ -61,34 +60,46 @@ export default function Exercises() {
         setExerciseList={setExerciseList}
         setLoading={setLoading}
       />
-      <section className="flex flex-wrap  w-[95%] bg-black">
+      <section className="">
         {!loading &&
           exerciseList.map((exercise) => {
             return (
-              <div className="w-full flex-wrap">
-                <div className=" flex justify-between text-white bg-[#2B2946] m-2 p-4">
-                  <ul
-                    key={exercise._id}
-                    className=" w-1/3 text-sm flex-col flex justify-between"
-                  >
-                    <li className="mb-4 text-3xl">{exercise.name}</li>
 
-                    <li className="rounded-xl border-2 border-black w-min px-2 bg-black">
-                      Type:
+              // TABLE
+              <table className="table-fixed text-white">
+                <thead>
+                  <tr>
+                    <th className="">Name</th>
+                    <th>Type</th>
+                    <th>Equipment</th>
+                    <th>Sets</th>
+                    <th>Reps</th>
+                    <th>Weight(KG)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    {/* EXERCISE NAME */}
+                    <td>{exercise.name}</td>
+
+                    {/* Exercise BODY TYPE */}
+
+                    <td>
                       {exercise.body_type
                         .map((type) => type.toUpperCase())
                         .join(", ")}
-                    </li>
-                    <li className="rounded-xl border-2 border-black w-min px-2 bg-white text-black">
-                      Equipment:
+                    </td>
+
+                    {/* Exercise EQUIPMENT */}
+                    <td>
+                      {" "}
                       {exercise.equipment
                         .map((type) => type.toUpperCase())
                         .join(", ")}
-                    </li>
-                  </ul>
-                  <form className="flex items-end  ">
-                    <fieldset className="mx-2  border-r-2 border-white ">
-                      <label>SETS</label>
+                    </td>
+
+                    {/* SETS  */}
+                    <td>
                       <input
                         placeholder="3"
                         className="w-12 h-12 mx-4 text-center text-2xl text-black"
@@ -96,9 +107,10 @@ export default function Exercises() {
                         name="sets"
                         onChange={handleChange(exercise._id)}
                       ></input>
-                    </fieldset>
-                    <fieldset className="mx-2  border-r-2 border-white ">
-                      <label>REPS</label>
+                    </td>
+
+                    {/* REPS */}
+                    <td>
                       <input
                         placeholder="8"
                         className="w-12 h-12 mx-4 text-center text-2xl text-black"
@@ -106,9 +118,10 @@ export default function Exercises() {
                         name="reps"
                         onChange={handleChange(exercise._id)}
                       ></input>
-                    </fieldset>{" "}
-                    <fieldset className="mx-2  border-r-2 border-white ">
-                      <label>WEIGHT</label>
+                    </td>
+
+                    {/* WEIGHTS KG */}
+                    <td>
                       <input
                         placeholder="10"
                         className="w-12 h-12 mx-4 text-center text-2xl text-black"
@@ -116,19 +129,20 @@ export default function Exercises() {
                         name="weight"
                         onChange={handleChange(exercise._id)}
                       ></input>
-                    </fieldset>
-                  </form>
-                  <div className="space-y-4  flex items-end ">
-                    {/* <FirebaseStorage imageBase={exercise.img} /> */}
-                    <button
-                      className="bg-white text-black p-2 h-16 "
-                      onClick={() => handleAddToWorkout(exercise._id)}
-                    >
-                      Add to workout
-                    </button>
-                  </div>
-                </div>
-              </div>
+                    </td>
+
+                    {/* ADD TO WORKOUT BUTTTON */}
+                    <td>
+                      <button
+                        className="bg-white text-black p-2 h-16 "
+                        onClick={() => handleAddToWorkout(exercise._id)}
+                      >
+                        Add to workout
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             );
           })}
         {loading && <Loading />}
