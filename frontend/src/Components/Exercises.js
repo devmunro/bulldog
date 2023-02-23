@@ -9,6 +9,7 @@ import ExerciseList from "./ExerciseList";
 export default function Exercises() {
   const [exerciseList, setExerciseList] = useState();
   const [loading, setLoading] = useState(true);
+  
 
   const defaultWorkout = useSelector((state) => state.fitness.defaultWorkout);
 
@@ -21,22 +22,14 @@ export default function Exercises() {
     exerciseWeight: 10,
   });
 
-  const [exerciseInputs, setExerciseInputs] = useState({});
+ 
   const [searchTerm, setSearchTerm] = useState("");
 
   const dispatch = useDispatch();
 
   //handle add to workout
 
-  const handleAddToWorkout = async (id) => {
-    setExerciseDetails({
-      exerciseID: id,
-      exerciseSets: exerciseInputs[id]?.sets ?? 3,
-      exerciseReps: exerciseInputs[id]?.reps ?? 8,
-      exerciseWeight: exerciseInputs[id]?.weight ?? 10,
-      selectedWorkout: defaultWorkout,
-    });
-  };
+
 
   useEffect(() => {
     if (exerciseDetails.exerciseID) {
@@ -44,19 +37,7 @@ export default function Exercises() {
     }
   }, [exerciseDetails, dispatch]);
 
-  //handlechange for inputs
-  const handleChange = (id) => (e) => {
-    e.preventDefault();
-    const { name, value } = e.target;
-    setExerciseInputs((prevState) => ({
-      ...prevState,
-      [id]: {
-        ...prevState[id],
-        [name]: parseInt(value),
-      },
-    }));
-  };
-
+ 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
@@ -90,7 +71,7 @@ setExerciseList(searchExercises)
         </button>
       </div>
       {/* // TABLE */}
-     <ExerciseList loading={loading} handleAddToWorkout={handleAddToWorkout} exerciseInputs={exerciseInputs} exerciseList={exerciseList} handleChange={handleChange}/>
+     <ExerciseList loading={loading} setExerciseDetails={setExerciseDetails} exerciseList={exerciseList}/>
     </div>
   );
 }
