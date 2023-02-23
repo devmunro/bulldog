@@ -7,15 +7,17 @@ export default function ExerciseList({
   setExerciseDetails,
   exerciseList,
   buttonText,
-  isDisabled
+  isDisabled,
 }) {
   const [exerciseInputs, setExerciseInputs] = useState({});
   const defaultWorkout = useSelector((state) => state.fitness.defaultWorkout);
 
   //handle add to workout
-  const handleAddToWorkout = async (id) => {
+  const handleAddToWorkout = async (id, name, bodyType, equipment) => {
     setExerciseDetails({
       exerciseID: id,
+      exerciseBodyType: bodyType,
+      exerciseEquipment: equipment,
       exerciseSets: exerciseInputs[id]?.sets ?? 3,
       exerciseReps: exerciseInputs[id]?.reps ?? 8,
       exerciseWeight: exerciseInputs[id]?.weight ?? 10,
@@ -23,9 +25,8 @@ export default function ExerciseList({
     });
   };
 
-
-   //handle edit exercise for current workout
-   const handleEditExercise = async (id) => {
+  //handle edit exercise for current workout
+  const handleEditExercise = async (id) => {
     setExerciseDetails({
       exerciseID: id,
       exerciseSets: exerciseInputs[id]?.sets ?? 3,
@@ -98,7 +99,9 @@ export default function ExerciseList({
                   <input
                     placeholder={exercise.sets || 3}
                     className="w-12 h-12  text-center text-xl text-black bg-slate-400 focus:bg-slate-100"
-                    value={exerciseInputs[exercise._id]?.sets ?? exercise.sets ?? 3}
+                    value={
+                      exerciseInputs[exercise._id]?.sets ?? exercise.sets ?? 3
+                    }
                     name="sets"
                     onChange={handleChange(exercise._id)}
                     disabled={isDisabled}
@@ -111,7 +114,9 @@ export default function ExerciseList({
                   <input
                     placeholder="8"
                     className="w-12 h-12 text-center text-xl text-black bg-slate-400 focus:bg-slate-100"
-                    value={exerciseInputs[exercise._id]?.reps ?? exercise.reps ?? 12}
+                    value={
+                      exerciseInputs[exercise._id]?.reps ?? exercise.reps ?? 12
+                    }
                     name="reps"
                     onChange={handleChange(exercise._id)}
                     disabled={isDisabled}
@@ -124,7 +129,11 @@ export default function ExerciseList({
                   <input
                     placeholder="10"
                     className="w-12 h-12 text-center text-xl text-black bg-slate-400 focus:bg-slate-100"
-                    value={exerciseInputs[exercise._id]?.weight ?? exercise.weight ?? 10}
+                    value={
+                      exerciseInputs[exercise._id]?.weight ??
+                      exercise.weight ??
+                      10
+                    }
                     name="weight"
                     onChange={handleChange(exercise._id)}
                     disabled={isDisabled}
@@ -138,7 +147,12 @@ export default function ExerciseList({
                     className="bg-white text-black p-2 h-10 "
                     onClick={() => {
                       if (buttonText === "Add") {
-                        handleAddToWorkout(exercise._id);
+                        handleAddToWorkout(
+                          exercise._id,
+                          exercise.name,
+                          exercise.body_type,
+                          exercise.equipment
+                        );
                       } else if (buttonText === "Edit") {
                         handleEditExercise(exercise._id);
                       }

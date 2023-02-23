@@ -56,6 +56,7 @@ console.log(workoutID)
 export const addExercise = async (req, res) => {
   const {
     exerciseID,
+    exerciseName
     exerciseSets,
     exerciseReps,
     exerciseWeight,
