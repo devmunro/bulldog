@@ -56,7 +56,6 @@ console.log(workoutID)
 export const addExercise = async (req, res) => {
   const {
     exerciseID,
-    exerciseName
     exerciseSets,
     exerciseReps,
     exerciseWeight,
@@ -66,10 +65,13 @@ export const addExercise = async (req, res) => {
   console.log(selectedWorkout);
   const selectedFullWorkout = await Workout.findById(selectedWorkout);
 
-  console.log(selectedFullWorkout);
+  const selectedExercise = await Exercise.findById(exerciseID);
 
   selectedFullWorkout.exercises.push({
     exercise: exerciseID,
+    name: selectedExercise.name,
+    body_type: selectedExercise.body_type,
+    equipment: selectedExercise.equipment,
     sets: exerciseSets,
     reps: exerciseReps,
     weight: exerciseWeight,
