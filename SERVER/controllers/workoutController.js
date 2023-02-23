@@ -1,5 +1,6 @@
 import { Workout } from "../models/workoutSchema.js";
-import { user } from "../models/userSchema.js";
+import { user } from "../models/userSchema.js"; 
+import { Exercise } from "../models/exerciseSchema.js";
 
 export const createWorkout = async (req, res) => {
   const { userID, name } = req.body;
@@ -61,14 +62,17 @@ export const addExercise = async (req, res) => {
     exerciseWeight,
     selectedWorkout,
   } = req.body;
-
+  console.log("hello")
   console.log(selectedWorkout);
   const selectedFullWorkout = await Workout.findById(selectedWorkout);
 
-  console.log(selectedFullWorkout);
-
+  const selectedExercise = await Exercise.findById(exerciseID);
+console.log(selectedExercise)
   selectedFullWorkout.exercises.push({
     exercise: exerciseID,
+    name: selectedExercise.name,
+    body_type: selectedExercise.body_type,
+    equipment: selectedExercise.equipment,
     sets: exerciseSets,
     reps: exerciseReps,
     weight: exerciseWeight,

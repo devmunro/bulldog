@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-//API LINK
+//API LINK // main url
 const API_URL = process.env.REACT_APP_API_BASE_URL;
 
 // fetch Exercises3
