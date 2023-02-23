@@ -6,6 +6,7 @@ import {
   findWorkout,
   setDefaultWorkout,
 } from "../../features/exerciseSlice";
+import ExerciseList from "../ExerciseList";
 import Loading from "../Loading";
 
 export default function Workout({ user }) {
@@ -85,6 +86,7 @@ export default function Workout({ user }) {
     }
   }, [defaultWorkout, dispatch]);
 
+  console.log("here", currentWorkout);
   return (
     <div>
       {loading === false && (
@@ -115,22 +117,18 @@ export default function Workout({ user }) {
               </form>
             </div>
           )}
-          {currentWorkout && (
+          {currentWorkout && currentWorkout.exercises && (
             <div className="text-black p-4">
               <h2 className="font-bold">Current Workout</h2>
               <h2>{currentWorkout.name}</h2>
               <h2>{currentWorkout._id}</h2>
 
-              {currentWorkout.exercises.map((exercise) => {
-                return (
-                  <ul key={exercise._id} className="flex">
-                    <li className="text-gray-500 p-4">{exercise._id}</li>
-                    <li className="text-gray-500 p-4">{exercise.sets}sets</li>
-                    <li className="text-gray-500 p-4">{exercise.reps}reps</li>
-                    <li className="text-gray-500 p-4">{exercise.weight}kg</li>
-                  </ul>
-                );
-              })}
+              <ExerciseList
+                exerciseList={currentWorkout.exercises}
+                loading={loading}
+                buttonText="Edit"
+                isDisabled
+              />
             </div>
           )}
           {!currentWorkout && <div>No current workout</div>}

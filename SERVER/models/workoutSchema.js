@@ -1,11 +1,11 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
 const workoutSchema = new mongoose.Schema(
   {
     userID: {
       type: mongoose.Schema.Types.ObjectId, // link to user
       ref: "User",
-      required: true,     
+      required: true,
     },
     name: {
       type: String,
@@ -15,9 +15,14 @@ const workoutSchema = new mongoose.Schema(
     exercises: [
       {
         exercise: {
-          type: mongoose.Schema.Types.ObjectId,  // exercise id
-          // required: true,
+          type: mongoose.Schema.Types.ObjectId, // exercise id
+          required: true,
         },
+        name: {
+          type: String,
+          required: true,
+        },
+
         sets: {
           type: Number,
         },
@@ -26,6 +31,15 @@ const workoutSchema = new mongoose.Schema(
         },
         weight: {
           type: Number,
+        },
+
+        body_type: {
+          type: [String],
+          required: true,
+        },
+        equipment: {
+          type: [String],
+          required: true,
         },
       },
     ],
