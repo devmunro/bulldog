@@ -27,10 +27,10 @@ export default function ExerciseCatergories({ setLoading, setExerciseList }) {
     fetchData(chosenCategory);
   }, [chosenCategory, dispatch, setExerciseList, setLoading]);
 
-  const handleCategory = (e) => {
-    e.preventDefault();
-
-    setChosenCategory(e.target.value);
+  const handleCategory = (type) => {
+   
+    console.log(type);
+    setChosenCategory(type);
   };
 
   return (
@@ -39,8 +39,8 @@ export default function ExerciseCatergories({ setLoading, setExerciseList }) {
       <ul className="flex gap-2 w-full ">
         {categories.map((item) => {
           return (
-            <div className=" w-full bg-[#2B2946] p-2 m-2 text-center rounded-xl border-x-2 border-x-slate-50 hover:border-white hover:border-2 	">
-              <button onClick={handleCategory} value={item.name}>
+            <div onClick={() => handleCategory(item.name)} className=" w-full bg-[#2B2946] p-2 m-2 text-center rounded-xl border-x-2 border-x-slate-50 hover:border-white hover:border-2 cursor-pointer">
+              <button >
                 <FirebaseStorage imageBase={item.image} />
                 {item.name}
               </button>
