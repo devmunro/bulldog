@@ -86,7 +86,7 @@ export default function Workout({ user }) {
     }
   }, [defaultWorkout, dispatch]);
 
-  console.log("here", currentWorkout)
+  console.log("here", currentWorkout);
   return (
     <div>
       {loading === false && (
@@ -117,18 +117,20 @@ export default function Workout({ user }) {
               </form>
             </div>
           )}
-          {currentWorkout && currentWorkout.exercises && 
+          {currentWorkout && currentWorkout.exercises && (
             <div className="text-black p-4">
               <h2 className="font-bold">Current Workout</h2>
               <h2>{currentWorkout.name}</h2>
               <h2>{currentWorkout._id}</h2>
-             
 
-              
-              <ExerciseList exerciseList={currentWorkout.exercises}loading={loading}  />
-                
+              <ExerciseList
+                exerciseList={currentWorkout.exercises}
+                loading={loading}
+                buttonText="Edit"
+                isDisabled
+              />
             </div>
-          }
+          )}
           {!currentWorkout && <div>No current workout</div>}
           <div className="text-gray-500 p-4">
             <h2 className="font-bold">Other Workouts</h2>

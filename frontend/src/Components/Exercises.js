@@ -9,7 +9,6 @@ import ExerciseList from "./ExerciseList";
 export default function Exercises() {
   const [exerciseList, setExerciseList] = useState();
   const [loading, setLoading] = useState(true);
-  
 
   const defaultWorkout = useSelector((state) => state.fitness.defaultWorkout);
 
@@ -18,18 +17,15 @@ export default function Exercises() {
   const [exerciseDetails, setExerciseDetails] = useState({
     exerciseID: "",
     exerciseSets: 3,
-    exerciseReps: 8,
+    exerciseReps: 12,
     exerciseWeight: 10,
   });
 
- 
   const [searchTerm, setSearchTerm] = useState("");
 
   const dispatch = useDispatch();
 
   //handle add to workout
-
-
 
   useEffect(() => {
     if (exerciseDetails.exerciseID) {
@@ -37,7 +33,6 @@ export default function Exercises() {
     }
   }, [exerciseDetails, dispatch]);
 
- 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
@@ -48,8 +43,8 @@ export default function Exercises() {
     const searchExercises = exerciseList.filter((word) => {
       return word.name.includes(searchTerm);
     });
-setExerciseList(searchExercises)
-    console.log(searchExercises)
+    setExerciseList(searchExercises);
+    console.log(searchExercises);
   };
   return (
     <div className="m-2">
@@ -71,7 +66,13 @@ setExerciseList(searchExercises)
         </button>
       </div>
       {/* // TABLE */}
-     <ExerciseList loading={loading} setExerciseDetails={setExerciseDetails} exerciseList={exerciseList}/>
+      <ExerciseList
+        loading={loading}
+        setExerciseDetails={setExerciseDetails}
+        exerciseList={exerciseList}
+        buttonText="Add"
+        isDisabled = {false}
+      />
     </div>
   );
 }
