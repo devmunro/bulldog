@@ -8,12 +8,18 @@ import {
 } from "../../features/exerciseSlice";
 import ExerciseList from "../ExerciseList";
 import Loading from "../Loading";
+import {
+  ChevronDoubleDownIcon,
+  ChevronDoubleUpIcon,
+} from "@heroicons/react/24/solid";
+import FirebaseStorage from "../../images/firebaseStorage";
 
 export default function Workout({ user }) {
   const dispatch = useDispatch();
 
   const [workoutCreateBox, setWorkoutCreateBox] = useState(false);
   const [name, setName] = useState("");
+  const [showExerciseForWorkout, setShowExerciseForWorkout] = useState(false);
   const [userWorkouts, setUserWorkouts] = useState([]);
   const { defaultWorkout, loading } = useSelector((state) => state.fitness);
   const [currentWorkout, setCurrentWorkout] = useState();
@@ -86,7 +92,14 @@ export default function Workout({ user }) {
     }
   }, [defaultWorkout, dispatch]);
 
-  console.log("here", currentWorkout);
+  //handleShowExercises - display exercises for current workout
+
+  const handleShowExercises = (e) => {
+    e.preventDefault();
+
+    setShowExerciseForWorkout(!showExerciseForWorkout);
+  };
+
   return (
     <div className="bg-[#2B2946] h-screen flex justify-center px-4 w-full">
       {loading === false && (
@@ -120,15 +133,44 @@ export default function Workout({ user }) {
           {currentWorkout && currentWorkout.exercises && (
             <div className="text-black p-4">
               <h2 className="font-bold">Current Workout</h2>
-              <h2>{currentWorkout.name}</h2>
-              <h2>{currentWorkout._id}</h2>
 
-              <ExerciseList
-                exerciseList={currentWorkout.exercises}
-                loading={loading}
-                buttonText="Edit"
-                isDisabled
-              />
+              {/* SHOW OR HIDE EXERCISES */}
+              <div className="flex justify-between h-1/2 items-center gap-4 border-2 border-white text-gray-400">
+                
+                <div className="mt-8 mx-8 space-y-4">
+                <h2 className=" text-3xl font-semibold">{currentWorkout.name.toUpperCase()}</h2>
+
+                <button className="items-baseline" onClick={handleShowExercises}>
+                  {showExerciseForWorkout && (
+                    <div className="flex">
+                      <span>HIDE</span>
+                      <ChevronDoubleUpIcon className="h-6 w-6 text-white-500 mx-2  hover:text-white" />
+                    </div>
+                  )}
+                  {!showExerciseForWorkout && (
+                    <div className="flex">
+                      <span>SHOW MORE</span>
+                      <ChevronDoubleDownIcon className="h-6 w-6 text-white-500 mx-2 hover:text-white" />
+                    </div>
+                  )}
+                </button>
+                </div>
+                <div className="opacity-25">
+                  <FirebaseStorage
+                    imageBase="manworkingout.png"
+      
+                  />
+                </div>
+              </div>
+
+              {showExerciseForWorkout && (
+                <ExerciseList
+                  exerciseList={currentWorkout.exercises}
+                  loading={loading}
+                  buttonText="Edit"
+                  isDisabled
+                />
+              )}
             </div>
           )}
           {!currentWorkout && <div>No current workout</div>}
