@@ -106,7 +106,7 @@ export default function Workout({ user }) {
         <div className="w-full">
           <button
             onClick={handleCreateWorkoutClick}
-            className="border-2 border-gray-400 px-2 m-2"
+            className="bg-white px-4 py-2 my-2 rounded-md hover:bg-slate-300 "
           >
             Create Workout
           </button>
@@ -131,11 +131,11 @@ export default function Workout({ user }) {
             </div>
           )}
           {currentWorkout && currentWorkout.exercises && (
-            <div className="text-black p-4">
+            <div className="text-black p-4 bg-gradient-to-bl from-blue-700 via-blue-800 to-gray-900">
               <h2 className="font-bold">Current Workout</h2>
 
               {/* SHOW OR HIDE EXERCISES */}
-              <div className="flex justify-between h-1/2 items-center gap-4 border-2 border-white text-gray-400">
+              <div className="flex justify-between h-1/2 items-center gap-4 text-gray-400">
                 
                 <div className="mt-8 mx-8 space-y-4">
                 <h2 className=" text-3xl font-semibold">{currentWorkout.name.toUpperCase()}</h2>
@@ -183,10 +183,10 @@ export default function Workout({ user }) {
                   // Check if workout has the same ID as default workout
 
                   return (
-                    <ul className="flex m-4">
+                    <ul className="flex m-4 p-8 justify-between bg-gradient-to-l from-gray-700 via-gray-900 to-black">
                       <li className="">{workout.name}</li>
                       <button
-                        className="px-2 border-2 border-blue-800"
+                        className="p-4 bg-white"
                         onClick={handleSetDefault}
                         value={workout._id}
                       >

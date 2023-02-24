@@ -23,7 +23,7 @@ if(imageBase !== "")
 
     if(imageBase === "manworkingout.png") {
 
-      return <img className="h-32" src={image} alt="thing"/>
+      return <img className="h-40" src={image} alt="thing"/>
     }
   return <img className="h-16 w-16" src={image} alt="thing"/>
 }
