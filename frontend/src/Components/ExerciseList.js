@@ -65,7 +65,7 @@ export default function ExerciseList({
         exerciseList.length > 0 &&
         exerciseList.map((exercise) => {
           return (
-            <tbody className="shadow-md  shadow-black even:bg-indigo-800 odd:bg-black ">
+            <tbody  className={`${disabled ? " even:bg-indigo-800 odd:bg-black" : "bg-black"} shadow-md shadow-black`}>
               {/* EXERCISE NAME */}
               <tr className="space-y-4 space-x-2 [&>*]:p-4">
                 <td>{exercise.name}</td>
