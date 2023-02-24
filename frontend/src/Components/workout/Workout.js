@@ -8,12 +8,18 @@ import {
 } from "../../features/exerciseSlice";
 import ExerciseList from "../ExerciseList";
 import Loading from "../Loading";
+import {
+  ChevronDoubleDownIcon,
+  ChevronDoubleUpIcon,
+} from "@heroicons/react/24/solid";
+import FirebaseStorage from "../../images/firebaseStorage";
 
 export default function Workout({ user }) {
   const dispatch = useDispatch();
 
   const [workoutCreateBox, setWorkoutCreateBox] = useState(false);
   const [name, setName] = useState("");
+  const [showExerciseForWorkout, setShowExerciseForWorkout] = useState(false);
   const [userWorkouts, setUserWorkouts] = useState([]);
   const { defaultWorkout, loading } = useSelector((state) => state.fitness);
   const [currentWorkout, setCurrentWorkout] = useState();
@@ -86,14 +92,21 @@ export default function Workout({ user }) {
     }
   }, [defaultWorkout, dispatch]);
 
-  console.log("here", currentWorkout);
+  //handleShowExercises - display exercises for current workout
+
+  const handleShowExercises = (e) => {
+    e.preventDefault();
+
+    setShowExerciseForWorkout(!showExerciseForWorkout);
+  };
+
   return (
-    <div>
+    <div className="bg-[#2B2946] h-full flex justify-center px-4 w-full">
       {loading === false && (
-        <div className="bg-white">
+        <div className="w-full">
           <button
             onClick={handleCreateWorkoutClick}
-            className="border-2 border-gray-400 px-2 m-2"
+            className="bg-white px-4 py-2 my-2 rounded-md hover:bg-slate-300 "
           >
             Create Workout
           </button>
@@ -118,17 +131,48 @@ export default function Workout({ user }) {
             </div>
           )}
           {currentWorkout && currentWorkout.exercises && (
-            <div className="text-black p-4">
-              <h2 className="font-bold">Current Workout</h2>
-              <h2>{currentWorkout.name}</h2>
-              <h2>{currentWorkout._id}</h2>
+            <div className=" relative text-black bg-gradient-to-bl from-blue-700 via-blue-800 to-gray-900">
+             
 
-              <ExerciseList
-                exerciseList={currentWorkout.exercises}
-                loading={loading}
-                buttonText="Edit"
-                isDisabled
-              />
+              {/* SHOW OR HIDE EXERCISES */}
+              <div className="flex justify-between h-1/2 items-center gap-4 text-gray-400">
+                <div className="mt-8 mx-8 space-y-4">
+                <h2 className="font-bold">Current Workout</h2>
+                  <h2 className=" text-3xl font-semibold">
+                    {currentWorkout.name.toUpperCase()}
+                  </h2>
+
+                  <button
+                    className="items-baseline btn-secondary"
+                    onClick={handleShowExercises}
+                  >
+                    {showExerciseForWorkout && (
+                      <div className="flex">
+                        <span>HIDE</span>
+                        <ChevronDoubleUpIcon className="h-6 w-6 text-white-500 mx-2" />
+                      </div>
+                    )}
+                    {!showExerciseForWorkout && (
+                      <div className="flex">
+                        <span>SHOW</span>
+                        <ChevronDoubleDownIcon className="h-6 w-6 text-white-500 ml-2" />
+                      </div>
+                    )}
+                  </button>
+                </div>
+                <div className="opacity-25">
+                  <FirebaseStorage imageBase="manworkingout.png" />
+                </div>
+              </div>
+
+              {showExerciseForWorkout && (
+                <ExerciseList
+                  exerciseList={currentWorkout.exercises}
+                  loading={loading}
+                  buttonText="Edit"
+                  isDisabled
+                />
+              )}
             </div>
           )}
           {!currentWorkout && <div>No current workout</div>}
@@ -141,10 +185,10 @@ export default function Workout({ user }) {
                   // Check if workout has the same ID as default workout
 
                   return (
-                    <ul className="flex m-4">
-                      <li className="">{workout.name}</li>
+                    <ul className="flex m-4 p-8 justify-between bg-gradient-to-l from-gray-700 via-gray-900 to-black">
+                      <li className="">{workout.name.toUpperCase()}</li>
                       <button
-                        className="px-2 border-2 border-blue-800"
+                        className="btn-primary"
                         onClick={handleSetDefault}
                         value={workout._id}
                       >

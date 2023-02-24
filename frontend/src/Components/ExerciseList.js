@@ -11,6 +11,7 @@ export default function ExerciseList({
 }) {
   const [exerciseInputs, setExerciseInputs] = useState({});
   const defaultWorkout = useSelector((state) => state.fitness.defaultWorkout);
+  const [disabled, setDisabled] = useState(isDisabled);
 
   //handle add to workout
   const handleAddToWorkout = async (id, name, bodyType, equipment) => {
@@ -27,13 +28,8 @@ export default function ExerciseList({
 
   //handle edit exercise for current workout
   const handleEditExercise = async (id) => {
-    setExerciseDetails({
-      exerciseID: id,
-      exerciseSets: exerciseInputs[id]?.sets ?? 3,
-      exerciseReps: exerciseInputs[id]?.reps ?? 8,
-      exerciseWeight: exerciseInputs[id]?.weight ?? 10,
-      selectedWorkout: defaultWorkout,
-    });
+    setDisabled(false);
+  
   };
   //handlechange for inputs
   const handleChange = (id) => (e) => {
@@ -48,7 +44,7 @@ export default function ExerciseList({
     }));
   };
 
-  console.log(exerciseList);
+  
 
   return (
     <table className="table-auto w-full text-white text-justify align-middle">
@@ -60,7 +56,7 @@ export default function ExerciseList({
           <th>Sets</th>
           <th>Reps</th>
           <th>Weight(KG)</th>
-          <th>Add to Workout</th>
+          <th>Add/Edit</th>
         </tr>
       </thead>
 
@@ -69,7 +65,7 @@ export default function ExerciseList({
         exerciseList.length > 0 &&
         exerciseList.map((exercise) => {
           return (
-            <tbody className="even:bg-[#7B7B8F] odd:bg-black ">
+            <tbody  className={`${disabled ? " even:bg-indigo-800 odd:bg-black" : "bg-black"} shadow-md shadow-black`}>
               {/* EXERCISE NAME */}
               <tr className="space-y-4 space-x-2 [&>*]:p-4">
                 <td>{exercise.name}</td>
@@ -98,13 +94,13 @@ export default function ExerciseList({
                 <td>
                   <input
                     placeholder={exercise.sets || 3}
-                    className="w-12 h-12  text-center text-xl text-black bg-slate-400 focus:bg-slate-100"
+                    className={!disabled ? "input" : "input-fixed"}
                     value={
                       exerciseInputs[exercise._id]?.sets ?? exercise.sets ?? 3
                     }
                     name="sets"
                     onChange={handleChange(exercise._id)}
-                    disabled={isDisabled}
+                    disabled={disabled}
                   ></input>
                 </td>
 
@@ -113,13 +109,13 @@ export default function ExerciseList({
                 <td>
                   <input
                     placeholder="8"
-                    className="w-12 h-12 text-center text-xl text-black bg-slate-400 focus:bg-slate-100"
+                    className={!disabled ? "input" : "input-fixed"}
                     value={
                       exerciseInputs[exercise._id]?.reps ?? exercise.reps ?? 12
                     }
                     name="reps"
                     onChange={handleChange(exercise._id)}
-                    disabled={isDisabled}
+                    disabled={disabled}
                   ></input>
                 </td>
 
@@ -128,7 +124,7 @@ export default function ExerciseList({
                 <td>
                   <input
                     placeholder="10"
-                    className="w-12 h-12 text-center text-xl text-black bg-slate-400 focus:bg-slate-100"
+                    className={!disabled ? "input" : "input-fixed"}
                     value={
                       exerciseInputs[exercise._id]?.weight ??
                       exercise.weight ??
@@ -136,7 +132,7 @@ export default function ExerciseList({
                     }
                     name="weight"
                     onChange={handleChange(exercise._id)}
-                    disabled={isDisabled}
+                    disabled={disabled}
                   ></input>
                 </td>
 
@@ -144,7 +140,7 @@ export default function ExerciseList({
 
                 <td className="justify-center">
                   <button
-                    className="bg-white text-black p-2 h-10 "
+                    className="btn-primary"
                     onClick={() => {
                       if (buttonText === "Add") {
                         handleAddToWorkout(

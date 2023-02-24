@@ -20,7 +20,7 @@ export default function Exercises() {
     exerciseReps: 12,
     exerciseWeight: 10,
   });
-
+  console.log(exerciseDetails);
   const [searchTerm, setSearchTerm] = useState("");
 
   const dispatch = useDispatch();
@@ -37,11 +37,11 @@ export default function Exercises() {
     setSearchTerm(e.target.value);
   };
 
-  const handleClick = () => {
+  const handleSearch = (e) => {
     console.log(`Searching for "${searchTerm}"`);
-
+    console.log(exerciseList);
     const searchExercises = exerciseList.filter((word) => {
-      return word.name.includes(searchTerm);
+      return word.name.toLowerCase().includes(searchTerm.toLowerCase());
     });
     setExerciseList(searchExercises);
     console.log(searchExercises);
@@ -53,26 +53,32 @@ export default function Exercises() {
         setLoading={setLoading}
       />
       {/* SEARCH BAR */}
-      <div className="w-1/2 flex">
-        <MagnifyingGlassCircleIcon className="w-10 h-full fill-inherit" />
-        <input
-          className="px-2  w-1/2 rounded-2xl bg-[#19192C] text-[#7B7B8F] "
-          placeholder="Search for an exercise"
-          onChange={handleSearchChange}
-          value={searchTerm}
+      <div className=" p-4 bg-gradient-to-bl from-blue-800 to-gray-900">
+        <div className="w-1/2 flex gap-4 items-center">
+          <input
+            className="px-2 w-2/3 h-12 rounded-2xl bg-[#19192C] text-[#7B7B8F] "
+            placeholder="Search for an exercise"
+            onChange={handleSearchChange}
+            value={searchTerm}
+            onKeyDown={(event) => event.key === "Enter" && handleSearch()}
+          />
+          <button
+            onClick={handleSearch}
+            className=" flex justify-center items-center btn-secondary "
+          >
+            Search
+            <MagnifyingGlassCircleIcon className="h-8 fill-inherit" />
+          </button>
+        </div>
+        {/* // TABLE */}
+        <ExerciseList
+          loading={loading}
+          setExerciseDetails={setExerciseDetails}
+          exerciseList={exerciseList}
+          buttonText="Add"
+          isDisabled={false}
         />
-        <button onClick={handleClick} className="mx-2">
-          Search
-        </button>
       </div>
-      {/* // TABLE */}
-      <ExerciseList
-        loading={loading}
-        setExerciseDetails={setExerciseDetails}
-        exerciseList={exerciseList}
-        buttonText="Add"
-        isDisabled = {false}
-      />
     </div>
   );
 }
