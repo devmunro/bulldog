@@ -186,7 +186,7 @@ export default function Workout({ user }) {
                     <ul className="flex m-4 p-8 justify-between bg-gradient-to-l from-gray-700 via-gray-900 to-black">
                       <li className="">{workout.name}</li>
                       <button
-                        className="p-4 bg-white"
+                        className="btn-primary"
                         onClick={handleSetDefault}
                         value={workout._id}
                       >

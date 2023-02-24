@@ -34,12 +34,12 @@ export default function ExerciseCatergories({ setLoading, setExerciseList }) {
   };
 
   return (
-    <div className=" text-white max-w-full mb-6">
+    <div className=" text-white max-w-full m-2 p-4 bg-black">
       <h2 className="font-bold mx-4">Catergories</h2>
       <ul className="flex gap-2 w-full ">
         {categories.map((item) => {
           return (
-            <div onClick={() => handleCategory(item.name)} className=" w-full bg-[#2B2946] p-2 m-2 text-center rounded-xl border-x-2 border-x-slate-50 hover:border-white hover:border-2 cursor-pointer">
+            <div onClick={() => handleCategory(item.name)} className=" w-full bg-[#2B2946] p-2 m-2 text-center rounded-xl border-2 border-slate-50 hover:bg-white hover:text-black cursor-pointer">
               <button >
                 <FirebaseStorage imageBase={item.image} />
                 {item.name}

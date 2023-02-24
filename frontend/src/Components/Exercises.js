@@ -53,7 +53,8 @@ export default function Exercises() {
         setLoading={setLoading}
       />
       {/* SEARCH BAR */}
-      <div className="w-1/2 flex">
+      <div className=" p-4 bg-gradient-to-bl from-blue-800 to-gray-900">
+      <div className="w-1/2 flex ">
         <MagnifyingGlassCircleIcon className="w-10 h-full fill-inherit" />
         <input
           className="px-2  w-1/2 rounded-2xl bg-[#19192C] text-[#7B7B8F] "
@@ -73,6 +74,7 @@ export default function Exercises() {
         buttonText="Add"
         isDisabled = {false}
       />
+      </div>
     </div>
   );
 }

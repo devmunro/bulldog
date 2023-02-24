@@ -69,7 +69,7 @@ export default function ExerciseList({
         exerciseList.length > 0 &&
         exerciseList.map((exercise) => {
           return (
-            <tbody className="even:bg-[#7B7B8F] odd:bg-black ">
+            <tbody className="shadow-md  shadow-slate-600 even:bg-indigo-900 odd:bg-gradient-to-l from-gray-700 via-gray-900 to-black ">
               {/* EXERCISE NAME */}
               <tr className="space-y-4 space-x-2 [&>*]:p-4">
                 <td>{exercise.name}</td>
@@ -144,7 +144,7 @@ export default function ExerciseList({
 
                 <td className="justify-center">
                   <button
-                    className="bg-white text-black p-2 h-10 "
+                    className="btn-primary"
                     onClick={() => {
                       if (buttonText === "Add") {
                         handleAddToWorkout(
