@@ -140,17 +140,17 @@ export default function Workout({ user }) {
                 <div className="mt-8 mx-8 space-y-4">
                 <h2 className=" text-3xl font-semibold">{currentWorkout.name.toUpperCase()}</h2>
 
-                <button className="items-baseline" onClick={handleShowExercises}>
+                <button className="items-baseline btn-secondary" onClick={handleShowExercises}>
                   {showExerciseForWorkout && (
                     <div className="flex">
                       <span>HIDE</span>
-                      <ChevronDoubleUpIcon className="h-6 w-6 text-white-500 mx-2  hover:text-white" />
+                      <ChevronDoubleUpIcon className="h-6 w-6 text-white-500 mx-2" />
                     </div>
                   )}
                   {!showExerciseForWorkout && (
                     <div className="flex">
-                      <span>SHOW MORE</span>
-                      <ChevronDoubleDownIcon className="h-6 w-6 text-white-500 mx-2 hover:text-white" />
+                      <span>SHOW</span>
+                      <ChevronDoubleDownIcon className="h-6 w-6 text-white-500 ml-2" />
                     </div>
                   )}
                 </button>
@@ -184,7 +184,7 @@ export default function Workout({ user }) {
 
                   return (
                     <ul className="flex m-4 p-8 justify-between bg-gradient-to-l from-gray-700 via-gray-900 to-black">
-                      <li className="">{workout.name}</li>
+                      <li className="">{workout.name.toUpperCase()}</li>
                       <button
                         className="btn-primary"
                         onClick={handleSetDefault}
