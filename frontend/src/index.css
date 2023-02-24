@@ -12,7 +12,11 @@
     }
     .input {
 
-      @apply w-12 h-12  text-center text-xl text-black bg-[#2B2946] focus:bg-slate-100
+      @apply w-12 h-12  text-center text-xl text-black bg-[#c4c1f0] focus:bg-slate-100
+    }
+    .input-fixed {
+
+      @apply w-12 h-12  text-center text-xl text-white bg-inherit
     }
   }
 

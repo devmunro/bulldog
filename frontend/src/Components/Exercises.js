@@ -20,7 +20,7 @@ export default function Exercises() {
     exerciseReps: 12,
     exerciseWeight: 10,
   });
-
+  console.log(exerciseDetails);
   const [searchTerm, setSearchTerm] = useState("");
 
   const dispatch = useDispatch();

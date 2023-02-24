@@ -11,6 +11,7 @@ export default function ExerciseList({
 }) {
   const [exerciseInputs, setExerciseInputs] = useState({});
   const defaultWorkout = useSelector((state) => state.fitness.defaultWorkout);
+  const [disabled, setDisabled] = useState(isDisabled);
 
   //handle add to workout
   const handleAddToWorkout = async (id, name, bodyType, equipment) => {
@@ -27,13 +28,8 @@ export default function ExerciseList({
 
   //handle edit exercise for current workout
   const handleEditExercise = async (id) => {
-    setExerciseDetails({
-      exerciseID: id,
-      exerciseSets: exerciseInputs[id]?.sets ?? 3,
-      exerciseReps: exerciseInputs[id]?.reps ?? 8,
-      exerciseWeight: exerciseInputs[id]?.weight ?? 10,
-      selectedWorkout: defaultWorkout,
-    });
+    setDisabled(false);
+  
   };
   //handlechange for inputs
   const handleChange = (id) => (e) => {
@@ -48,7 +44,7 @@ export default function ExerciseList({
     }));
   };
 
-  console.log(exerciseList);
+  
 
   return (
     <table className="table-auto w-full text-white text-justify align-middle">
@@ -98,13 +94,13 @@ export default function ExerciseList({
                 <td>
                   <input
                     placeholder={exercise.sets || 3}
-                    className="input"
+                    className={!disabled ? "input" : "input-fixed"}
                     value={
                       exerciseInputs[exercise._id]?.sets ?? exercise.sets ?? 3
                     }
                     name="sets"
                     onChange={handleChange(exercise._id)}
-                    disabled={isDisabled}
+                    disabled={disabled}
                   ></input>
                 </td>
 
@@ -113,13 +109,13 @@ export default function ExerciseList({
                 <td>
                   <input
                     placeholder="8"
-                    className="input"
+                    className={!disabled ? "input" : "input-fixed"}
                     value={
                       exerciseInputs[exercise._id]?.reps ?? exercise.reps ?? 12
                     }
                     name="reps"
                     onChange={handleChange(exercise._id)}
-                    disabled={isDisabled}
+                    disabled={disabled}
                   ></input>
                 </td>
 
@@ -128,7 +124,7 @@ export default function ExerciseList({
                 <td>
                   <input
                     placeholder="10"
-                    className="input"
+                    className={!disabled ? "input" : "input-fixed"}
                     value={
                       exerciseInputs[exercise._id]?.weight ??
                       exercise.weight ??
@@ -136,7 +132,7 @@ export default function ExerciseList({
                     }
                     name="weight"
                     onChange={handleChange(exercise._id)}
-                    disabled={isDisabled}
+                    disabled={disabled}
                   ></input>
                 </td>
 
