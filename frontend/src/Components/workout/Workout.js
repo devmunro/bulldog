@@ -101,7 +101,7 @@ export default function Workout({ user }) {
   };
 
   return (
-    <div className="bg-[#2B2946] h-screen flex justify-center px-4 w-full">
+    <div className="bg-[#2B2946] h-full flex justify-center px-4 w-full">
       {loading === false && (
         <div className="w-full">
           <button
@@ -131,35 +131,37 @@ export default function Workout({ user }) {
             </div>
           )}
           {currentWorkout && currentWorkout.exercises && (
-            <div className="text-black p-4 bg-gradient-to-bl from-blue-700 via-blue-800 to-gray-900">
-              <h2 className="font-bold">Current Workout</h2>
+            <div className=" relative text-black bg-gradient-to-bl from-blue-700 via-blue-800 to-gray-900">
+             
 
               {/* SHOW OR HIDE EXERCISES */}
               <div className="flex justify-between h-1/2 items-center gap-4 text-gray-400">
-                
                 <div className="mt-8 mx-8 space-y-4">
-                <h2 className=" text-3xl font-semibold">{currentWorkout.name.toUpperCase()}</h2>
+                <h2 className="font-bold">Current Workout</h2>
+                  <h2 className=" text-3xl font-semibold">
+                    {currentWorkout.name.toUpperCase()}
+                  </h2>
 
-                <button className="items-baseline btn-secondary" onClick={handleShowExercises}>
-                  {showExerciseForWorkout && (
-                    <div className="flex">
-                      <span>HIDE</span>
-                      <ChevronDoubleUpIcon className="h-6 w-6 text-white-500 mx-2" />
-                    </div>
-                  )}
-                  {!showExerciseForWorkout && (
-                    <div className="flex">
-                      <span>SHOW</span>
-                      <ChevronDoubleDownIcon className="h-6 w-6 text-white-500 ml-2" />
-                    </div>
-                  )}
-                </button>
+                  <button
+                    className="items-baseline btn-secondary"
+                    onClick={handleShowExercises}
+                  >
+                    {showExerciseForWorkout && (
+                      <div className="flex">
+                        <span>HIDE</span>
+                        <ChevronDoubleUpIcon className="h-6 w-6 text-white-500 mx-2" />
+                      </div>
+                    )}
+                    {!showExerciseForWorkout && (
+                      <div className="flex">
+                        <span>SHOW</span>
+                        <ChevronDoubleDownIcon className="h-6 w-6 text-white-500 ml-2" />
+                      </div>
+                    )}
+                  </button>
                 </div>
                 <div className="opacity-25">
-                  <FirebaseStorage
-                    imageBase="manworkingout.png"
-      
-                  />
+                  <FirebaseStorage imageBase="manworkingout.png" />
                 </div>
               </div>
 
