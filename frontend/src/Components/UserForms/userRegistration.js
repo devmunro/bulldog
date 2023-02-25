@@ -32,16 +32,17 @@ const RegisterForm = () => {
 
     const { passwordConfirmation, ...userData } = formData;
 
-      const registerDataResult = await dispatch(registerUser(userData));
-      console.log(registerDataResult.response);
+    const registerDataResult = await dispatch(registerUser(userData));
+    console.log(registerDataResult.response);
 
-      if (success) {
-        navigate("/");
-        console.log("User created");
-      }
-    
-    if(error) {
-    console.log(error)}
+    if (success) {
+      navigate("/");
+      console.log("User created");
+    }
+
+    if (error) {
+      console.log(error);
+    }
   };
 
   // clear state on unmount
@@ -56,7 +57,27 @@ const RegisterForm = () => {
   };
 
   return (
-    <div className="h-screen flex items-center justify-center ">
+    <div className="h-screen flex flex-col items-center justify-center ">
+      {error && (
+        <div
+          class="flex items-center justify-center w-1/2 lg:w-1/3 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded "
+          role="alert"
+        >
+          <strong class="font-bold space-x-2">{error}</strong>
+         
+          <span class=" px-4 py-3">
+            <svg
+              class="fill-current h-6 w-6 text-red-500"
+              role="button"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+            >
+              <title>Close</title>
+              <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
+            </svg>
+          </span>
+        </div>
+      )}
       <div className="w-1/2 lg:w-1/3 ring-4 rounded-t-xl shadow-2xl  ">
         <div className="flex-col items-center flex bg-[#2B2946]">
           <h2 className="text-xl text-white font-bold mt-4">Sign up here</h2>
