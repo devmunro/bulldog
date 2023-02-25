@@ -12,7 +12,9 @@ export const registerUser = createAsyncThunk(
       const response = await axios.post(`${API_URL}signup`, userdata);
       return response.data;
     } catch (error) {
-      console.log(error);
+      console.log(error.response.data.error);
+
+      throw new Error(error.response.data.error );
     }
   }
 );
@@ -63,7 +65,7 @@ export const getUserDetails = createAsyncThunk("auth/getDetails", async () => {
 
 export const logout = createAsyncThunk("auth/logout", async () => {
   // Clear the localStorage items for user and token
-  
+
   console.log("Clearing localStorage data...");
 
   localStorage.removeItem("user");
@@ -111,7 +113,7 @@ export const userSlice = createSlice({
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error;
+        state.error = action.error.message;
       })
       .addCase(loginUser.pending, (state) => {
         state.loading = true;
@@ -139,8 +141,8 @@ export const userSlice = createSlice({
       .addCase(logout.fulfilled, (state) => {
         state.user = null;
         state.token = null;
-        localStorage.removeItem('user'); // remove user data from local storage
-        localStorage.removeItem('token'); // remove user token from local storage
+        localStorage.removeItem("user"); // remove user data from local storage
+        localStorage.removeItem("token"); // remove user token from local storage
       });
   },
 });

@@ -3,6 +3,7 @@ import { clearState, loginUser } from "../../features/userSlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Loading from "../Loading";
 
 const LoginForm = () => {
   const [loginData, setLoginData] = useState({
@@ -54,8 +55,8 @@ const LoginForm = () => {
     navigate("/register");
   };
 
-  console.log("state:", user)
-  console.log("local:",localStorage.getItem("user"))
+  console.log("state:", user);
+  console.log("local:", localStorage.getItem("user"));
   return (
     <div className="flex-col items-center flex bg-[#2B2946]">
       <h2 className="text-xl mt-4 font-bold text-white">Login</h2>
@@ -85,9 +86,17 @@ const LoginForm = () => {
           required
         />
 
-        <button className="bg-blue-800 text-white font-bold" type="submit">
-          Submit
-        </button>
+        {!loading && (
+          <button className="bg-blue-800 text-white font-bold" type="submit">
+            Submit
+          </button>
+        )}
+
+{loading && (
+          <button disabled className="items-center bg-blue-800 text-white font-bold" type="submit">
+            <Loading/>
+          </button>
+        )}
       </form>
       <p className="bg-white w-full text-center">
         Don't have an account?
