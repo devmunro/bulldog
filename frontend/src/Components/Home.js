@@ -5,13 +5,14 @@ import { Link } from "react-router-dom";
 
 export default function Home() {
   const [showModal, setShowModal] = useState(false);
+  const [showRegistrationBox, setShowRegistrationBox] = useState(false);
 
   const openModal = () => {
-    setShowModal(true);
+    setShowModal(!showModal);
   };
 
-  const closeModal = () => {
-    setShowModal(false);
+  const showRegistration = () => {
+    setShowRegistrationBox(!showRegistrationBox);
   };
 
   return (
@@ -37,18 +38,22 @@ export default function Home() {
       <section className="bg-black">
         <div className="w-full h-full bg-black opacity-70 z-0"></div>
         <div className=" w-1/2 h-full opacity-70 z-10"></div>
-        <div class="relative z-20 py-10 md:py-14 text-white">
-          <div class="container mx-auto px-4 md:px-8 lg:px-16">
-            <div class="flex justify-between gap-4 px-1 md:px-2 lg:px-4 flex-col md:flex-row items-center">
-              <div class="w-full md:w-1/2"></div>
-              <div class="w-full md:w-1/2 mb-12 md:mb-0">
-                <h1 class="font-bold text-4xl sm:text-5xl mb-4 leading-tight">
+        <div className="relative z-20 py-10 md:py-14 text-white">
+          <div className="container mx-auto px-4 md:px-8 lg:px-16">
+            <div className="flex justify-between gap-4 px-1 md:px-2 lg:px-4 flex-col md:flex-row items-center">
+              <div className="w-full md:w-1/2"></div>
+
+              <div className="w-full md:w-1/2 mb-12 md:mb-0">
+                <h1 className="font-bold text-4xl sm:text-5xl mb-4 leading-tight">
                   Get fit and stay healthy with Active AI
                 </h1>
-                <p class="text-gray-300 text-xl mb-6">
+                <p className="text-gray-300 text-xl mb-6">
                   Join Active AI today and take control of your fitness journey.
                 </p>
-                <button class="bg-purple-600 text-white py-2 px-4 rounded hover:bg-purple-700">
+                <button
+                  onClick={showRegistration}
+                  className="bg-purple-600 text-white py-2 px-4 rounded hover:bg-purple-700"
+                >
                   Sign Up Now
                 </button>
               </div>
@@ -88,7 +93,6 @@ export default function Home() {
                 workouts tailored to your fitness level and goals.
               </p>
             </div>
-            
           </div>
         </div>
       </section>
@@ -141,18 +145,31 @@ export default function Home() {
       </section>
 
       {/* The modal */}
-      {showModal ? (
-        <div className="fixed w-full inset-0 ful0 z-50 flex items-center justify-center">
+      {showModal && (
+        <div className="fixed w-full h-full top-0 left-0 z-50 flex items-center justify-center">
           <div
-            className="absolute inset-0 bg-black opacity-50"
-            onClick={closeModal}
+            className="absolute inset-0 bg-black opacity-80"
+            onClick={openModal}
           />
-          <div className=" z-10">
+          <div className="w-1/2 z-10">
             {/* Your LoginForm component here */}
             <LoginForm />
           </div>
         </div>
-      ) : null}
+      )}
+
+      {showRegistrationBox && (
+        <div className="fixed w-full h-full top-0 left-0 z-50 flex items-center justify-center">
+          <div
+            className="absolute inset-0 bg-black opacity-80"
+            onClick={showRegistration}
+          />
+          <div className="w-1/2 z-10">
+            {/* Your Reguster component here */}
+            <RegisterForm />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

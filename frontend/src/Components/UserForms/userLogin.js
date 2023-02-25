@@ -58,67 +58,65 @@ const LoginForm = () => {
   console.log("state:", user);
   console.log("local:", localStorage.getItem("user"));
   return (
-    <div>{error && (
-      <div
-        class="flex items-center justify-center w-full bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded "
-        role="alert"
-      >
-        <strong class="font-bold space-x-2">{error}</strong>
-      </div>
-    )}
-    <div className="flex-col items-center flex bg-[#2B2946]">
-     
-     
-     
-      <h2 className="text-xl mt-4 font-bold text-white">Login</h2>
-      <p className="text-white">Sign in to your account</p>
-
-      <form
-        className=" flex-col flex space-y-2 px-8 w-full h-full p-4 [&>*]:p-2 [&>*]:rounded-md [&>*]:border-2 [&>*]:border-gray-300"
-        onSubmit={handleSubmit}
-      >
-        <input
-          type="email"
-          name="email"
-          id="email"
-          placeholder="Email"
-          value={loginData.email}
-          onChange={handleInputChange}
-          required
-        />
-
-        <input
-          type="password"
-          name="password"
-          id="password"
-          placeholder="Password"
-          value={loginData.password}
-          onChange={handleInputChange}
-          required
-        />
-
-        {!loading && (
-          <button className="bg-blue-800 text-white font-bold" type="submit">
-            Submit
-          </button>
-        )}
-
-{loading && (
-          <button disabled className="items-center bg-blue-800 text-white font-bold" type="submit">
-            <Loading/>
-          </button>
-        )}
-      </form>
-      <p className="bg-white w-full text-center">
-        Don't have an account?
-        <span>
-          <button onClick={handleClick} className="px-2 italic">
-            Click Here
-          </button>
-        </span>
-      </p>
+    <div>
+  {error && (
+    <div class="flex items-center justify-center  bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+      <strong class="font-bold space-x-2">{error}</strong>
     </div>
-    </div>
+  )}
+  <div className="flex-col items-center flex bg-black border-2 border-white space-y-8">
+    <h2 className="text-4xl sm:text-5xl font-bold text-white mt-8">
+      Login
+    </h2>
+    <p className="text-gray-300 text-xl">Sign in to your account</p>
+
+    <form
+      className="flex-col flex space-y-2 px-8 w-full p-4"
+      onSubmit={handleSubmit}
+    >
+      <input
+        type="email"
+        name="email"
+        id="email"
+        placeholder="Email"
+        value={loginData.email}
+        onChange={handleInputChange}
+        required
+        className="w-full bg-gray-800 text-gray-300 rounded-md p-2"
+      />
+
+      <input
+        type="password"
+        name="password"
+        id="password"
+        placeholder="Password"
+        value={loginData.password}
+        onChange={handleInputChange}
+        required
+        className="w-full bg-gray-800 text-gray-300 rounded-md p-2"
+      />
+
+      {!loading && (
+        <button className="bg-purple-600 text-white py-2 px-4 rounded hover:bg-purple-700">
+          Submit
+        </button>
+      )}
+
+      {loading && (
+        <button disabled className="bg-purple-600 text-white py-2 px-4 rounded">
+          <Loading />
+        </button>
+      )}
+    </form>
+    <p className="text-gray-300 text-xl p-2">
+      Don't have an account?
+      <button onClick={handleClick} className="text-purple-600 italic ml-2">
+        Click Here
+      </button>
+    </p>
+  </div>
+</div>
+
   );
 };
 
