@@ -58,7 +58,18 @@ const LoginForm = () => {
   console.log("state:", user);
   console.log("local:", localStorage.getItem("user"));
   return (
+    <div>{error && (
+      <div
+        class="flex items-center justify-center w-full bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded "
+        role="alert"
+      >
+        <strong class="font-bold space-x-2">{error}</strong>
+      </div>
+    )}
     <div className="flex-col items-center flex bg-[#2B2946]">
+     
+     
+     
       <h2 className="text-xl mt-4 font-bold text-white">Login</h2>
       <p className="text-white">Sign in to your account</p>
 
@@ -106,6 +117,7 @@ const LoginForm = () => {
           </button>
         </span>
       </p>
+    </div>
     </div>
   );
 };

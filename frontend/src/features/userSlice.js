@@ -31,7 +31,7 @@ export const loginUser = createAsyncThunk("auth/logUser", async (userdata) => {
       return response.data;
     }
   } catch (error) {
-    throw new Error(error);
+    throw new Error(error.response.data.error );
   }
 });
 
@@ -125,7 +125,7 @@ export const userSlice = createSlice({
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error;
+        state.error = action.error.message;
       })
       .addCase(getUserDetails.pending, (state) => {
         state.loading = true;
