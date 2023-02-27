@@ -4,6 +4,9 @@
   "private": true,
   "proxy": "http://localhost:8635/",
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.3.0",
+    "@fortawesome/free-solid-svg-icons": "^6.3.0",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@heroicons/react": "^2.0.13",
     "@reduxjs/toolkit": "^1.9.1",
     "@testing-library/jest-dom": "^5.16.5",
@@ -11,6 +14,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.2.4",
     "firebase": "^9.16.0",
+    "framer-motion": "^10.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.5",
