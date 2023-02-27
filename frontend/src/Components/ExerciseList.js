@@ -29,7 +29,6 @@ export default function ExerciseList({
   //handle edit exercise for current workout
   const handleEditExercise = async (id) => {
     setDisabled(false);
-  
   };
   //handlechange for inputs
   const handleChange = (id) => (e) => {
@@ -44,124 +43,128 @@ export default function ExerciseList({
     }));
   };
 
-  
-
   return (
-    <table className="table-auto w-full text-white text-justify align-middle">
-      <thead>
-        <tr className="[&>*]:p-4">
-          <th className="w-1/4">Name</th>
-          <th>Type</th>
-          <th>Equipment</th>
-          <th>Sets</th>
-          <th>Reps</th>
-          <th>Weight(KG)</th>
-          <th>Add/Edit</th>
-        </tr>
-      </thead>
-
+    <div className="grid md:grid-cols-8 grid-cols-5 selection text-center  gap-4">
+      <div className="col-span-1 font-bold">Name</div>
+      <div className="font-bold hidden md:block">Type</div>
+      <div className="font-bold hidden md:block">Equipment</div>
+      <div className="font-bold">Sets</div>
+      <div className="font-bold">Reps</div>
+      <div className="font-bold">Weight</div>
+      <div className="font-bold">{buttonText}</div>
       {!loading &&
         exerciseList &&
         exerciseList.length > 0 &&
         exerciseList.map((exercise) => {
           return (
-            <tbody  className={`${disabled ? " even:bg-indigo-800 odd:bg-black" : "bg-black"} shadow-md shadow-black`}>
+            <React.Fragment key={exercise._id}>
               {/* EXERCISE NAME */}
-              <tr className="space-y-4 space-x-2 [&>*]:p-4">
-                <td>{exercise.name}</td>
+              <div className="col-span-1 md:p-4">{exercise.name}</div>
 
-                {/* Exercise BODY TYPE */}
+              {/* Exercise BODY TYPE */}
+              <div className="p-4 hidden md:block">
+                {exercise.body_type &&
+                  exercise.body_type
+                    .map((type) => type.toUpperCase())
+                    .join(", ")}
+              </div>
 
-                <td>
-                  {exercise.body_type &&
-                    exercise.body_type
-                      .map((type) => type.toUpperCase())
-                      .join(", ")}
-                </td>
+              {/* Exercise EQUIPMENT */}
+              <div className="p-4 hidden md:block">
+                {exercise.equipment &&
+                  exercise.equipment
+                    .map((type) => type.toUpperCase())
+                    .join(", ")}
+              </div>
 
-                {/* Exercise EQUIPMENT */}
+              {/* SETS */}
+              <div className="md:p-4">
+                <input
+                  placeholder={exercise.sets || 3}
+                  className={!disabled ? "input" : "input-fixed"}
+                  value={
+                    exerciseInputs[exercise._id]?.sets ?? exercise.sets ?? 3
+                  }
+                  name="sets"
+                  onChange={handleChange(exercise._id)}
+                  disabled={disabled}
+                ></input>
+              </div>
 
-                <td>
-                  {" "}
-                  {exercise.equipment &&
-                    exercise.equipment
-                      .map((type) => type.toUpperCase())
-                      .join(", ")}
-                </td>
+              {/* REPS */}
+              <div className="md:p-4">
+                <input
+                  placeholder="8"
+                  className={!disabled ? "input" : "input-fixed"}
+                  value={
+                    exerciseInputs[exercise._id]?.reps ?? exercise.reps ?? 12
+                  }
+                  name="reps"
+                  onChange={handleChange(exercise._id)}
+                  disabled={disabled}
+                ></input>
+              </div>
 
-                {/* SETS  */}
+              {/* WEIGHTS KG */}
+              <div className="md:p-4">
+                <input
+                  placeholder="10"
+                  className={!disabled ? "input" : "input-fixed"}
+                  value={
+                    exerciseInputs[exercise._id]?.weight ??
+                    exercise.weight ??
+                    10
+                  }
+                  name="weight"
+                  onChange={handleChange(exercise._id)}
+                  disabled={disabled}
+                ></input>
+              </div>
 
-                <td>
-                  <input
-                    placeholder={exercise.sets || 3}
-                    className={!disabled ? "input" : "input-fixed"}
-                    value={
-                      exerciseInputs[exercise._id]?.sets ?? exercise.sets ?? 3
+              {/* ADD TO WORKOUT BUTTTON */}
+              <div className="md:p-4 md:visible hidden">
+                <button
+                  className="btn-primary"
+                  onClick={() => {
+                    if (buttonText === "Add") {
+                      handleAddToWorkout(
+                        exercise._id,
+                        exercise.name,
+                        exercise.body_type,
+                        exercise.equipment
+                      );
+                    } else if (buttonText === "Edit") {
+                      handleEditExercise(exercise._id);
                     }
-                    name="sets"
-                    onChange={handleChange(exercise._id)}
-                    disabled={disabled}
-                  ></input>
-                </td>
+                  }}
+                >
+                  {buttonText}
+                </button>
+              </div>
 
-                {/* REPS */}
-
-                <td>
-                  <input
-                    placeholder="8"
-                    className={!disabled ? "input" : "input-fixed"}
-                    value={
-                      exerciseInputs[exercise._id]?.reps ?? exercise.reps ?? 12
+              <div className="md:p-4 md:hidden visible">
+                <button
+                  className="btn-primary"
+                  onClick={() => {
+                    if (buttonText === "Add") {
+                      handleAddToWorkout(
+                        exercise._id,
+                        exercise.name,
+                        exercise.body_type,
+                        exercise.equipment
+                      );
+                    } else if (buttonText === "Edit") {
+                      handleEditExercise(exercise._id);
                     }
-                    name="reps"
-                    onChange={handleChange(exercise._id)}
-                    disabled={disabled}
-                  ></input>
-                </td>
-
-                {/* WEIGHTS KG */}
-
-                <td>
-                  <input
-                    placeholder="10"
-                    className={!disabled ? "input" : "input-fixed"}
-                    value={
-                      exerciseInputs[exercise._id]?.weight ??
-                      exercise.weight ??
-                      10
-                    }
-                    name="weight"
-                    onChange={handleChange(exercise._id)}
-                    disabled={disabled}
-                  ></input>
-                </td>
-
-                {/* ADD TO WORKOUT BUTTTON */}
-
-                <td className="justify-center">
-                  <button
-                    className="btn-primary"
-                    onClick={() => {
-                      if (buttonText === "Add") {
-                        handleAddToWorkout(
-                          exercise._id,
-                          exercise.name,
-                          exercise.body_type,
-                          exercise.equipment
-                        );
-                      } else if (buttonText === "Edit") {
-                        handleEditExercise(exercise._id);
-                      }
-                    }}
-                  >
-                    {buttonText}
-                  </button>
-                </td>
-              </tr>
-            </tbody>
+                  }}
+                >
+                  +
+                </button>
+              </div>
+            </React.Fragment>
           );
         })}
       {loading && <Loading />}
-    </table>
+    </div>
   );
 }

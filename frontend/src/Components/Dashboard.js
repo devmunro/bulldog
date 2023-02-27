@@ -34,7 +34,7 @@ export default function Dashboard() {
   return (
     <div className="bg-[#2B2946] h-full flex w-full">
       <Sidebar />
-      <div className="flex-col w-full">
+      <div className="flex-col w-full h-full m-2">
         <Navbar />
         <Routes>
           <Route path="/" element={<Overview user={user} />} />
