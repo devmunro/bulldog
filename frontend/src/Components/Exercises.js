@@ -47,16 +47,16 @@ export default function Exercises() {
     console.log(searchExercises);
   };
   return (
-    <div className="m-2">
+    <div className="md:m-2">
       <ExerciseCatergories
         setExerciseList={setExerciseList}
         setLoading={setLoading}
       />
       {/* SEARCH BAR */}
-      <div className=" p-4 bg-gradient-to-bl from-blue-800 to-gray-900">
-        <div className="w-1/2 flex gap-4 items-center">
+      <div className=" md:p-4 bg-gradient-to-bl from-blue-800 to-gray-900">
+        <div className="w-full md:1/2 flex md:gap-4 gap-1 items-center">
           <input
-            className="px-2 w-2/3 h-12 rounded-2xl bg-[#19192C] text-[#7B7B8F] "
+            className="px-2 md:w-2/3 md:h-12 h-8 rounded-2xl bg-[#19192C] text-[#7B7B8F] "
             placeholder="Search for an exercise"
             onChange={handleSearchChange}
             value={searchTerm}
@@ -77,6 +77,7 @@ export default function Exercises() {
           exerciseList={exerciseList}
           buttonText="Add"
           isDisabled={false}
+
         />
       </div>
     </div>
