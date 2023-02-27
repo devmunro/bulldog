@@ -17,6 +17,10 @@ export default function ExerciseCatergories({ setLoading, setExerciseList }) {
   const dispatch = useDispatch();
 
   const [chosenCategory, setChosenCategory] = useState("cardio");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [sliceStart, setSliceStart] = useState(0);
+  const [sliceEnd, setSliceEnd] = useState(4);
+  const [pageSize, setPageSize] = useState(4);
 
   useEffect(() => {
     const fetchData = async (a) => {
@@ -28,26 +32,70 @@ export default function ExerciseCatergories({ setLoading, setExerciseList }) {
   }, [chosenCategory, dispatch, setExerciseList, setLoading]);
 
   const handleCategory = (type) => {
-   
     console.log(type);
     setChosenCategory(type);
   };
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 668) {
+        setSliceStart(0);
+        setSliceEnd(2);
+        setPageSize(2);
+      } else {
+        setSliceStart(0);
+        setSliceEnd(4);
+        setPageSize(4);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    handleResize();
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const startIndex = (currentPage - 1) * pageSize + sliceStart;
+  const endIndex = startIndex + pageSize;
+  const displayedCategories = categories.slice(startIndex, endIndex);
+
+  const handlePreviousPage = () => {
+    if (startIndex === 0) {
+      return;
+    }
+    setCurrentPage(currentPage - 1);
+  };
+
+  const handleNextPage = () => {
+    if (endIndex >= 5) {
+      return;
+    }
+
+    setCurrentPage(currentPage + 1);
+  };
+
   return (
-    <div className=" text-white max-w-full m-2 p-4 bg-black">
+    <div className=" text-white w-full m-2 p-2 bg-black">
       <h2 className="font-bold mx-4">Catergories</h2>
-      <ul className="flex gap-2 w-full ">
-        {categories.map((item) => {
-          return (
-            <div onClick={() => handleCategory(item.name)} className=" w-full bg-[#2B2946] p-2 m-2 text-center rounded-xl border-2 border-slate-50 hover:bg-white hover:text-black cursor-pointer">
-              <button >
-                <FirebaseStorage imageBase={item.image} />
-                {item.name}
-              </button>
-            </div>
-          );
-        })}
-      </ul>
+      <div className="flex w-full  items-center">
+        <button onClick={handlePreviousPage}>B</button>
+        <ul className="w-full md:mx-4 md:px-4 px-4 grid grid-cols-2 lg:grid-cols-4 gap-2 h-32 overflow-hidden">
+          {displayedCategories.map((item) => {
+            return (
+              <li
+                onClick={() => handleCategory(item.name)}
+                className="w-full bg-[#2B2946] p-2 m-2 text-center rounded-xl border-2 border-slate-50 hover:bg-white hover:text-black cursor-pointer"
+              >
+                <button>
+                  <FirebaseStorage imageBase={item.image} />
+                  {item.name}
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+        <button onClick={handleNextPage}>N</button>
+      </div>
     </div>
   );
 }
