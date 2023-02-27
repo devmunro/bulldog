@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import LoginForm from "./UserForms/userLogin";
 import RegisterForm from "./UserForms/userRegistration";
 import { Link } from "react-router-dom";
+import FirebaseStorage from "../images/firebaseStorage";
 
 export default function Home() {
   const [showModal, setShowModal] = useState(false);
@@ -38,10 +39,12 @@ export default function Home() {
       <section className="bg-black">
         <div className="w-full h-full bg-black opacity-70 z-0"></div>
         <div className=" w-1/2 h-full opacity-70 z-10"></div>
-        <div className="relative z-20 py-10 md:py-14 text-white">
-          <div className="container mx-auto px-4 md:px-8 lg:px-16">
-            <div className="flex justify-between gap-4 px-1 md:px-2 lg:px-4 flex-col md:flex-row items-center">
-              <div className="w-full md:w-1/2"></div>
+        <div className="relative z-20 py-4 md:py-8 text-white">
+          <div className="container mx-auto px-4 md:px-4 lg:px-8">
+            <div className="flex justify-center gap-4 px-1 md:px-2 lg:px-4 flex-col md:flex-row items-center">
+              <div className="w-full md:w-1/2 -center">
+                <FirebaseStorage imageBase="homepage.jpg" />
+              </div>
 
               <div className="w-full md:w-1/2 mb-12 md:mb-0">
                 <h1 className="font-bold text-4xl sm:text-5xl mb-4 leading-tight">
