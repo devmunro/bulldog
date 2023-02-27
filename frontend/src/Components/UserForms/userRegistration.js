@@ -177,14 +177,14 @@ const RegisterForm = () => {
               )}
             </div>
           </form>
-          <p className="w-full text-center pt-2 pb-4 text-white">
+          {/* <p className="w-full text-center pt-2 pb-4 text-white">
             Already have an account?
             <span>
               <button onClick={handleClick} className="text-blue-400 px-2 italic">
                 Click Here
               </button>
             </span>
-          </p>
+          </p> */}
         </div>
       </div>
     </div>

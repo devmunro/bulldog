@@ -108,12 +108,12 @@ const LoginForm = () => {
         </button>
       )}
     </form>
-    <p className="text-gray-300 text-xl p-2">
+    {/* <p className="text-gray-300 text-xl p-2">
       Don't have an account?
       <button onClick={handleClick} className="text-purple-600 italic ml-2">
         Click Here
       </button>
-    </p>
+    </p> */}
   </div>
 </div>
 

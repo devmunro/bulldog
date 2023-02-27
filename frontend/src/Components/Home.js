@@ -147,27 +147,28 @@ export default function Home() {
         </div>
       </section>
 
-      {/* The modal */}
+      {/* LOGIN The modal */}
       {showModal && (
         <div className="fixed w-full h-full top-0 left-0 z-50 flex items-center justify-center">
           <div
             className="absolute inset-0 bg-black opacity-80"
             onClick={openModal}
           />
-          <div className="w-1/2 z-10">
+          <div className="md:w-1/2 w-full z-10 px-8">
             {/* Your LoginForm component here */}
             <LoginForm />
           </div>
         </div>
       )}
 
+{/* REGistration The modal */}
       {showRegistrationBox && (
         <div className="fixed w-full h-full top-0 left-0 z-50 flex items-center justify-center">
           <div
             className="absolute inset-0 bg-black opacity-80"
             onClick={showRegistration}
           />
-          <div className="w-1/2 z-10">
+          <div className="md:w-1/2 w-full z-10 px-8">
             {/* Your Reguster component here */}
             <RegisterForm />
           </div>
