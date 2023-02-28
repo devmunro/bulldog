@@ -13,6 +13,7 @@ import {
   ChevronDoubleUpIcon,
 } from "@heroicons/react/24/solid";
 import FirebaseStorage from "../../images/firebaseStorage";
+import WorkoutPage from "../workoutPage";
 
 export default function Workout({ user }) {
   const dispatch = useDispatch();
@@ -100,13 +101,19 @@ export default function Workout({ user }) {
     setShowExerciseForWorkout(!showExerciseForWorkout);
   };
 
+  const handleStartWorkoutClick = (workout) => {
+    console.log(workout);
+    return <WorkoutPage workout={workout} />;
+  };
+
   return (
-    <div className="bg-[#2B2946] h-full flex justify-center px-4 w-full">
-      {loading === false && (
-        <div className="w-full">
+   <div className="bg-[#2B2946] md:m-2 justify-center flex-col flex-grow">
+  {loading === false && (
+    <div className="w-full">
+      <div>  
           <button
             onClick={handleCreateWorkoutClick}
-            className="bg-white px-4 py-2 my-2 rounded-md hover:bg-slate-300 "
+            className="bg-white px-1 py-2 my-2 rounded-md hover:bg-slate-300 "
           >
             Create Workout
           </button>
@@ -116,7 +123,7 @@ export default function Workout({ user }) {
                 Create a Workout
               </h2>
               <form
-                className=" flex-col flex space-y-2 px-8 w-full h-full p-4 [&>*]:p-2 [&>*]:rounded-md [&>*]:border-2 [&>*]:border-gray-300"
+                className=" flex-col flex space-y-2 px-4 w-full h-full p-4 [&>*]:p-2 [&>*]:rounded-md [&>*]:border-2 [&>*]:border-gray-300"
                 onSubmit={handleSubmit}
               >
                 <input
@@ -129,15 +136,15 @@ export default function Workout({ user }) {
                 <button>Submit</button>
               </form>
             </div>
+            
           )}
+          </div>
           {currentWorkout && currentWorkout.exercises && (
-            <div className=" relative text-black bg-gradient-to-bl from-blue-700 via-blue-800 to-gray-900">
-             
-
+            <div className="text-black bg-gradient-to-bl from-blue-700 via-blue-800 to-gray-900">
               {/* SHOW OR HIDE EXERCISES */}
               <div className="flex justify-between h-1/2 items-center gap-4 text-gray-400">
                 <div className="mt-8 mx-8 space-y-4">
-                <h2 className="font-bold">Current Workout</h2>
+                  <h2 className="font-bold">Current Workout</h2>
                   <h2 className=" text-3xl font-semibold">
                     {currentWorkout.name.toUpperCase()}
                   </h2>
@@ -199,8 +206,11 @@ export default function Workout({ user }) {
                 }
               })}
           </div>
+
+          {/* <WorkoutPage workout={currentWorkout} /> */}
         </div>
       )}
+
       {loading === true && <Loading />}
     </div>
   );

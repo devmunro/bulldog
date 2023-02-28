@@ -44,7 +44,7 @@ export default function ExerciseList({
   };
 
   return (
-    <div className="mx-2">
+    <div className="md:mx-2">
       <div className="bg-white p-4 grid md:grid-cols-7 grid-cols-5 mt-2 items-center text-md md:text-lg text-center gap-4">
         <div className="font-bold  py-2 ">Name</div>
         <div className="font-bold hidden md:block  py-2 ">Type</div>

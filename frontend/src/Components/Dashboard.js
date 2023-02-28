@@ -30,16 +30,20 @@ export default function Dashboard() {
       dispatch(getUserDetails());
     }
   }, [token]);
-  
+
   return (
     <div className="bg-[#2B2946] h-full flex w-full">
+      <div className="w-14">
       <Sidebar />
-      <div className="flex-col w-full h-full m-2">
+      </div>
+      <div className= "flex-grow ml-4">
         <Navbar />
         <Routes>
           <Route path="/" element={<Overview user={user} />} />
           <Route path="/exerciselist" element={<Exercises />} />
+          
           <Route path="/workout" element={<Workout user={user} />} />
+         
         </Routes>
       </div>
     </div>

@@ -18,7 +18,7 @@ export default function Sidebar() {
   };
 
   return (
-    <div className="min-h-screen flex-col text-gray-400 bg-black">
+    <div className="fixed min-h-screen flex-col text-gray-400 bg-black">
       <div className="flex justify-between">
         {!hideSidebar && (
           <h1 className="text-white mt-6 md:ml-10 ml-2 px-2 font-bold">BULLDOG</h1>
@@ -34,7 +34,7 @@ export default function Sidebar() {
       </div>
 
       {!hideSidebar && (
-        <div className="md:min-w-[228px] ">
+        <div className=" ">
           <ul className="mt-10 md:ml-5 ml-2 space-y-3 text-sm text-left [&>*]:p-2  [&>*]:rounded-l-2xl [&>*]:flex">
             <li className="hover:bg-[#2B2946] hover:text-white">
               <Link to="/dashboard" className="flex">

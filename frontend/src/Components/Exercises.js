@@ -47,13 +47,13 @@ export default function Exercises() {
     console.log(searchExercises);
   };
   return (
-    <div className="md:m-2 flex justify-center flex-col">
+    <div className="flex justify-center flex-col ">
       <ExerciseCatergories
         setExerciseList={setExerciseList}
         setLoading={setLoading}
       />
       {/* SEARCH BAR */}
-      <div className="p-2 md:p-4 bg-gradient-to-bl from-blue-800 to-gray-900">
+      <div className=" md:p-4 bg-gradient-to-bl from-blue-800 to-gray-900">
         <div className="w-full md:1/2 flex px-4 gap-4 items-center">
           <input
             className="px-2 w-full md:w-2/3 md:h-12 h-8 rounded-2xl md:text-sm text-xs bg-[#19192C] text-[#7B7B8F] "
