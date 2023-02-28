@@ -12,7 +12,7 @@
     }
     .input {
 
-      @apply md:w-12 md:h-12 w-10 h-10 text-center md:text-xl rounded text-black bg-[#c4c1f0] focus:bg-slate-100
+      @apply md:w-16 md:h-16 w-14 h-10 text-center md:text-xl rounded text-black bg-[#c4c1f0] focus:bg-slate-100
     }
     .input-fixed {
 
