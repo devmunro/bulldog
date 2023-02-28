@@ -75,26 +75,55 @@ export default function ExerciseCatergories({ setLoading, setExerciseList }) {
   };
 
   return (
-    <div className=" text-white w-full m-2 p-2 bg-black">
-      <h2 className="font-bold mx-4">Catergories</h2>
-      <div className="flex w-full  items-center">
-        <button onClick={handlePreviousPage}>B</button>
-        <ul className="w-full md:mx-4 md:px-4 px-4 grid grid-cols-2 lg:grid-cols-4 gap-2 h-32 overflow-hidden">
-          {displayedCategories.map((item) => {
-            return (
-              <li
-                onClick={() => handleCategory(item.name)}
-                className="w-full bg-[#2B2946] p-2 m-2 text-center rounded-xl border-2 border-slate-50 hover:bg-white hover:text-black cursor-pointer"
-              >
-                <button>
-                  <FirebaseStorage imageBase={item.image} />
-                  {item.name}
-                </button>
-              </li>
-            );
-          })}
-        </ul>
-        <button onClick={handleNextPage}>N</button>
+    <div className="flex justify-center">
+      <div className="  text-white md:w-full w-2/3 my-4 md:p-2 p-1 bg-black">
+        <h2 className="hidden md:block font-bold text-lg md:text-xl mb-4">
+          Categories
+        </h2>
+        <div className="flex w-full items-center justify-center ">
+          <button
+            onClick={handlePreviousPage}
+            className="hidden md:block px-2 py-1 mr-2 rounded-md bg-gray-900 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 disabled:bg-gray-600 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            Previous
+          </button>
+          <button
+            onClick={handlePreviousPage}
+            className="md:hidden px-2 py-2 rounded-md bg-gray-900 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800"
+          >
+            {"<"}
+          </button>
+          <ul className="w-2/3 md:mx-4 md:px-4 items-center grid grid-cols-2 lg:grid-cols-4 h-24 md:h-32 overflow-hidden">
+            {displayedCategories.map((item) => {
+              return (
+                <li
+                  key={item.name}
+                  onClick={() => handleCategory(item.name)}
+                  className=" flex justify-center w-full p-2 mb-4 text-center rounded-xl md:border-2 border-slate-50 hover:border-transparent hover:bg-gray-900 hover:shadow-md cursor-pointer"
+                >
+                  <button className="text-base font-medium ">
+                    <FirebaseStorage imageBase={item.image} alt={item.name} />
+                    <span className="hidden md:block mt-2">{item.name}</span>
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+          <button
+            onClick={handleNextPage}
+            className="hidden md:block px-2 py-1 ml-2 rounded-md bg-gray-900 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 disabled:bg-gray-600 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            Next
+          </button>
+          <div className="md:hidden flex-1"></div>
+
+          <button
+            onClick={handleNextPage}
+            className="md:hidden px-2 py-2 rounded-md bg-gray-900 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800"
+          >
+            {">"}
+          </button>
+        </div>
       </div>
     </div>
   );
