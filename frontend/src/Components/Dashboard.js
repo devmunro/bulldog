@@ -32,20 +32,19 @@ export default function Dashboard() {
   }, [token]);
 
   return (
-    <div className="bg-[#2B2946] h-full flex w-full">
-      <div className="w-14">
+    <div className="flex h-full">
+    <div className="fixed left-0 top-0 h-full w-10 bg-gray-800">
       <Sidebar />
-      </div>
-      <div className= "flex-grow ml-4">
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Overview user={user} />} />
-          <Route path="/exerciselist" element={<Exercises />} />
-          
-          <Route path="/workout" element={<Workout user={user} />} />
-         
-        </Routes>
-      </div>
     </div>
+    <div className="flex-grow flex flex-col ml-10 md:ml-14 bg-[#1F2937]">
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Overview user={user} />} />
+        <Route path="/exerciselist" element={<Exercises />} />
+        <Route path="/workout" element={<Workout user={user} />} />
+      </Routes>
+    </div>
+  </div>
+  
   );
 }

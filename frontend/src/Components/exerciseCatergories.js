@@ -76,7 +76,7 @@ export default function ExerciseCatergories({ setLoading, setExerciseList }) {
 
   return (
     <div className="h-full w-full flex flex-col justify-center items-center">
-      <div className="  text-white lg:w-full w-2/3 my-4 md:p-2 p-1 bg-black">
+      <div className="  text-white  w-2/3 my-4 md:p-2 p-1 bg-black">
         <h2 className="hidden md:block font-bold text-lg md:text-xl mb-4">
           Categories
         </h2>
