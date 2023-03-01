@@ -89,6 +89,10 @@ export const findSingleWorkout = createAsyncThunk(
         params: { workoutID },
       });
       console.log(response);
+      localStorage.setItem(
+        "currentWorkout",
+        JSON.stringify(response.data)
+      );
       return response.data;
     } catch (error) {
       console.log(error);
@@ -123,6 +127,7 @@ export const exerciseSlice = createSlice({
   name: "fitness",
   initialState: {
     defaultWorkout: JSON.parse(localStorage.getItem("defaultWorkout")),
+    currentWorkout:  JSON.parse(localStorage.getItem("currentWorkout")),
     loading: false,
   },
 
@@ -143,7 +148,7 @@ export const exerciseSlice = createSlice({
     });
     builder.addCase(findSingleWorkout.fulfilled, (state, action) => {
       state.loading = false;
-      state.userWorkouts = action.payload;
+      state.currentWorkouth = action.payload;
     });
     builder.addCase(setDefaultWorkout.fulfilled, (state, action) => {
       state.defaultWorkout = action.payload.defaultWorkout;

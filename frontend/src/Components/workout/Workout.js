@@ -22,9 +22,10 @@ export default function Workout({ user }) {
   const [name, setName] = useState("");
   const [showExerciseForWorkout, setShowExerciseForWorkout] = useState(false);
   const [userWorkouts, setUserWorkouts] = useState([]);
-  const { defaultWorkout, loading } = useSelector((state) => state.fitness);
-  const [currentWorkout, setCurrentWorkout] = useState();
-
+  const { defaultWorkout, loading, currentWorkout } = useSelector((state) => state.fitness);
+ 
+  console.log(currentWorkout)
+  console.log(defaultWorkout)
   //### WORKOUT CREATION ###
   //adds section in order to create a workout
   const handleCreateWorkoutClick = (e) => {
@@ -82,14 +83,19 @@ export default function Workout({ user }) {
       return;
     }
     const defaultWorkoutResponse = await dispatch(findSingleWorkout(workoutID));
-    setCurrentWorkout(defaultWorkoutResponse.payload);
+    console.log(defaultWorkoutResponse)
+   
   };
 
   useEffect(() => {
     if (defaultWorkout) {
-      dispatch(findSingleWorkout(defaultWorkout)).then((response) => {
-        setCurrentWorkout(response.payload);
-      });
+      console.log("hi", defaultWorkout)
+      const getCurrentWorkout = async () => {
+        const response = await dispatch(findSingleWorkout(defaultWorkout))
+        console.log(response)
+      }
+      getCurrentWorkout();
+      console.log("hello")
     }
   }, [defaultWorkout, dispatch]);
 
