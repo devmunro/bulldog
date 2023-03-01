@@ -3,7 +3,6 @@ import Dashboard from "./Components/Dashboard";
 import Home from "./Components/Home";
 import Loading from "./Components/Loading";
 import RegisterForm from "./Components/UserForms/userRegistration";
-import WorkoutPage from "./Components/workoutPage";
 
 function App() {
   return (
