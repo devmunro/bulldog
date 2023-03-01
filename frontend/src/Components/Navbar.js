@@ -1,24 +1,12 @@
-import React from "react";
+import React from 'react';
 
-import { useDispatch } from "react-redux";
-import { logout } from "../features/userSlice";
-import { useNavigate } from "react-router-dom";
-
-export default function Navbar() {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const handleLogout = async () => {
-    const logoutUser = await dispatch(logout());
-    console.log("loggin out user:", logoutUser);
-    navigate("/");
-  };
-
+export default function DashboardHeader({ handleLogout }) {
   return (
-    <div className="flex justify-around m-4 text-white">
-      <h2 className="m-2 font-bold">Dashboard</h2>
-
-      <button onClick={handleLogout}>LOGOUT</button>
+    <div className="flex  justify-between items-center bg-gray-800 px-2 md:px-4 py-3 md:py-4 ">
+      <h2 className="text-white text-base md:text-2xl font-bold ml-10">Dashboard</h2>
+      <button onClick={handleLogout} className="text-white bg-red-600 hover:bg-red-700 py-2 px-4 rounded-lg font-semibold">
+        Logout
+      </button>
     </div>
   );
 }

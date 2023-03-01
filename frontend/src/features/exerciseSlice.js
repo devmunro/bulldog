@@ -83,12 +83,16 @@ export const addExercise = createAsyncThunk(
 export const findSingleWorkout = createAsyncThunk(
   "fitness/findSingleWorkout",
   async (workoutID) => {
-    console.log(workoutID);
+    console.log("text",workoutID);
     try {
       const response = await axios.get(`${API_URL}workout/findsingleworkout`, {
         params: { workoutID },
       });
-      console.log(response);
+      console.log("the response", response);
+      localStorage.setItem(
+        "currentWorkout",
+        JSON.stringify(response.data)
+      );
       return response.data;
     } catch (error) {
       console.log(error);
@@ -112,6 +116,7 @@ export const setDefaultWorkout = createAsyncThunk(
         "defaultWorkout",
         JSON.stringify(response.data.workoutID)
       );
+
       return { defaultWorkout: response.data.workoutID };
     } catch (error) {
       console.log(error);
@@ -123,6 +128,7 @@ export const exerciseSlice = createSlice({
   name: "fitness",
   initialState: {
     defaultWorkout: JSON.parse(localStorage.getItem("defaultWorkout")),
+    currentWorkout:  JSON.parse(localStorage.getItem("currentWorkout")),
     loading: false,
   },
 
@@ -143,7 +149,7 @@ export const exerciseSlice = createSlice({
     });
     builder.addCase(findSingleWorkout.fulfilled, (state, action) => {
       state.loading = false;
-      state.userWorkouts = action.payload;
+      state.currentWorkout = action.payload;
     });
     builder.addCase(setDefaultWorkout.fulfilled, (state, action) => {
       state.defaultWorkout = action.payload.defaultWorkout;
