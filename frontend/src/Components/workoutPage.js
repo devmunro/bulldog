@@ -4,7 +4,8 @@ import { completeWorkout } from "../features/exerciseSlice";
 
 function WorkoutPage() {
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
-  const { currentWorkout } = useSelector((state) => state.fitness);
+   const { currentWorkout } = useSelector((state) => state.fitness);
+  const { user } = useSelector((state) => state.auth);
   const currentExercise = currentWorkout.exercises;
   const exerciseID = currentExercise[currentExerciseIndex].exercise;
   const exerciseName = currentExercise[currentExerciseIndex].name;
@@ -24,7 +25,7 @@ function WorkoutPage() {
     },
   ]);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   //handle inputs
 
@@ -98,10 +99,20 @@ function WorkoutPage() {
     setCurrentExerciseIndex(newNumber);
     setDisabledRows([]);
   };
+console.log("cw:", currentWorkout)
+  //complee workout
 
   const handleCompleteWorkout = (e) => {
     e.preventDefault();
-    dispatch(completeWorkout(exerciseData))
+
+    const workoutResults = {
+      userID: user._id, 
+      workoutID: currentWorkout._id, 
+      workoutName: currentWorkout.name,
+      exercises: exerciseData,
+    }
+
+    dispatch(completeWorkout(workoutResults));
   };
   return (
     <div>

@@ -20,7 +20,7 @@ const workoutStatsSchema = new mongoose.Schema(
     },
     exercises: [
       {
-        exercise: {
+        id: {
           type: mongoose.Schema.Types.ObjectId, // exercise id
           required: true,
         },

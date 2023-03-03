@@ -127,7 +127,7 @@ export const completeWorkout = createAsyncThunk(
     console.log("COMPLETE WORKOUT:", workoutData);
     try {
       const response = await axios.post(
-        `${API_URL}workout/setdefaultworkout`,
+        `${API_URL}workoutStats/completeworkout`,
         workoutData
       );
 
