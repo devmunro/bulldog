@@ -143,14 +143,15 @@ export const completeWorkout = createAsyncThunk(
  
 export const getUserWorkoutStats = createAsyncThunk(
   "fitness/getUserWorkoutStats",
-  async (user) => {
-    console.log("user", user);
+  async (userID) => {
+    console.log("user", userID);
+    
     try {
       const response = await axios.get(
         `${API_URL}workoutStats/getuserstats`,
-        user
-      );
-console.log(response.data).
+        { params: { userID: userID } }
+      )
+ return response.data
     } catch (error) {
       console.log(error);
     }
