@@ -11,6 +11,7 @@ export default function ExerciseList({
 }) {
   const [exerciseInputs, setExerciseInputs] = useState({});
   const defaultWorkout = useSelector((state) => state.fitness.defaultWorkout);
+  const [disabled, setDisabled] = useState(isDisabled);
 
   //handle add to workout
   const handleAddToWorkout = async (id, name, bodyType, equipment) => {
@@ -27,13 +28,7 @@ export default function ExerciseList({
 
   //handle edit exercise for current workout
   const handleEditExercise = async (id) => {
-    setExerciseDetails({
-      exerciseID: id,
-      exerciseSets: exerciseInputs[id]?.sets ?? 3,
-      exerciseReps: exerciseInputs[id]?.reps ?? 8,
-      exerciseWeight: exerciseInputs[id]?.weight ?? 10,
-      selectedWorkout: defaultWorkout,
-    });
+    setDisabled(false);
   };
   //handlechange for inputs
   const handleChange = (id) => (e) => {
@@ -48,124 +43,135 @@ export default function ExerciseList({
     }));
   };
 
-  console.log(exerciseList);
-
   return (
-    <table className="table-auto w-full text-white text-justify align-middle">
-      <thead>
-        <tr className="[&>*]:p-4">
-          <th className="w-1/4">Name</th>
-          <th>Type</th>
-          <th>Equipment</th>
-          <th>Sets</th>
-          <th>Reps</th>
-          <th>Weight(KG)</th>
-          <th>Add to Workout</th>
-        </tr>
-      </thead>
-
+    <div className="md:mx-2">
+      <div className="bg-white p-4 grid md:grid-cols-7 grid-cols-5 mt-2 items-center text-md md:text-lg text-center gap-4">
+        <div className="font-bold  py-2 ">Name</div>
+        <div className="font-bold hidden md:block  py-2 ">Type</div>
+        <div className="font-bold hidden md:block  py-2 ">Equipment</div>
+        <div className="font-bold  py-2 ">Sets</div>
+        <div className="font-bold  py-2 ">Reps</div>
+        <div className="font-bold  py-2 ">Weight</div>
+        <div className="font-bold  py-2 ">{buttonText}</div>
+      </div>
       {!loading &&
         exerciseList &&
         exerciseList.length > 0 &&
         exerciseList.map((exercise) => {
           return (
-            <tbody className="even:bg-[#7B7B8F] odd:bg-black ">
+            <div
+              key={exercise._id}
+              className="bg-white even:bg-slate-300 border-b-2 border-dashed border-black text-xs md:text-sm items-center grid md:grid-cols-7 grid-cols-5 gap-4 text-center px-2 py-4"
+            >
               {/* EXERCISE NAME */}
-              <tr className="space-y-4 space-x-2 [&>*]:p-4">
-                <td>{exercise.name}</td>
+              <div className="col-span-1 md:p-4 my-2 font-semibold  text-left">
+                {exercise.name}
+              </div>
 
-                {/* Exercise BODY TYPE */}
+              {/* Exercise BODY TYPE */}
+              <div className=" p-4 hidden md:block my-2 ">
+                {exercise.body_type &&
+                  exercise.body_type
+                    .map((type) => type.toUpperCase())
+                    .join(", ")}
+              </div>
 
-                <td>
-                  {exercise.body_type &&
-                    exercise.body_type
-                      .map((type) => type.toUpperCase())
-                      .join(", ")}
-                </td>
+              {/* Exercise EQUIPMENT */}
+              <div className="p-4 hidden md:block my-2">
+                {exercise.equipment &&
+                  exercise.equipment
+                    .map((type) => type.toUpperCase())
+                    .join(", ")}
+              </div>
 
-                {/* Exercise EQUIPMENT */}
+              {/* SETS */}
+              <div className="md:p-4 my-2">
+                <input
+                  placeholder={exercise.sets || 3}
+                  className="input py-2 md:px-4 border rounded-md outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  value={
+                    exerciseInputs[exercise._id]?.sets ?? exercise.sets ?? 3
+                  }
+                  name="sets"
+                  onChange={handleChange(exercise._id)}
+                  disabled={disabled}
+                ></input>
+              </div>
 
-                <td>
-                  {" "}
-                  {exercise.equipment &&
-                    exercise.equipment
-                      .map((type) => type.toUpperCase())
-                      .join(", ")}
-                </td>
+              {/* REPS */}
+              <div className="md:p-4 my-2">
+                <input
+                  placeholder="8"
+                  className="input py-2 md:px-4 border rounded-md outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  value={
+                    exerciseInputs[exercise._id]?.reps ?? exercise.reps ?? 12
+                  }
+                  name="reps"
+                  onChange={handleChange(exercise._id)}
+                  disabled={disabled}
+                ></input>
+              </div>
 
-                {/* SETS  */}
-
-                <td>
-                  <input
-                    placeholder={exercise.sets || 3}
-                    className="w-12 h-12  text-center text-xl text-black bg-slate-400 focus:bg-slate-100"
-                    value={
-                      exerciseInputs[exercise._id]?.sets ?? exercise.sets ?? 3
+              {/* WEIGHTS KG */}
+              <div className="md:p-4 my-2">
+                <input
+                  placeholder="10"
+                  className="input py-2 md:px-4 border rounded-md outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  value={
+                    exerciseInputs[exercise._id]?.weight ??
+                    exercise.weight ??
+                    10
+                  }
+                  name="weight"
+                  onChange={handleChange(exercise._id)}
+                  disabled={disabled}
+                ></input>
+              </div>
+              {/* ADD TO WORKOUT BUTTON */}
+              <div className="md:p-4 md:block hidden my-2">
+                <button
+                  className=" py-2 px-4 rounded-md bg-blue-500 hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 text-white"
+                  onClick={() => {
+                    if (buttonText === "Add") {
+                      handleAddToWorkout(
+                        exercise._id,
+                        exercise.name,
+                        exercise.body_type,
+                        exercise.equipment
+                      );
+                    } else if (buttonText === "Edit") {
+                      handleEditExercise(exercise._id);
                     }
-                    name="sets"
-                    onChange={handleChange(exercise._id)}
-                    disabled={isDisabled}
-                  ></input>
-                </td>
+                  }}
+                >
+                  {buttonText}
+                </button>
+              </div>
 
-                {/* REPS */}
-
-                <td>
-                  <input
-                    placeholder="8"
-                    className="w-12 h-12 text-center text-xl text-black bg-slate-400 focus:bg-slate-100"
-                    value={
-                      exerciseInputs[exercise._id]?.reps ?? exercise.reps ?? 12
+              <div className="md:p-4 md:hidden block my-2">
+                <button
+                  className="btn-primary py-2 px-4 rounded-md bg-blue-500 hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 text-white"
+                  onClick={() => {
+                    if (buttonText === "Add") {
+                      handleAddToWorkout(
+                        exercise._id,
+                        exercise.name,
+                        exercise.body_type,
+                        exercise.equipment
+                      );
+                    } else if (buttonText === "Edit") {
+                      handleEditExercise(exercise._id);
                     }
-                    name="reps"
-                    onChange={handleChange(exercise._id)}
-                    disabled={isDisabled}
-                  ></input>
-                </td>
-
-                {/* WEIGHTS KG */}
-
-                <td>
-                  <input
-                    placeholder="10"
-                    className="w-12 h-12 text-center text-xl text-black bg-slate-400 focus:bg-slate-100"
-                    value={
-                      exerciseInputs[exercise._id]?.weight ??
-                      exercise.weight ??
-                      10
-                    }
-                    name="weight"
-                    onChange={handleChange(exercise._id)}
-                    disabled={isDisabled}
-                  ></input>
-                </td>
-
-                {/* ADD TO WORKOUT BUTTTON */}
-
-                <td className="justify-center">
-                  <button
-                    className="bg-white text-black p-2 h-10 "
-                    onClick={() => {
-                      if (buttonText === "Add") {
-                        handleAddToWorkout(
-                          exercise._id,
-                          exercise.name,
-                          exercise.body_type,
-                          exercise.equipment
-                        );
-                      } else if (buttonText === "Edit") {
-                        handleEditExercise(exercise._id);
-                      }
-                    }}
-                  >
-                    {buttonText}
-                  </button>
-                </td>
-              </tr>
-            </tbody>
+                  }}
+                >
+                  +
+                </button>
+              </div>
+            </div>
           );
         })}
+
       {loading && <Loading />}
-    </table>
+    </div>
   );
 }
