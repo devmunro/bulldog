@@ -6,6 +6,7 @@ export const WorkoutStatsRouter = () => {
   const workoutStatsRouter = express();
   // full route example /api/workoutStats/completeworkout
   workoutStatsRouter.post("/completeworkout", workoutCompleted); //
+  workoutStatsRouter.get('/getuserstats', getUserWorkoutStats);
 
 
   return workoutStatsRouter;

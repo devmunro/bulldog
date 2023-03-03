@@ -23,3 +23,21 @@ export const workoutCompleted = async (req, res) => {
     res.status(409).json({ message: error.message });
   }
 };
+
+
+export const getUserWorkoutStats = async (req, res) => {
+  const userID = req.user.id;
+  const endDate = new Date();
+  const startDate = new Date(endDate.getTime() - 7 * 24 * 60 * 60 * 1000); // 7 days ago
+
+  try {
+    const workoutStats = await WorkoutStats.find({
+      userID: userID,
+      createdAt: { $gte: startDate, $lt: endDate },
+    });
+
+    res.status(200).json(workoutStats);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
