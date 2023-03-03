@@ -7,7 +7,13 @@ const workoutStatsSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    name: {
+
+    workoutID: {
+      type: mongoose.Schema.Types.ObjectId, // link to workout being performed
+      ref: "Workout",
+      required: true,
+    },
+    workoutName: {
       type: String,
       required: true,
       trim: true, // extra option to display better in database

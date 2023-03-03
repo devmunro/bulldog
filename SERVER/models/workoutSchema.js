@@ -7,6 +7,7 @@ const workoutSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+    
     name: {
       type: String,
       required: true,
