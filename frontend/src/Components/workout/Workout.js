@@ -1,49 +1,23 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  createWorkout,
   findSingleWorkout,
   findWorkout,
   setDefaultWorkout,
 } from "../../features/exerciseSlice";
-import ExerciseList from "../ExerciseList";
 import Loading from "../Loading";
+import WorkoutPage from "../workoutPage";
+import CreateWorkout from "./createWorkout";
+import CurrentWorkout from "./currentWorkout";
 
 export default function Workout({ user }) {
   const dispatch = useDispatch();
 
-  const [workoutCreateBox, setWorkoutCreateBox] = useState(false);
-  const [name, setName] = useState("");
   const [userWorkouts, setUserWorkouts] = useState([]);
-  const { defaultWorkout, loading } = useSelector((state) => state.fitness);
-  const [currentWorkout, setCurrentWorkout] = useState();
-
-  //### WORKOUT CREATION ###
-  //adds section in order to create a workout
-  const handleCreateWorkoutClick = (e) => {
-    e.preventDefault();
-    setWorkoutCreateBox(!workoutCreateBox);
-  };
-
-  //to be able to write workout name
-  const handleInputChange = (e) => {
-    setName(e.target.value);
-  };
-
-  //handle submit
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const workoutForm = {
-      userID: user._id,
-      name: name,
-    };
-
-    await dispatch(createWorkout(workoutForm));
-
-    findUserWorkouts();
-  };
-
+  const { defaultWorkout, loading, currentWorkout } = useSelector(
+    (state) => state.fitness
+  );
+ console.log(defaultWorkout, currentWorkout)
   //### FIND ALL USER WORKOUTS
   async function findUserWorkouts() {
     if (user.workouts <= 0) {
@@ -62,76 +36,49 @@ export default function Workout({ user }) {
   //### SET CURRENT WORKOUT
   const handleSetDefault = async (e) => {
     e.preventDefault(e);
-
+  
     const workoutID = e.target.value;
     const userDetails = {
       userID: user._id,
       workoutID: workoutID,
     };
-
+  
     await dispatch(setDefaultWorkout(userDetails));
     if (defaultWorkout === undefined) {
       console.log("no default workout yet");
       return;
     }
-    const defaultWorkoutResponse = await dispatch(findSingleWorkout(workoutID));
-    setCurrentWorkout(defaultWorkoutResponse.payload);
-  };
-
+      };
+  
   useEffect(() => {
     if (defaultWorkout) {
-      dispatch(findSingleWorkout(defaultWorkout)).then((response) => {
-        setCurrentWorkout(response.payload);
-      });
+      console.log("hi", defaultWorkout);
+      const getCurrentWorkout = async () => {
+        const response = await dispatch(findSingleWorkout(defaultWorkout));
+        console.log(response);
+      };
+      getCurrentWorkout();
+      console.log("hello");
     }
   }, [defaultWorkout, dispatch]);
 
-  console.log("here", currentWorkout);
-  return (
-    <div>
-      {loading === false && (
-        <div className="bg-white">
-          <button
-            onClick={handleCreateWorkoutClick}
-            className="border-2 border-gray-400 px-2 m-2"
-          >
-            Create Workout
-          </button>
-          {workoutCreateBox && (
-            <div className="flex-col items-center flex bg-[#2B2946]">
-              <h2 className="text-xl mt-4 font-bold text-white">
-                Create a Workout
-              </h2>
-              <form
-                className=" flex-col flex space-y-2 px-8 w-full h-full p-4 [&>*]:p-2 [&>*]:rounded-md [&>*]:border-2 [&>*]:border-gray-300"
-                onSubmit={handleSubmit}
-              >
-                <input
-                  name="name"
-                  id="name"
-                  placeholder="Type Workout Name"
-                  onChange={handleInputChange}
-                  required
-                />
-                <button>Submit</button>
-              </form>
-            </div>
-          )}
-          {currentWorkout && currentWorkout.exercises && (
-            <div className="text-black p-4">
-              <h2 className="font-bold">Current Workout</h2>
-              <h2>{currentWorkout.name}</h2>
-              <h2>{currentWorkout._id}</h2>
 
-              <ExerciseList
-                exerciseList={currentWorkout.exercises}
-                loading={loading}
-                buttonText="Edit"
-                isDisabled
-              />
-            </div>
-          )}
+  const handleStartWorkoutClick = (workout) => {
+    console.log(workout);
+    return <WorkoutPage workout={workout} />;
+  };
+
+  return (
+    <div className="bg-[#2B2946] md:m-2 justify-center flex-col">
+      {loading === false && (
+        <div className="w-full">
+          {/* // create workout */}
+          <CreateWorkout user={user} findUserWorkouts={findUserWorkouts} />
+          {/* //currentWORKOUT */}
+          {currentWorkout && <CurrentWorkout currentWorkout={currentWorkout} />}
           {!currentWorkout && <div>No current workout</div>}
+
+          {/* OTHER WORKOUTs */}
           <div className="text-gray-500 p-4">
             <h2 className="font-bold">Other Workouts</h2>
             {userWorkouts &&
@@ -141,10 +88,10 @@ export default function Workout({ user }) {
                   // Check if workout has the same ID as default workout
 
                   return (
-                    <ul className="flex m-4">
-                      <li className="">{workout.name}</li>
+                    <ul className="flex m-4 p-8 justify-between bg-gradient-to-l from-gray-700 via-gray-900 to-black">
+                      <li className="">{workout.name.toUpperCase()}</li>
                       <button
-                        className="px-2 border-2 border-blue-800"
+                        className="btn-primary"
                         onClick={handleSetDefault}
                         value={workout._id}
                       >
@@ -157,6 +104,7 @@ export default function Workout({ user }) {
           </div>
         </div>
       )}
+
       {loading === true && <Loading />}
     </div>
   );

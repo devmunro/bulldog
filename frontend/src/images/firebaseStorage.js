@@ -19,5 +19,13 @@ if(imageBase !== "")
     .catch((error) => {
       console.log(error);
     });
+
+
+    if(imageBase === "manworkingout.png") {
+
+      return <img className="h-64" src={image} alt="thing"/>
+    }else if (imageBase === "homepage.jpg") {
+      return <img className="w-full" src={image} alt="thing"/>
+    }
   return <img className="h-16 w-16" src={image} alt="thing"/>
 }
