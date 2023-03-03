@@ -7,9 +7,17 @@ export const workoutCompleted = async (req, res) => {
   const workoutStat = req.body;
 
   const newWorkoutStat = new WorkoutStats(workoutStat);
-
+  const workoutID = workoutStat.workoutID
   try {
     await newWorkoutStat.save();
+   
+  // Update user collection with workout ID
+  const userID = workoutStat.userID;
+  const userMatched = await user.findById(userID);
+  userMatched.workoutStats.push(workoutID);
+  await userMatched.save();
+
+
     res.status(201).json(newWorkoutStat);
   } catch (error) {
     res.status(409).json({ message: error.message });
