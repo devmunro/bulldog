@@ -28,6 +28,8 @@ const userSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Workout",
     },
+
+    workoutStats: [{ type: mongoose.Schema.Types.ObjectId, ref: "WorkoutStats" }]
   },
 
   { timestamps: true }
