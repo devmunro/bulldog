@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { completeWorkout } from "../features/exerciseSlice";
 
 function WorkoutPage() {
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
