@@ -30,3 +30,7 @@ We have some exciting features in the works for future updates, including:
 - Create React Native version
 
 Stay tuned for updates as we continue to improve the Fitness Record Gym Website!
+
+## Preview
+
+![Beige Elegant Tablet Mockup Pinterest Pin](https://user-images.githubusercontent.com/57059357/223763769-42c47fc1-f0a1-47d3-9068-3b4ef03296cd.png)
