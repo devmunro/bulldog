@@ -81,8 +81,7 @@ export default function Workout({ user }) {
           {/* OTHER WORKOUTs */}
           <div className="text-gray-500 p-4">
             <h2 className="font-bold">Other Workouts</h2>
-            {userWorkouts &&
-              currentWorkout &&
+            {userWorkouts.length > 0 &&
               userWorkouts.map((workout) => {
                 if (workout._id !== currentWorkout._id) {
                   // Check if workout has the same ID as default workout

@@ -44,8 +44,8 @@ export default function ExerciseCatergories({ setLoading, setExerciseList }) {
         setPageSize(2);
       } else {
         setSliceStart(0);
-        setSliceEnd(4);
-        setPageSize(4);
+        setSliceEnd(3);
+        setPageSize(3);
       }
     };
     window.addEventListener("resize", handleResize);
@@ -91,7 +91,7 @@ export default function ExerciseCatergories({ setLoading, setExerciseList }) {
           >
             {"<"}
           </button>
-          <ul className="md:mx-4 md:px-4 items-center grid grid-cols-2 gap-2 lg:grid-cols-4  md:h-32 overflow-hidden">
+          <ul className="md:mx-4 md:px-4 items-center grid grid-cols-2 gap-2 lg:grid-cols-3  md:h-28 overflow-hidden">
             {displayedCategories.map((item) => {
               return (
                 <li
