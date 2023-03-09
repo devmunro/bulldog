@@ -43,7 +43,7 @@ export default function Dashboard() {
       <div className="fixed left-0 top-0 h-full w-10 bg-gray-800">
         <Sidebar />
       </div>
-      <div className="flex-grow flex flex-col ml-10 md:ml-14 bg-[#1F2937]">
+      <div className="flex-grow flex flex-col ml-10 md:ml-14 bg-[#1F2937] h-screen">
         <Navbar  handleLogout={handleLogout}/>
         <Routes>
           <Route path="/" element={<Overview user={user} />} />

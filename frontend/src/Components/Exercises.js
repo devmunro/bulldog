@@ -69,10 +69,11 @@ export default function Exercises() {
           </button>
           </div>
           <div className="md:w-1/2">
-            <ExerciseCatergories
+
+            {/* <ExerciseCatergories
               setExerciseList={setExerciseList}
               setLoading={setLoading}
-            />
+            /> */}
           </div>
         </div>
         {/* // TABLE */}
