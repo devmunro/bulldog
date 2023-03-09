@@ -48,14 +48,12 @@ export default function Exercises() {
   };
   return (
     <div className="flex justify-center flex-col ">
-      <ExerciseCatergories
-        setExerciseList={setExerciseList}
-        setLoading={setLoading}
-      />
       {/* SEARCH BAR */}
       <div className=" md:p-4 bg-gradient-to-bl from-blue-800 to-gray-900">
-        <div className="w-full md:1/2 flex px-4 gap-4 items-center">
-          <input
+        <div className="w-full md:flex  px-4 items-center">
+          
+          
+          <div className="md:w-1/2  flex items-center"><input
             className="px-2 w-full md:w-2/3 md:h-12 h-8 rounded-2xl md:text-sm text-xs bg-[#19192C] text-[#7B7B8F] "
             placeholder="Search for an exercise"
             onChange={handleSearchChange}
@@ -69,6 +67,13 @@ export default function Exercises() {
             Search
             <MagnifyingGlassCircleIcon className="h-8 fill-inherit" />
           </button>
+          </div>
+          <div className="md:w-1/2">
+            <ExerciseCatergories
+              setExerciseList={setExerciseList}
+              setLoading={setLoading}
+            />
+          </div>
         </div>
         {/* // TABLE */}
         <ExerciseList
@@ -77,7 +82,6 @@ export default function Exercises() {
           exerciseList={exerciseList}
           buttonText="Add"
           isDisabled={false}
-
         />
       </div>
     </div>

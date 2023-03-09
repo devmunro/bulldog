@@ -75,11 +75,9 @@ export default function ExerciseCatergories({ setLoading, setExerciseList }) {
   };
 
   return (
-    <div className="h-full w-full flex flex-col justify-center items-center">
-      <div className="  text-white  w-2/3 my-4 md:p-2 p-1 bg-black">
-        <h2 className="hidden md:block font-bold text-lg md:text-xl mb-4">
-          Categories
-        </h2>
+    <div className="w-full flex justify-center items-center">
+      <div className="  text-white md:p-2 p-1">
+       
         <div className="flex w-full items-center justify-center ">
           <button
             onClick={handlePreviousPage}
@@ -93,7 +91,7 @@ export default function ExerciseCatergories({ setLoading, setExerciseList }) {
           >
             {"<"}
           </button>
-          <ul className="w-2/3 md:mx-4 md:px-4 items-center grid grid-cols-2 lg:grid-cols-4 h-24 md:h-32 overflow-hidden">
+          <ul className="md:mx-4 md:px-4 items-center grid grid-cols-2 gap-2 lg:grid-cols-4  md:h-32 overflow-hidden">
             {displayedCategories.map((item) => {
               return (
                 <li
