@@ -27,5 +27,5 @@ if(imageBase !== "")
     }else if (imageBase === "homepage.jpg") {
       return <img className="w-full" src={image} alt="thing"/>
     }
-  return <img className="h-16 w-16" src={image} alt="thing"/>
+  return <img className="h-12 w-12" src={image} alt="thing"/>
 }

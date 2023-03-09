@@ -127,7 +127,7 @@ export const completeWorkout = createAsyncThunk(
     console.log("COMPLETE WORKOUT:", workoutData);
     try {
       const response = await axios.post(
-        `${API_URL}workout/setdefaultworkout`,
+        `${API_URL}workoutStats/completeworkout`,
         workoutData
       );
 
@@ -135,6 +135,23 @@ export const completeWorkout = createAsyncThunk(
         message: "WORKOUT COMPLETED",
         exerciseComplete: workoutData.length,
       };
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+ 
+export const getUserWorkoutStats = createAsyncThunk(
+  "fitness/getUserWorkoutStats",
+  async (userID) => {
+    console.log("user", userID);
+    
+    try {
+      const response = await axios.get(
+        `${API_URL}workoutStats/getuserstats`,
+        { params: { userID: userID } }
+      )
+ return response.data
     } catch (error) {
       console.log(error);
     }
