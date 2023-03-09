@@ -116,17 +116,29 @@ console.log("cw:", currentWorkout)
   };
   return (
     <div>
-      <form className="bg-white">
-        <h2>{exerciseName}</h2>
-        {setAmount}
-
-        <button type="button" onClick={handleNextExercise}>
-          Next Exercise
-        </button>
-      </form>
-
-      <button onClick={handleCompleteWorkout}>Complete</button>
-    </div>
+    <div className="flex justify-center w-full items-center">
+    <form className="bg-white rounded-lg shadow-lg p-8">
+      <h2 className="text-2xl font-bold mb-4">{exerciseName}</h2>
+      {setAmount}
+  
+      <button
+        type="button"
+        onClick={handleNextExercise}
+        className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mt-4"
+      >
+        Next Exercise
+      </button>
+    </form>
+  
+   
+  </div>
+  <button
+      onClick={handleCompleteWorkout}
+      className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mt-4"
+    >
+      Complete
+    </button>
+  </div>
   );
 }
 
