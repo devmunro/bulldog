@@ -140,6 +140,23 @@ export const completeWorkout = createAsyncThunk(
     }
   }
 );
+ 
+export const getUserWorkoutStats = createAsyncThunk(
+  "fitness/getUserWorkoutStats",
+  async (userID) => {
+    console.log("user", userID);
+    
+    try {
+      const response = await axios.get(
+        `${API_URL}workoutStats/getuserstats`,
+        { params: { userID: userID } }
+      )
+ return response.data
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
 
 export const exerciseSlice = createSlice({
   name: "fitness",
