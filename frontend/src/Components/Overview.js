@@ -14,120 +14,122 @@ export default function Overview({ user }) {
 
   useEffect(() => {
     const getData = async () => {
-      if(user) {
-      const res = await dispatch(getUserWorkoutStats(user._id));
-      const data = res.payload;
-      console.log(data);
-            
+      if (user) {
+        const res = await dispatch(getUserWorkoutStats(user._id));
+        const data = res.payload;
+        console.log(data);
 
-      const endDate = new Date();
-      const startDate = new Date();
-      startDate.setDate(endDate.getDate() - 6);
-      const labels = [...Array(7)].map((_, i) => {
-        const date = new Date(startDate);
-        date.setDate(startDate.getDate() + i);
-        return date.toLocaleDateString();
-      });
-
-      const totalWeight = labels.map((date) => {
-        const workouts = data.filter((workout) => {
-          const workoutDate = new Date(workout.createdAt).toLocaleDateString();
-          return workoutDate === date;
+        const endDate = new Date();
+        const startDate = new Date();
+        startDate.setDate(endDate.getDate() - 6);
+        const labels = [...Array(7)].map((_, i) => {
+          const date = new Date(startDate);
+          date.setDate(startDate.getDate() + i);
+          return date.toLocaleDateString();
         });
 
-        if (workouts.length > 0) {
-          return workouts.reduce((acc, workout) => {
-            return (
-              acc +
-              workout.exercises.reduce((acc2, exercise) => {
-                return (
-                  acc2 +
-                  exercise.sets.reduce(
-                    (setAcc, set) => setAcc + set.weight * set.reps,
-                    0
-                  )
-                );
-              }, 0)
-            );
-          }, 0);
-        } else {
-          return null;
-        }
-      });
+        const totalWeight = labels.map((date) => {
+          const workouts = data.filter((workout) => {
+            const workoutDate = new Date(
+              workout.createdAt
+            ).toLocaleDateString();
+            return workoutDate === date;
+          });
 
-      const totalReps = labels.map((date) => {
-        const workouts = data.filter((workout) => {
-          const workoutDate = new Date(workout.createdAt).toLocaleDateString();
-          return workoutDate === date;
+          if (workouts.length > 0) {
+            return workouts.reduce((acc, workout) => {
+              return (
+                acc +
+                workout.exercises.reduce((acc2, exercise) => {
+                  return (
+                    acc2 +
+                    exercise.sets.reduce(
+                      (setAcc, set) => setAcc + set.weight * set.reps,
+                      0
+                    )
+                  );
+                }, 0)
+              );
+            }, 0);
+          } else {
+            return null;
+          }
         });
 
-        if (workouts.length > 0) {
-          return workouts.reduce((acc, workout) => {
-            return (
-              acc +
-              workout.exercises.reduce((acc2, exercise) => {
-                return (
-                  acc2 +
-                  exercise.sets.reduce((setAcc, set) => setAcc + set.reps, 0)
-                );
-              }, 0)
-            );
-          }, 0);
-        } else {
-          return null;
-        }
-      });
+        const totalReps = labels.map((date) => {
+          const workouts = data.filter((workout) => {
+            const workoutDate = new Date(
+              workout.createdAt
+            ).toLocaleDateString();
+            return workoutDate === date;
+          });
 
-      // Get the total amount of exercises per name
-      const exerciseNames = data
-        .map((workout) => workout.exercises)
-        .flat()
-        .map((exercise) => exercise.name);
+          if (workouts.length > 0) {
+            return workouts.reduce((acc, workout) => {
+              return (
+                acc +
+                workout.exercises.reduce((acc2, exercise) => {
+                  return (
+                    acc2 +
+                    exercise.sets.reduce((setAcc, set) => setAcc + set.reps, 0)
+                  );
+                }, 0)
+              );
+            }, 0);
+          } else {
+            return null;
+          }
+        });
 
-      const exerciseCount = {};
-      exerciseNames.forEach((name) => {
-        exerciseCount[name] = (exerciseCount[name] || 0) + 1;
-      });
+        // Get the total amount of exercises per name
+        const exerciseNames = data
+          .map((workout) => workout.exercises)
+          .flat()
+          .map((exercise) => exercise.name);
 
-      setExerciseData({
-        labels: Object.keys(exerciseCount),
-        datasets: [
-          {
-            data: Object.values(exerciseCount),
-            backgroundColor: [
-              "#FF6384",
-              "#36A2EB",
-              "#FFCE56",
-              "#36EBAF",
-              "#AB37EB",
-            ],
-          },
-        ],
-      });
+        const exerciseCount = {};
+        exerciseNames.forEach((name) => {
+          exerciseCount[name] = (exerciseCount[name] || 0) + 1;
+        });
 
-      setChartData({
-        labels,
-        datasets: [
-          {
-            label: "Total Weight Lifted(KG)",
-            data: totalWeight,
-            backgroundColor: "#fff",
-            borderColor: "#000",
-            yAxisID: "y",
-          },
-          {
-            label: "Total Reps Lifted",
-            data: totalReps,
-            backgroundColor: "#f34",
-            borderColor: "#000",
-            yAxisID: "y1",
-          },
-        ],
-      });
-    }
+        setExerciseData({
+          labels: Object.keys(exerciseCount),
+          datasets: [
+            {
+              data: Object.values(exerciseCount),
+              backgroundColor: [
+                "#FF6384",
+                "#36A2EB",
+                "#FFCE56",
+                "#36EBAF",
+                "#AB37EB",
+              ],
+            },
+          ],
+        });
+
+        setChartData({
+          labels,
+          datasets: [
+            {
+              label: "Total Weight Lifted(KG)",
+              data: totalWeight,
+              backgroundColor: "#fff",
+              borderColor: "#000",
+              yAxisID: "y",
+            },
+            {
+              label: "Total Reps Lifted",
+              data: totalReps,
+              backgroundColor: "#f34",
+              borderColor: "#000",
+              yAxisID: "y1",
+            },
+          ],
+        });
+      }
     };
-    getData()
-   
+    getData();
   }, [user, dispatch]);
 
   return (
