@@ -70,10 +70,10 @@ export default function Exercises() {
           </div>
           <div className="md:w-1/2">
 
-            {/* <ExerciseCatergories
+            <ExerciseCatergories
               setExerciseList={setExerciseList}
               setLoading={setLoading}
-            /> */}
+            />
           </div>
         </div>
         {/* // TABLE */}
