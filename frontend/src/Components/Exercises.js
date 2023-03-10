@@ -37,10 +37,14 @@ export default function Exercises() {
     console.log(`Searching for "${searchTerm}"`);
     console.log(exerciseList);
     const searchExercises = completeExercises.filter((word) => {
-      return word.name.toLowerCase().includes(searchTerm.toLowerCase());
+
+      const nameMatch = word.name.toLowerCase().includes(searchTerm.toLowerCase());
+      const bodyTypeMatch = word.body_type.some((type) => type.toLowerCase().includes(searchTerm.toLowerCase()));
+      return nameMatch || bodyTypeMatch ;
     });
     setExerciseList(searchExercises);
     setCompleteExercises(searchList)
+    setSearchTerm("")
     console.log(searchExercises);
   };
   return (
