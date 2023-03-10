@@ -19,6 +19,19 @@ export const fetchExercise = createAsyncThunk(
   }
 );
 
+export const getAllExercises = createAsyncThunk(
+  "fitness/getAllExercises",
+  async () => {
+    try {
+      const response = await axios.get(`${API_URL}/exercises/getallexercises`);
+      return response.data
+   
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
 export const createWorkout = createAsyncThunk(
   "fitness/createWorkout",
   async (workoutCreateData) => {
@@ -165,6 +178,7 @@ export const exerciseSlice = createSlice({
     currentWorkout: JSON.parse(localStorage.getItem("currentWorkout")),
     loading: false,
     alert: null,
+    completeExercises: []
   },
 
   reducers: {
@@ -196,7 +210,7 @@ export const exerciseSlice = createSlice({
     builder.addCase(addExercise.fulfilled, (state, action) => {
       state.alert = action.payload.message;
     });
-    
+   
   },
 });
 

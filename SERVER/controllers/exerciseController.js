@@ -14,3 +14,14 @@ export const getExercisesByType = async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 };
+
+export const getAllExercises = async (req, res) => {
+    try {
+    const exercises = await Exercise.find();
+
+    res.status(200).json(exercises);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Server error" });
+  }
+};

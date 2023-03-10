@@ -16,7 +16,7 @@ export default function ExerciseCatergories({ setLoading, setExerciseList }) {
   const dispatch = useDispatch();
 
   const [chosenCategory, setChosenCategory] = useState("cardio");
-
+  const [allExercises, setAllExercises] = useState();
   useEffect(() => {
     const fetchData = async (a) => {
       const response = await dispatch(fetchExercise(a));

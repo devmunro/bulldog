@@ -1,27 +1,46 @@
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { MagnifyingGlassCircleIcon } from "@heroicons/react/24/solid";
 import ExerciseCatergories from "./exerciseCatergories";
 
 import ExerciseList from "./ExerciseList";
+import { getAllExercises } from "../features/exerciseSlice";
 
 export default function Exercises() {
   const [exerciseList, setExerciseList] = useState();
   const [loading, setLoading] = useState(true);
-
   const [searchTerm, setSearchTerm] = useState("");
+  const [completeExercises, setCompleteExercises] = useState("");
+  const [searchList, setSearchList] = useState("");
 
+  const dispatch = useDispatch();
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
 
+  useEffect(() => {
+    const getAll = async () => {
+     const response = await dispatch(getAllExercises());
+  console.log(response)
+  if(response) {
+    setCompleteExercises(response.payload)
+    setSearchList(response.payload)
+    
+  }
+    };
+
+    
+    getAll();
+  }, []);
+
   const handleSearch = (e) => {
     console.log(`Searching for "${searchTerm}"`);
     console.log(exerciseList);
-    const searchExercises = exerciseList.filter((word) => {
+    const searchExercises = completeExercises.filter((word) => {
       return word.name.toLowerCase().includes(searchTerm.toLowerCase());
     });
     setExerciseList(searchExercises);
+    setCompleteExercises(searchList)
     console.log(searchExercises);
   };
   return (
