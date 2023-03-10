@@ -11,7 +11,11 @@ export default function ExerciseList({
   isDisabled,
 }) {
   const [exerciseInputs, setExerciseInputs] = useState({});
-  const defaultWorkout = useSelector((state) => state.fitness.defaultWorkout);
+  const { defaultWorkout } = useSelector(
+    (state) => state.fitness.defaultWorkout
+  );
+  const { currentWorkout } = useSelector((state) => state.fitness);
+
   const [disabled, setDisabled] = useState(isDisabled);
   const [currentPage, setCurrentPage] = useState("");
 
@@ -50,14 +54,11 @@ export default function ExerciseList({
     }));
   };
 
-  //CHECK CURRENT PAGE:
-
-  const location = useLocation();
-
-  console.log(currentPage);
-
   return (
     <div className="md:mx-2">
+      <p className=" text-gray-400 bg-red-900 uppercase text-sm text-center">
+        Current Workout:<strong>{currentWorkout.name}</strong>
+      </p>
       {!loading &&
         exerciseList &&
         exerciseList.length > 0 &&
@@ -102,9 +103,9 @@ export default function ExerciseList({
                         placeholder="8"
                         className={` ${disabled ? "input" : "input-edit"}`}
                         value={
-                          exerciseInputs[exercise._id]?.reps  ??
+                          exerciseInputs[exercise._id]?.reps ??
                           exercise.reps ??
-                          12 
+                          12
                         }
                         name="reps"
                         onChange={handleChange(exercise._id)}
@@ -112,7 +113,7 @@ export default function ExerciseList({
                       ></input>
                     </div>
 
-                    <div className="md:p-4 my-2" >
+                    <div className="md:p-4 my-2">
                       Weight
                       <input
                         placeholder="10"
@@ -138,7 +139,7 @@ export default function ExerciseList({
                     className=" py-2 px-4 rounded-md bg-blue-500 hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 text-white"
                     onClick={handleAddToWorkout}
                   >
-                    Add to Workout
+                    Add
                   </button>
                 </div>
               )}

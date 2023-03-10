@@ -33,16 +33,16 @@ export default function ExerciseCatergories({ setLoading, setExerciseList }) {
 
   return (
     <div className="w-full">
-      <ul className="w-full flex flex-row flex-wrap md:mx-4 md:px-4 items-center justify-center text-white">
+      <ul className="w-full flex flex-row flex-wrap md:mx-4 md:px-4 items-center text-white text-sm md:text-md">
         {categories.map((item) => {
           return (
             <li
               key={item.name}
               onClick={() => handleCategory(item.name)}
-              className="p-2 text-center cursor-pointer"
+              className="p-1 text-center cursor-pointer"
             >
               <button className="p-2 bg-black rounded-lg ">
-                <span className="uppercase text-sm">{item.name}</span>
+                <span className="uppercase text-xs">{item.name}</span>
               </button>
             </li>
           );
