@@ -110,6 +110,7 @@ export default function Overview({ user }) {
 
         setChartData({
           labels,
+
           datasets: [
             {
               label: "Total Weight Lifted(KG)",
@@ -133,45 +134,48 @@ export default function Overview({ user }) {
   }, [user, dispatch]);
 
   return (
-    <div className="bg-black h-screen w-full justify-center p-4">
+    <div className=" w-full justify-center p-4">
       <div className="md:m-4 my-2 md:p-4 grid md:grid-cols-2 bg-gradient-to-bl from-blue-700 via-blue-800 to-gray-900 text-white">
-          <div>
-            <h2 className="text-white p-4 text-sm md:text-lg font-bold mb-2 md:mb-8">
-              Welcome {user && user.name.toUpperCase()},
-              <p className="text-sm">We hope you enjoy your workout!</p>
-            </h2>
-          </div>
-
-          <div className="bg-gray-900 p-4 md:block text-sm md:text-lg ">
-            <h3 className="text-gray-400 uppercase">
-              Current Workout
-            </h3>
-            <h2 className="text-white mt-2">
-              - {currentWorkout ? currentWorkout.name.toUpperCase() : "No Current Workout"}
-            </h2>
-            <button className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md mt-4 inline-block">
-              START NOW
-            </button>
-          </div>
+        <div>
+          <h2 className="text-white p-4 text-sm md:text-lg font-bold mb-2 md:mb-8">
+            Welcome {user && user.name.toUpperCase()},
+            <p className="text-sm">We hope you enjoy your workout!</p>
+          </h2>
         </div>
-      
-      <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1  gap-8 w-full  [&>*]:bg-[#1F2937] [&>*]:lg:p-8 [&>*]:rounded-md [&>*]:shadow-white [&>*]:shadow-lg">
-        
 
+        <div className="bg-gray-900 p-4 md:block text-sm md:text-lg ">
+          <h3 className="text-gray-400 uppercase">Current Workout</h3>
+          <h2 className="text-white mt-2">
+            -{" "}
+            {currentWorkout
+              ? currentWorkout.name.toUpperCase()
+              : "No Current Workout"}
+          </h2>
+          <button className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md mt-4 inline-block">
+            START NOW
+          </button>
+        </div>
+      </div>
+
+      <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1  gap-8 w-full  [&>*]:bg-[#1F2937] [&>*]:lg:p-8 [&>*]:rounded-md [&>*]:shadow-white [&>*]:shadow-lg">
         <div className="w-full min-h-48">
           {Object.keys(chartData).length > 0 ? (
+            
             <Bar
+            className="bg-black"
+
               data={chartData}
               options={{
-                backgroundColor: "rgba(0, 0, 0, 1)",
-
+                color: "white",
                 plugins: {
+                  
                   title: {
                     display: true,
                     text: "Activity",
                     font: {
                       size: 24,
                       weight: "bold",
+                      
                     },
                   },
                 },
@@ -181,6 +185,7 @@ export default function Overview({ user }) {
                     title: {
                       display: true,
                       text: "Total Weight Lifted (KG)",
+                      color: "white",
                     },
                   },
                   y1: {
@@ -188,6 +193,7 @@ export default function Overview({ user }) {
                     title: {
                       display: true,
                       text: "Total Reps Lifted",
+                      color: "white",
                     },
                   },
                 },
@@ -201,8 +207,10 @@ export default function Overview({ user }) {
         <div className="w-full">
           {Object.keys(exerciseData).length > 0 ? (
             <Doughnut
+            className="bg-black"
               data={exerciseData}
               options={{
+                color: "white",
                 plugins: {
                   title: {
                     display: true,
