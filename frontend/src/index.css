@@ -12,11 +12,11 @@
     }
     .input {
 
-      @apply md:w-16 md:h-16 w-10 h-10 text-center md:text-xl rounded text-black bg-[#c4c1f0] focus:bg-slate-100
+      @apply md:w-16 md:h-16 w-10 h-10 text-center md:text-xl rounded text-gray-400 bg-black
     }
-    .input-fixed {
+    .input-edit {
 
-      @apply md:w-12 md:h-12 w-10 h-10 text-center md:text-xl rounded text-white bg-inherit
+      @apply md:w-16 md:h-16 w-10 h-10 text-center md:text-xl rounded text-black bg-white
     }
   }
 

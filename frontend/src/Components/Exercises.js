@@ -9,6 +9,8 @@ import ExerciseList from "./ExerciseList";
 export default function Exercises() {
   const [exerciseList, setExerciseList] = useState();
   const [loading, setLoading] = useState(true);
+ 
+
 
   const defaultWorkout = useSelector((state) => state.fitness.defaultWorkout);
 
