@@ -19,9 +19,9 @@ export default function ExerciseList({
       exerciseID: id,
       exerciseBodyType: bodyType,
       exerciseEquipment: equipment,
-      exerciseSets: exerciseInputs[id]?.sets ?? 3,
-      exerciseReps: exerciseInputs[id]?.reps ?? 8,
-      exerciseWeight: exerciseInputs[id]?.weight ?? 10,
+      exerciseSets:  3,
+      exerciseReps: 8,
+      exerciseWeight:  10,
       selectedWorkout: defaultWorkout,
     });
   };
@@ -45,15 +45,7 @@ export default function ExerciseList({
 
   return (
     <div className="md:mx-2">
-      <div className="bg-white p-4 grid md:grid-cols-7 grid-cols-5 mt-2 items-center text-md md:text-lg text-center gap-4">
-        <div className="font-bold  py-2 ">Name</div>
-        <div className="font-bold hidden md:block  py-2 ">Type</div>
-        <div className="font-bold hidden md:block  py-2 ">Equipment</div>
-        <div className="font-bold  py-2 ">Sets</div>
-        <div className="font-bold  py-2 ">Reps</div>
-        <div className="font-bold  py-2 ">Weight</div>
-        <div className="font-bold  py-2 ">{buttonText}</div>
-      </div>
+      
       {!loading &&
         exerciseList &&
         exerciseList.length > 0 &&
@@ -61,31 +53,20 @@ export default function ExerciseList({
           return (
             <div
               key={exercise._id}
-              className="bg-white even:bg-slate-300 border-b-2 border-dashed border-black text-xs md:text-sm items-center grid md:grid-cols-7 grid-cols-5 gap-4 text-center px-2 py-4"
+              className=" bg-black text-white md:my-4 my-2 md:py-4 flex items-center justify-center text-center "
             >
               {/* EXERCISE NAME */}
-              <div className="col-span-1 md:p-4 my-2 font-semibold  text-left">
-                {exercise.name}
+              <div className=" text-md  md:text-lg col-span-1 flex-col md:p-4 my-2 font-semibold text-left space-y-4 w-2/3">
+                <h3>{exercise.name}</h3>
+                <div className="uppercase flex text-black space-x-4 text-sm md:text-md" >
+               <p className="p-2 bg-white rounded-lg">{exercise.body_type}</p> <p className="p-2 bg-white rounded-lg">{exercise.equipment}</p>
+                </div>
               </div>
 
-              {/* Exercise BODY TYPE */}
-              <div className=" p-4 hidden md:block my-2 ">
-                {exercise.body_type &&
-                  exercise.body_type
-                    .map((type) => type.toUpperCase())
-                    .join(", ")}
-              </div>
-
-              {/* Exercise EQUIPMENT */}
-              <div className="p-4 hidden md:block my-2">
-                {exercise.equipment &&
-                  exercise.equipment
-                    .map((type) => type.toUpperCase())
-                    .join(", ")}
-              </div>
+            
 
               {/* SETS */}
-              <div className="md:p-4 my-2">
+              {/* <div className="md:p-4 my-2">
                 <input
                   placeholder={exercise.sets || 3}
                   className="input py-2 md:px-4 border rounded-md outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -96,10 +77,10 @@ export default function ExerciseList({
                   onChange={handleChange(exercise._id)}
                   disabled={disabled}
                 ></input>
-              </div>
+              </div> */}
 
               {/* REPS */}
-              <div className="md:p-4 my-2">
+              {/* <div className="md:p-4 my-2">
                 <input
                   placeholder="8"
                   className="input py-2 md:px-4 border rounded-md outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -110,10 +91,10 @@ export default function ExerciseList({
                   onChange={handleChange(exercise._id)}
                   disabled={disabled}
                 ></input>
-              </div>
+              </div> */}
 
               {/* WEIGHTS KG */}
-              <div className="md:p-4 my-2">
+              {/* <div className="md:p-4 my-2">
                 <input
                   placeholder="10"
                   className="input py-2 md:px-4 border rounded-md outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -126,7 +107,7 @@ export default function ExerciseList({
                   onChange={handleChange(exercise._id)}
                   disabled={disabled}
                 ></input>
-              </div>
+              </div>  */}
               {/* ADD TO WORKOUT BUTTON */}
               <div className="md:p-4 md:block hidden my-2">
                 <button
