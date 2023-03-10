@@ -79,7 +79,7 @@ export default function Workout({ user }) {
           {!currentWorkout && <div>No current workout</div>}
 
           {/* OTHER WORKOUTs */}
-          <div className="text-gray-500 p-4">
+          <div className="text-gray-500 my-8 ">
             <h2 className="font-bold">Other Workouts</h2>
             {userWorkouts.length > 0 &&
               userWorkouts.map((workout) => {
@@ -87,8 +87,8 @@ export default function Workout({ user }) {
                   // Check if workout has the same ID as default workout
 
                   return (
-                    <ul className="flex m-4 p-8 justify-between bg-gradient-to-l from-gray-700 via-gray-900 to-black">
-                      <li className="">{workout.name.toUpperCase()}</li>
+                    <ul className="flex w-full p-8 justify-between bg-gradient-to-l from-gray-700 via-gray-900 to-black">
+                      <li className="w-1/2">{workout.name.toUpperCase()}</li>
                       <button
                         className="btn-primary"
                         onClick={handleSetDefault}

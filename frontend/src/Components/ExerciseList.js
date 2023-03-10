@@ -183,7 +183,7 @@ export default function ExerciseList({ loading, exerciseList, isDisabled }) {
             </div>
           );
         })}
-  <div className="fixed top-0 right-0 z-50">
+  <div className="fixed top-10 right-10 left-10 z-50 text-center">
       {showAlert &&  alert && (
         <div className="p-4 bg-blue-500 text-white rounded-md transition duration-500 ease-in-out">
           {alert}
