@@ -149,7 +149,7 @@ function WorkoutPage() {
       clearTimeout(timerId);
     };
   }, [showTimer, secondsLeft]);
-  console.log(currentWorkout.exercise);
+  console.log("SHOW EX",currentWorkout.exercises);
   return (
     <section className="flex flex-col w-full justify-center">
       <h2 className="uppercase text-center m-4 p-4 bg-white -">
@@ -158,8 +158,8 @@ function WorkoutPage() {
 
       {/* NO WORKOUT SECTION */}
       {!currentWorkout && <p>Loading...</p>}
-      {!currentWorkout.exercise && (
-        <div className="bg-white p-4 flex flex-col w-max m-4">
+      {currentWorkout.exercises.length === 0 && (
+        <div className="bg-white p-4 flex flex-col m-4">
           <div className="justify-center ">
             <p >
               No Exercises found, please add exercises to start
@@ -169,7 +169,7 @@ function WorkoutPage() {
         </div>
       )}
       {/* WORKOUT SECTION */}
-      {currentWorkout.exercises > 0 && (
+      {currentWorkout.exercises.length > 0 && (
         <div>
           <form className="bg-white rounded-lg shadow-lg p-8 lg:w-2/3 w-full lg:mx-auto">
             <h2 className="md:text-2xl text-l font-bold md:mb-4 text-center">

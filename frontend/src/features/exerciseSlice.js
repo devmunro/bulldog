@@ -75,6 +75,7 @@ export const addExercise = createAsyncThunk(
         `${API_URL}workout/addexercise`,
         exercise
       );
+      return { message: response.data };
     } catch (error) {}
   }
 );
@@ -140,18 +141,17 @@ export const completeWorkout = createAsyncThunk(
     }
   }
 );
- 
+
 export const getUserWorkoutStats = createAsyncThunk(
   "fitness/getUserWorkoutStats",
   async (userID) => {
     console.log("user", userID);
-    
+
     try {
-      const response = await axios.get(
-        `${API_URL}workoutStats/getuserstats`,
-        { params: { userID: userID } }
-      )
- return response.data
+      const response = await axios.get(`${API_URL}workoutStats/getuserstats`, {
+        params: { userID: userID },
+      });
+      return response.data;
     } catch (error) {
       console.log(error);
     }
@@ -164,9 +164,14 @@ export const exerciseSlice = createSlice({
     defaultWorkout: JSON.parse(localStorage.getItem("defaultWorkout")),
     currentWorkout: JSON.parse(localStorage.getItem("currentWorkout")),
     loading: false,
+    alert: null,
   },
 
-  reducers: {},
+  reducers: {
+    resetAlert: (state) => {
+      state.alert = null;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(createWorkout.fulfilled, (state, action) => {
       state.defaultWorkout = action.payload.workout;
@@ -188,6 +193,13 @@ export const exerciseSlice = createSlice({
     builder.addCase(setDefaultWorkout.fulfilled, (state, action) => {
       state.defaultWorkout = action.payload.defaultWorkout;
     });
+    builder.addCase(addExercise.fulfilled, (state, action) => {
+      state.alert = action.payload.message;
+    });
+    
   },
 });
+
+export const { resetAlert } = exerciseSlice.actions;
+
 export default exerciseSlice.reducer;

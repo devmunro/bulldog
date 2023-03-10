@@ -1,40 +1,50 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Loading from "./Loading";
-import { useLocation } from "react-router-dom";
+import { addExercise } from "../features/exerciseSlice";
+import { resetAlert } from "../features/exerciseSlice";
 
-export default function ExerciseList({
-  loading,
-  setExerciseDetails,
-  exerciseList,
-  buttonText,
-  isDisabled,
-}) {
+
+
+export default function ExerciseList({ loading, exerciseList, isDisabled }) {
   const [exerciseInputs, setExerciseInputs] = useState({});
-  const { defaultWorkout } = useSelector(
-    (state) => state.fitness.defaultWorkout
+  const { alert } = useSelector(
+    (state) => state.fitness
   );
   const { currentWorkout } = useSelector((state) => state.fitness);
+  const [showAlert, setShowAlert] = useState(false);
 
   const [disabled, setDisabled] = useState(isDisabled);
   const [currentPage, setCurrentPage] = useState("");
+
+  const [exerciseDetails, setExerciseDetails] = useState({
+    exerciseID: "",
+    exerciseSets: 3,
+    exerciseReps: 12,
+    exerciseWeight: 10,
+  });
 
   // set the current page in the useEffect hook
   useEffect(() => {
     setCurrentPage(window.location.pathname);
   }, []);
 
+  const dispatch = useDispatch();
   //handle add to workout
   const handleAddToWorkout = async (id, name, bodyType, equipment) => {
-    setExerciseDetails({
+    const newExerciseDetails = ({
       exerciseID: id,
       exerciseBodyType: bodyType,
       exerciseEquipment: equipment,
       exerciseSets: 3,
       exerciseReps: 8,
       exerciseWeight: 10,
-      selectedWorkout: defaultWorkout,
+      selectedWorkout: currentWorkout._id,
     });
+       setExerciseDetails(newExerciseDetails);
+    console.log(newExerciseDetails);
+   const response = await  dispatch(addExercise(newExerciseDetails));
+    console.log(response)
   };
 
   //handle edit exercise for current workout
@@ -53,6 +63,16 @@ export default function ExerciseList({
       },
     }));
   };
+
+  useEffect(() => {
+    if (alert) {
+      setShowAlert(true);
+      setTimeout(() => {
+        setShowAlert(false);
+        dispatch(resetAlert());
+      }, 3000); // hide after 3 seconds
+    }
+  }, [alert, dispatch]);
 
   return (
     <div className="md:mx-2">
@@ -137,7 +157,12 @@ export default function ExerciseList({
                 <div className="md:p-4  my-2">
                   <button
                     className=" py-2 px-4 rounded-md bg-blue-500 hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 text-white"
-                    onClick={handleAddToWorkout}
+                    onClick={() => handleAddToWorkout(
+                      exercise._id,
+                      exercise.name,
+                      exercise.body_type,
+                      exercise.equipment
+                    )}
                   >
                     Add
                   </button>
@@ -158,6 +183,13 @@ export default function ExerciseList({
             </div>
           );
         })}
+  <div className="fixed top-0 right-0 z-50">
+      {showAlert &&  alert && (
+        <div className="p-4 bg-blue-500 text-white rounded-md transition duration-500 ease-in-out">
+          {alert}
+        </div>
+      )}
+    </div>
 
       {loading && <Loading />}
     </div>
