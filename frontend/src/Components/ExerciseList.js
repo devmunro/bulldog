@@ -56,10 +56,10 @@ export default function ExerciseList({
               className=" bg-black text-white md:my-4 my-2 md:py-4 flex items-center justify-center text-center "
             >
               {/* EXERCISE NAME */}
-              <div className=" text-md  md:text-lg col-span-1 flex-col md:p-4 my-2 font-semibold text-left space-y-4 w-2/3">
+              <div className=" text-md  md:text-lg m-2  flex-col font-semibold text-left w-2/3">
                 <h3>{exercise.name}</h3>
-                <div className="uppercase flex text-black space-x-4 text-sm md:text-md" >
-               <p className="p-2 bg-white rounded-lg">{exercise.body_type}</p> <p className="p-2 bg-white rounded-lg">{exercise.equipment}</p>
+                <div className="uppercase flex text-gray-500 space-x-4 text-sm md:text-md" >
+               <p className="p-2 rounded-lg">{exercise.body_type}</p> <p className="p-2 rounded-lg">{exercise.equipment}</p>
                 </div>
               </div>
 

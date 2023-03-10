@@ -68,7 +68,7 @@ export default function Exercises() {
             <MagnifyingGlassCircleIcon className="h-8 fill-inherit" />
           </button>
           </div>
-          <div className="md:w-1/2">
+          <div>
 
             <ExerciseCatergories
               setExerciseList={setExerciseList}
