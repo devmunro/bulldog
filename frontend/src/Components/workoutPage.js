@@ -59,6 +59,14 @@ function WorkoutPage() {
   const handleDone = (rowIndex) => (e) => {
     e.preventDefault();
 
+    const repsValue = exerciseData[currentExerciseIndex]?.sets[rowIndex]?.reps;
+    const weightValue = exerciseData[currentExerciseIndex]?.sets[rowIndex]?.weight;
+  
+    if (!repsValue && !weightValue) {
+      return;
+    }
+  
+
     setSecondsLeft(5);
     setShowTimer(true);
     setDisabledRows([...disabledRows, rowIndex]);
