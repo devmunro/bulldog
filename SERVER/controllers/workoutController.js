@@ -95,3 +95,31 @@ export const setDefaultWorkout = async (req, res) => {
 
   res.status(200).json({ workoutID });
 };
+
+
+//###DELETE EXERCISE FROM WORKOUT
+export const deleteExercise = async (req, res) => {
+  const selectedExercise = req.body;
+
+  try {
+    const matchedWorkout = await Workout.findById(selectedExercise.workoutID);
+
+    const updatedExercises = matchedWorkout.exercises.filter(
+      (exercise) => exercise._id.toString() !== selectedExercise.exerciseID
+    );
+
+    await Workout.updateOne(
+      { _id: selectedExercise.workoutID },
+      { exercises: updatedExercises }
+    );
+    const updatedWorkout = await Workout.findById(selectedExercise.workoutID);
+
+    res.status(200).json({
+      message: "Exercise deleted successfully.",
+      updatedWorkout: updatedWorkout,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
+};

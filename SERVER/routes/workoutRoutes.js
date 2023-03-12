@@ -5,6 +5,7 @@ import {
   addExercise,
   findSingleWorkout,
   setDefaultWorkout,
+  deleteExercise,
 } from "../controllers/workoutController.js";
 
 export const WorkoutRouter = () => {
@@ -15,6 +16,9 @@ export const WorkoutRouter = () => {
   workoutRouter.get("/findsingleworkout", findSingleWorkout); //
   workoutRouter.put("/addexercise", addExercise); //
   workoutRouter.put("/setdefaultworkout", setDefaultWorkout); //
+  workoutRouter.delete("/deleteexercise", deleteExercise); //
+
+
 
   return workoutRouter;
 };

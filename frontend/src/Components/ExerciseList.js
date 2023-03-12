@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Loading from "./Loading";
-import { addExercise } from "../features/exerciseSlice";
+import { addExercise, deleteExercise, findSingleWorkout } from "../features/exerciseSlice";
 import { resetAlert } from "../features/exerciseSlice";
+import { TrashIcon } from "@heroicons/react/24/solid";
+import { current } from "@reduxjs/toolkit";
 
 
 
-export default function ExerciseList({ loading, exerciseList, isDisabled }) {
+export default function ExerciseList({ loading, exerciseList, disabled }) {
   const [exerciseInputs, setExerciseInputs] = useState({});
   const { alert } = useSelector(
     (state) => state.fitness
@@ -14,7 +16,6 @@ export default function ExerciseList({ loading, exerciseList, isDisabled }) {
   const { currentWorkout } = useSelector((state) => state.fitness);
   const [showAlert, setShowAlert] = useState(false);
 
-  const [disabled, setDisabled] = useState(isDisabled);
   const [currentPage, setCurrentPage] = useState("");
 
   const [exerciseDetails, setExerciseDetails] = useState({
@@ -41,16 +42,12 @@ export default function ExerciseList({ loading, exerciseList, isDisabled }) {
       exerciseWeight: 10,
       selectedWorkout: currentWorkout._id,
     });
-       setExerciseDetails(newExerciseDetails);
-    console.log(newExerciseDetails);
+
    const response = await  dispatch(addExercise(newExerciseDetails));
     console.log(response)
   };
 
-  //handle edit exercise for current workout
-  const handleEditExercise = async (id) => {
-    setDisabled(false);
-  };
+
   //handlechange for inputs
   const handleChange = (id) => (e) => {
     e.preventDefault();
@@ -59,7 +56,7 @@ export default function ExerciseList({ loading, exerciseList, isDisabled }) {
       ...prevState,
       [id]: {
         ...prevState[id],
-        [name]: parseInt(value),
+        [name]: (value),
       },
     }));
   };
@@ -73,6 +70,27 @@ export default function ExerciseList({ loading, exerciseList, isDisabled }) {
       }, 3000); // hide after 3 seconds
     }
   }, [alert, dispatch]);
+
+  const deleteExerciseFromWorkout = async (id) => {
+
+    console.log(id)
+    console.log(currentWorkout._id) 
+    const deleteOneExercise = {
+      workoutID: currentWorkout._id,
+      exerciseID: id,
+
+    }
+
+   const response = await dispatch(deleteExercise(deleteOneExercise))
+
+  //  const getCurrentWorkout = async () => {
+  //   const response = await dispatch(findSingleWorkout(currentWorkout._id));
+  //   console.log(response);
+  // };
+  // getCurrentWorkout();
+  // console.log("hello");
+
+  }
 
   return (
     <div className="md:mx-2">
@@ -89,7 +107,7 @@ export default function ExerciseList({ loading, exerciseList, isDisabled }) {
               className=" bg-black text-white md:my-4 my-2 md:py-4 flex items-center justify-center text-center "
             >
               {/* EXERCISE NAME */}
-              <div className=" text-md  md:text-lg m-2  flex-col font-semibold text-left w-2/3">
+              <div className=" text-md  md:text-lg flex-col font-semibold text-left w-2/3">
                 <h3>{exercise.name}</h3>
                 {currentPage === "/dashboard/exerciselist" && (
                   <div className="uppercase flex text-gray-500 space-x-4 text-sm md:text-md">
@@ -101,7 +119,7 @@ export default function ExerciseList({ loading, exerciseList, isDisabled }) {
                 {/* SET REPS AND WEIGHTS SECTION */}
                 {currentPage === "/dashboard/workout" && (
                   <div className="flex space-x-4 text-gray-400 text-center text-sm">
-                    <div className="md:p-4 my-2 ">
+                    <div className="md:p-4 ">
                       Sets
                       <input
                         placeholder={exercise.sets || 3}
@@ -117,7 +135,7 @@ export default function ExerciseList({ loading, exerciseList, isDisabled }) {
                       ></input>
                     </div>
 
-                    <div className="md:p-4 my-2">
+                    <div className="md:p-4">
                       Rep
                       <input
                         placeholder="8"
@@ -133,7 +151,7 @@ export default function ExerciseList({ loading, exerciseList, isDisabled }) {
                       ></input>
                     </div>
 
-                    <div className="md:p-4 my-2">
+                    <div className="md:p-4">
                       Weight
                       <input
                         placeholder="10"
@@ -154,7 +172,7 @@ export default function ExerciseList({ loading, exerciseList, isDisabled }) {
 
               {/* ADD TO WORKOUT BUTTON */}
               {currentPage === "/dashboard/exerciselist" && (
-                <div className="md:p-4  my-2">
+                <div className="md:p-4 my-2">
                   <button
                     className=" py-2 px-4 rounded-md bg-blue-500 hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 text-white"
                     onClick={() => handleAddToWorkout(
@@ -169,27 +187,32 @@ export default function ExerciseList({ loading, exerciseList, isDisabled }) {
                 </div>
               )}
 
-              {/* EDIT BUTTON */}
-              {currentPage === "/dashboard/workout" && (
-                <div className="md:p-4  my-2">
-                  <button
-                    className="btn-primary py-2 px-4 rounded-md bg-blue-500 hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 text-white"
-                    onClick={handleEditExercise}
+{currentPage === "/dashboard/workout" && (
+                <div className="md:p-4 my-2 self-end mx-4 ">
+                  {!disabled && (<button
+                    className=" py-2 px-2 rounded-md bg-red-900 hover:bg-red-400  text-white"
+                    onClick={() => deleteExerciseFromWorkout(
+                      exercise._id,
+  
+                    )}
                   >
-                    Edit
-                  </button>
+                    <TrashIcon className="w-4 h-4 md:w-8 md:h-8"/>
+                  </button>)}
                 </div>
               )}
+
+           
             </div>
           );
         })}
-  <div className="fixed top-10 right-10 left-10 z-50 text-center">
+  <div className="fixed top-10  right-10 left-10 z-50 text-center">
       {showAlert &&  alert && (
         <div className="p-4 bg-blue-500 text-white rounded-md transition duration-500 ease-in-out">
           {alert}
         </div>
       )}
     </div>
+   
 
       {loading && <Loading />}
     </div>

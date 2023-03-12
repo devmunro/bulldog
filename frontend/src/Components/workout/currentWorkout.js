@@ -12,7 +12,13 @@ import {
 export default function CurrentWorkout() {
     const [showExerciseForWorkout, setShowExerciseForWorkout] = useState(false);
     const {defaultWorkout, loading, currentWorkout } = useSelector((state) => state.fitness);
-   
+    const [disabled, setDisabled] = useState(true);
+
+  //handle edit exercise for current workout
+  const handleEditExercise = async (id) => {
+    setDisabled(false);
+  };
+
  //handleShowExercises - display exercises for current workout
 
     const handleShowExercises = (e) => {
@@ -33,6 +39,7 @@ export default function CurrentWorkout() {
           <h2 className=" text-3xl font-semibold">
             {currentWorkout.name.toUpperCase()}
           </h2>
+          <div className="flex">
           <button className="items-baseline btn-secondary" onClick={handleShowExercises}>
             {showExerciseForWorkout && (
               <div className="flex">
@@ -47,6 +54,17 @@ export default function CurrentWorkout() {
               </div>
             )}
           </button>
+             {/* EDIT BUTTON */}
+      {showExerciseForWorkout  && (
+               
+                  <button
+                    className="btn-primary mx-8 py-2 px-4 rounded-md bg-blue-500 hover:bg-blue-600  text-white"
+                    onClick={handleEditExercise}
+                  >
+                    Edit
+                  </button>
+      )}
+      </div>
         </div>
         <div className="opacity-25">
           <FirebaseStorage imageBase="manworkingout.png" />
@@ -57,7 +75,8 @@ export default function CurrentWorkout() {
           exerciseList={currentWorkout.exercises}
           loading={loading}
           buttonText="Edit"
-          isDisabled
+          disabled={disabled}
+          
         />
       )}
     </div>

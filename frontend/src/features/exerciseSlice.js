@@ -24,8 +24,7 @@ export const getAllExercises = createAsyncThunk(
   async () => {
     try {
       const response = await axios.get(`${API_URL}/exercises/getallexercises`);
-      return response.data
-   
+      return response.data;
     } catch (error) {
       console.log(error);
     }
@@ -171,6 +170,21 @@ export const getUserWorkoutStats = createAsyncThunk(
   }
 );
 
+export const deleteExercise = createAsyncThunk(
+  "fitness/deleteExercise",
+  async (selectedExercise) => {
+    console.log("del", selectedExercise);
+
+    try {
+      const response = await axios.delete(`${API_URL}workout/deleteexercise`,{ data: selectedExercise });
+
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
 export const exerciseSlice = createSlice({
   name: "fitness",
   initialState: {
@@ -178,7 +192,7 @@ export const exerciseSlice = createSlice({
     currentWorkout: JSON.parse(localStorage.getItem("currentWorkout")),
     loading: false,
     alert: null,
-    completeExercises: []
+    completeExercises: [],
   },
 
   reducers: {
@@ -210,7 +224,9 @@ export const exerciseSlice = createSlice({
     builder.addCase(addExercise.fulfilled, (state, action) => {
       state.alert = action.payload.message;
     });
-   
+    builder.addCase(deleteExercise.fulfilled, (state, action) => {
+      state.currentWorkout = action.payload.updatedWorkout;
+    });
   },
 });
 

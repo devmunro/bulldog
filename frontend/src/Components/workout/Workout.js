@@ -67,6 +67,7 @@ export default function Workout({ user }) {
     console.log(workout);
     return <WorkoutPage workout={workout} />;
   };
+  
 
   return (
     <div className="bg-[#2B2946] md:m-2 justify-center flex-col">
