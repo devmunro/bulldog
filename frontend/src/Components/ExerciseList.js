@@ -1,30 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Loading from "./Loading";
-import { addExercise, deleteExercise, findSingleWorkout } from "../features/exerciseSlice";
+import { addExercise, deleteExercise } from "../features/exerciseSlice";
 import { resetAlert } from "../features/exerciseSlice";
 import { TrashIcon } from "@heroicons/react/24/solid";
 import { current } from "@reduxjs/toolkit";
 
-
-
-export default function ExerciseList({ loading, exerciseList, disabled }) {
-  const [exerciseInputs, setExerciseInputs] = useState({});
-  const { alert } = useSelector(
-    (state) => state.fitness
-  );
+export default function ExerciseList({
+  exerciseInputs,
+  handleChange,
+  loading,
+  exerciseList,
+  disabled,
+}) {
+  const { alert } = useSelector((state) => state.fitness);
   const { currentWorkout } = useSelector((state) => state.fitness);
   const [showAlert, setShowAlert] = useState(false);
 
   const [currentPage, setCurrentPage] = useState("");
 
-  const [exerciseDetails, setExerciseDetails] = useState({
-    exerciseID: "",
-    exerciseSets: 3,
-    exerciseReps: 12,
-    exerciseWeight: 10,
-  });
-
+  
   // set the current page in the useEffect hook
   useEffect(() => {
     setCurrentPage(window.location.pathname);
@@ -33,7 +28,7 @@ export default function ExerciseList({ loading, exerciseList, disabled }) {
   const dispatch = useDispatch();
   //handle add to workout
   const handleAddToWorkout = async (id, name, bodyType, equipment) => {
-    const newExerciseDetails = ({
+    const newExerciseDetails = {
       exerciseID: id,
       exerciseBodyType: bodyType,
       exerciseEquipment: equipment,
@@ -41,24 +36,10 @@ export default function ExerciseList({ loading, exerciseList, disabled }) {
       exerciseReps: 8,
       exerciseWeight: 10,
       selectedWorkout: currentWorkout._id,
-    });
+    };
 
-   const response = await  dispatch(addExercise(newExerciseDetails));
-    console.log(response)
-  };
-
-
-  //handlechange for inputs
-  const handleChange = (id) => (e) => {
-    e.preventDefault();
-    const { name, value } = e.target;
-    setExerciseInputs((prevState) => ({
-      ...prevState,
-      [id]: {
-        ...prevState[id],
-        [name]: (value),
-      },
-    }));
+    const response = await dispatch(addExercise(newExerciseDetails));
+    console.log(response);
   };
 
   useEffect(() => {
@@ -72,25 +53,17 @@ export default function ExerciseList({ loading, exerciseList, disabled }) {
   }, [alert, dispatch]);
 
   const deleteExerciseFromWorkout = async (id) => {
-
-    console.log(id)
-    console.log(currentWorkout._id) 
+    console.log(id);
+    console.log(currentWorkout._id);
     const deleteOneExercise = {
       workoutID: currentWorkout._id,
       exerciseID: id,
+    };
 
-    }
-
-   const response = await dispatch(deleteExercise(deleteOneExercise))
-
-  //  const getCurrentWorkout = async () => {
-  //   const response = await dispatch(findSingleWorkout(currentWorkout._id));
-  //   console.log(response);
-  // };
-  // getCurrentWorkout();
-  // console.log("hello");
-
-  }
+    const response = await dispatch(deleteExercise(deleteOneExercise));
+  
+  
+  };
 
   return (
     <div className="md:mx-2">
@@ -130,7 +103,7 @@ export default function ExerciseList({ loading, exerciseList, disabled }) {
                           3
                         }
                         name="sets"
-                        onChange={handleChange(exercise._id)}
+                        onChange={(e) => handleChange(exercise._id, e)}
                         disabled={disabled}
                       ></input>
                     </div>
@@ -146,7 +119,7 @@ export default function ExerciseList({ loading, exerciseList, disabled }) {
                           12
                         }
                         name="reps"
-                        onChange={handleChange(exercise._id)}
+                        onChange={(e) => handleChange(exercise._id, e)}
                         disabled={disabled}
                       ></input>
                     </div>
@@ -162,7 +135,7 @@ export default function ExerciseList({ loading, exerciseList, disabled }) {
                           10
                         }
                         name="weight"
-                        onChange={handleChange(exercise._id)}
+                        onChange={(e) => handleChange(exercise._id, e)}
                         disabled={disabled}
                       ></input>
                     </div>
@@ -175,44 +148,42 @@ export default function ExerciseList({ loading, exerciseList, disabled }) {
                 <div className="md:p-4 my-2">
                   <button
                     className=" py-2 px-4 rounded-md bg-blue-500 hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 text-white"
-                    onClick={() => handleAddToWorkout(
-                      exercise._id,
-                      exercise.name,
-                      exercise.body_type,
-                      exercise.equipment
-                    )}
+                    onClick={() =>
+                      handleAddToWorkout(
+                        exercise._id,
+                        exercise.name,
+                        exercise.body_type,
+                        exercise.equipment
+                      )
+                    }
                   >
                     Add
                   </button>
                 </div>
               )}
 
-{currentPage === "/dashboard/workout" && (
+              {currentPage === "/dashboard/workout" && (
                 <div className="md:p-4 my-2 self-end mx-4 ">
-                  {!disabled && (<button
-                    className=" py-2 px-2 rounded-md bg-red-900 hover:bg-red-400  text-white"
-                    onClick={() => deleteExerciseFromWorkout(
-                      exercise._id,
-  
-                    )}
-                  >
-                    <TrashIcon className="w-4 h-4 md:w-8 md:h-8"/>
-                  </button>)}
+                  {!disabled && (
+                    <button
+                      className=" py-2 px-2 rounded-md bg-red-900 hover:bg-red-400  text-white"
+                      onClick={() => deleteExerciseFromWorkout(exercise._id)}
+                    >
+                      <TrashIcon className="w-4 h-4 md:w-8 md:h-8" />
+                    </button>
+                  )}
                 </div>
               )}
-
-           
             </div>
           );
         })}
-  <div className="fixed top-10  right-10 left-10 z-50 text-center">
-      {showAlert &&  alert && (
-        <div className="p-4 bg-blue-500 text-white rounded-md transition duration-500 ease-in-out">
-          {alert}
-        </div>
-      )}
-    </div>
-   
+      <div className="fixed top-10  right-10 left-10 z-50 text-center">
+        {showAlert && alert && (
+          <div className="p-4 bg-blue-500 text-white rounded-md transition duration-500 ease-in-out">
+            {alert}
+          </div>
+        )}
+      </div>
 
       {loading && <Loading />}
     </div>

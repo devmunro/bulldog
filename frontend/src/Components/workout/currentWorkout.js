@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import ExerciseList from "../ExerciseList";
 import {
     ChevronDoubleDownIcon,
@@ -7,16 +7,22 @@ import {
   } from "@heroicons/react/24/solid";
   import FirebaseStorage from "../../images/firebaseStorage";
   import Loading from "../Loading";  
+import { editExercise } from "../../features/exerciseSlice";
 
 
 export default function CurrentWorkout() {
     const [showExerciseForWorkout, setShowExerciseForWorkout] = useState(false);
     const {defaultWorkout, loading, currentWorkout } = useSelector((state) => state.fitness);
     const [disabled, setDisabled] = useState(true);
+    const [exerciseInputs, setExerciseInputs] = useState({
+    });
+    const [swapButton, setSwapButton] =useState(true)
+    const dispatch = useDispatch()
 
   //handle edit exercise for current workout
   const handleEditExercise = async (id) => {
     setDisabled(false);
+    setSwapButton(false)
   };
 
  //handleShowExercises - display exercises for current workout
@@ -27,7 +33,38 @@ export default function CurrentWorkout() {
         setShowExerciseForWorkout(!showExerciseForWorkout);
       };
 
+ //handle Save exercise for current workout
+ const handleSaveExercise = async () => {
+const currentID = currentWorkout._id
+  const editedDetails = {
+   currentID,
+   exerciseInputs
+  }
  
+  const response = await dispatch(editExercise(editedDetails))
+
+if(response) {
+  setDisabled(true)
+}
+setSwapButton(true)
+
+};
+
+
+  //handlechange for inputs
+  const handleChange = async (id,e) => {
+      const { name, value } = e.target;
+    setExerciseInputs((prevState) => ({
+      ...prevState,
+      [id]: {
+        ...prevState[id],
+        [name]: (value),
+      },
+    }));
+
+
+ 
+  };
     
 
     return (
@@ -55,7 +92,7 @@ export default function CurrentWorkout() {
             )}
           </button>
              {/* EDIT BUTTON */}
-      {showExerciseForWorkout  && (
+      {showExerciseForWorkout  && swapButton && (
                
                   <button
                     className="btn-primary mx-8 py-2 px-4 rounded-md bg-blue-500 hover:bg-blue-600  text-white"
@@ -64,6 +101,16 @@ export default function CurrentWorkout() {
                     Edit
                   </button>
       )}
+           {/* Save BUTTON */}
+           {showExerciseForWorkout  && !swapButton && (
+               
+               <button
+                 className="btn-primary mx-8 py-2 px-4 rounded-md bg-blue-500 hover:bg-blue-600  text-white"
+                 onClick={handleSaveExercise}
+               >
+                 Save
+               </button>
+   )}
       </div>
         </div>
         <div className="opacity-25">
@@ -76,6 +123,8 @@ export default function CurrentWorkout() {
           loading={loading}
           buttonText="Edit"
           disabled={disabled}
+          exerciseInputs = {exerciseInputs}
+          handleChange = {handleChange}
           
         />
       )}

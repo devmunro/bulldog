@@ -123,3 +123,26 @@ export const deleteExercise = async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 };
+
+
+//### EDIT EXERCISES IN CURRENT WORKOUT
+export const editExercise = async (req, res) => {
+  const { id, exerciseDetails } = req.body;
+
+  try {
+    const matchedWorkout = await Workout.findById(id);
+
+    const updatedExercises = matchedWorkout.exercises.map((exercise) => {
+      const matchedExercise = exerciseDetails[exercise._id.toString()];
+      return matchedExercise ? { ...exercise, ...matchedExercise } : exercise;
+    });
+console.log(updatedExercises)
+    matchedWorkout.exercises = updatedExercises;
+    const updatedWorkout = await matchedWorkout.save();
+
+    res.status(200).json({ updatedWorkout });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
+};

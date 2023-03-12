@@ -176,7 +176,27 @@ export const deleteExercise = createAsyncThunk(
     console.log("del", selectedExercise);
 
     try {
-      const response = await axios.delete(`${API_URL}workout/deleteexercise`,{ data: selectedExercise });
+      const response = await axios.delete(`${API_URL}workout/deleteexercise`, {
+        data: selectedExercise,
+      });
+
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+export const editExercise = createAsyncThunk(
+  "fitness/editExercise",
+  async (details) => {
+    console.log("edit", details);
+
+    try {
+      const response = await axios.put(`${API_URL}workout/editexercise`, {
+        id: details.currentID,
+        exerciseDetails: details.exerciseInputs,
+      });
 
       return response.data;
     } catch (error) {
@@ -227,6 +247,10 @@ export const exerciseSlice = createSlice({
     builder.addCase(deleteExercise.fulfilled, (state, action) => {
       state.currentWorkout = action.payload.updatedWorkout;
     });
+    builder.addCase(editExercise.fulfilled, (state, action) => {
+      state.currentWorkout = action.payload.updatedWorkout;
+    });
+  
   },
 });
 
