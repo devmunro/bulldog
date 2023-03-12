@@ -43,10 +43,14 @@ export default function Overview({ user }) {
                 workout.exercises.reduce((acc2, exercise) => {
                   return (
                     acc2 +
-                    exercise.sets.reduce(
-                      (setAcc, set) => setAcc + set.weight * set.reps,
-                      0
-                    )
+                    exercise.sets.reduce((setAcc, set) => {
+                      if (set.weight === 0) {
+                        console.log(setAcc)
+                        return setAcc;
+                      } else {
+                        return setAcc + set.weight * set.reps;
+                      }
+                    }, 0)
                   );
                 }, 0)
               );
@@ -58,12 +62,10 @@ export default function Overview({ user }) {
 
         const totalReps = labels.map((date) => {
           const workouts = data.filter((workout) => {
-            const workoutDate = new Date(
-              workout.createdAt
-            ).toLocaleDateString();
+            const workoutDate = new Date(workout.createdAt).toLocaleDateString();
             return workoutDate === date;
           });
-
+        
           if (workouts.length > 0) {
             return workouts.reduce((acc, workout) => {
               return (
@@ -71,7 +73,13 @@ export default function Overview({ user }) {
                 workout.exercises.reduce((acc2, exercise) => {
                   return (
                     acc2 +
-                    exercise.sets.reduce((setAcc, set) => setAcc + set.reps, 0)
+                    exercise.sets.reduce((setAcc, set) => {
+                      if (set.weight === 0) {
+                        return setAcc;
+                      } else {
+                        return setAcc + set.reps;
+                      }
+                    }, 0)
                   );
                 }, 0)
               );
@@ -80,6 +88,7 @@ export default function Overview({ user }) {
             return null;
           }
         });
+        
 
         // Get the total amount of exercises per name
         const exerciseNames = data
@@ -132,6 +141,7 @@ export default function Overview({ user }) {
     };
     getData();
   }, [user, dispatch]);
+
 
   return (
     <div className=" w-full justify-center p-4">
