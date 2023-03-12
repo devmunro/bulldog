@@ -41,14 +41,15 @@ export default function Overview({ user }) {
               return (
                 acc +
                 workout.exercises.reduce((acc2, exercise) => {
+                  console.log(acc2)
                   return (
                     acc2 +
                     exercise.sets.reduce((setAcc, set) => {
-                      if (set.weight === 0) {
+                      if (set.weight === 0 || set.weight != null) {
                         console.log(setAcc)
-                        return setAcc;
+                        return setAcc + (set.weight || 0) * set.reps;
                       } else {
-                        return setAcc + set.weight * set.reps;
+                        return setAcc;
                       }
                     }, 0)
                   );
