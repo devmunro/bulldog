@@ -94,7 +94,7 @@ function WorkoutPage() {
           type="number"
           onChange={handleInputChange(i)}
           disabled={disabledRows.includes(i)}
-          className={`py-2 px-4 md:m-4 rounded-lg w-20 md:w-full text-center${
+          className={`py-2 px-4 md:m-4 rounded-lg w-20 md:w-full text-center ${
             disabledRows.includes(i)
               ? "bg-gray-400 placeholder-white my-2 border-2"
               : "bg-white border-2 border-black my-2"
