@@ -17,6 +17,10 @@ function WorkoutPage() {
   const [disabledRows, setDisabledRows] = useState([]);
   const [showTimer, setShowTimer] = useState(false);
   const [secondsLeft, setSecondsLeft] = useState(5);
+  const [incompleteSets, setIncompleteSets] = useState(false);
+
+
+
 
   //exercisedata
 
@@ -24,13 +28,20 @@ function WorkoutPage() {
     {
       id: "",
       name: "",
-      sets: [{ reps: "", weight: "" }],
+      sets: [{ reps: "", weight: "", completed: false }],
     },
   ]);
 
   const dispatch = useDispatch();
 
-  //handle inputs
+  useEffect(() => {
+    const hasIncompleteSets = exerciseData.some((exercise) =>
+      exercise.sets.some((set) => !set.reps || !set.weight)
+    );
+    setIncompleteSets(hasIncompleteSets);
+  }, [exerciseData]);
+
+    //handle inputs
 
   const handleInputChange = (id) => (e) => {
     e.preventDefault();
@@ -41,7 +52,7 @@ function WorkoutPage() {
         id: exerciseID,
         name: exerciseName,
         sets: prevState[currentExerciseIndex]?.sets || [
-          { reps: exerciseReps, weight: exerciseWeight },
+          { reps: exerciseReps, weight: exerciseWeight, completed: false },
         ],
       };
       updatedExercise.sets[id] = {
@@ -53,74 +64,88 @@ function WorkoutPage() {
       return newState;
     });
   };
-  console.log(exerciseID);
-  console.log(exerciseData);
 
-  const handleDone = (rowIndex) => (e) => {
-    e.preventDefault();
 
-    const repsValue = exerciseData[currentExerciseIndex]?.sets[rowIndex]?.reps;
-    const weightValue = exerciseData[currentExerciseIndex]?.sets[rowIndex]?.weight;
-  
-    if (!repsValue && !weightValue) {
-      return;
-    }
-  
+const handleDone = (rowIndex) => (e) => {
+  e.preventDefault();
 
-    setSecondsLeft(5);
-    setShowTimer(true);
-    setDisabledRows([...disabledRows, rowIndex]);
-  };
+  const repsValue = exerciseData[currentExerciseIndex]?.sets[rowIndex]?.reps;
+  const weightValue = exerciseData[currentExerciseIndex]?.sets[rowIndex]?.weight;
 
-  const setAmount = [];
-  for (let i = 0; i < exerciseSets; i++) {
-    setAmount.push(
-      <div
-        key={i}
-        className="flex  md:flex-row md:space-x-4 items-center justify-center"
-      >
-        <h3 className="mb-2 md:mb-0 text-center md:m-4 font-bold">
-          Set {i + 1}
-        </h3>
-        <input
-          placeholder={exerciseReps}
-          type="number"
-          name="reps"
-          value={exerciseData[currentExerciseIndex]?.sets[i]?.reps || ""}
-          onChange={handleInputChange(i)}
-          disabled={disabledRows.includes(i)}
-          className={`py-2 md:px-4 px-2 m-4 rounded-lg w-12 md:w-full text-center ${
-            disabledRows.includes(i)
-              ? "bg-gray-400 placeholder-white my-2 border-2"
-              : "bg-white border-2 border-black my-2"
-          }`}
-        />
-        <input
-          placeholder={`${exerciseWeight}kg`}
-          name="weight"
-          value={exerciseData[currentExerciseIndex]?.sets[i]?.weight || ""}
-          type="number"
-          pattern="^\d+(\.\d+)?$"
-
-          onChange={handleInputChange(i)}
-          disabled={disabledRows.includes(i)}
-          className={`py-2 md:px-4 md:m-4 rounded-lg w-20 md:w-full text-center ${
-            disabledRows.includes(i)
-              ? "bg-gray-400 placeholder-white my-2 border-2"
-              : "bg-white border-2 border-black my-2"
-          }`}
-        />
-        <button
-          className="btn-primary mt-2 m-4 text-xl"
-          onClick={handleDone(i)}
-          disabled={disabledRows.includes(i)}
-        >
-          +
-        </button>
-        <hr className="bg-black md:m-4"></hr>
-      </div>
-    );
+  if (!repsValue || !weightValue) {
+    alert("complete all fields")
+    return;
   }
+
+  const updatedSets = [...exerciseData[currentExerciseIndex].sets];
+  updatedSets[rowIndex].completed = true;
+  setExerciseData((prevState) => {
+    const updatedExercise = {
+      ...prevState[currentExerciseIndex],
+      sets: updatedSets,
+    };
+    const newState = [...prevState];
+    newState[currentExerciseIndex] = updatedExercise;
+    return newState;
+  });
+  setDisabledRows([...disabledRows, rowIndex]);
+
+  setSecondsLeft(5);
+  setShowTimer(true);
+};
+
+const setAmount = [];
+for (let i = 0; i < exerciseSets; i++) {
+  const set = exerciseData[currentExerciseIndex]?.sets[i];
+  const repsValue = set?.reps;
+  const weightValue = set?.weight;
+  const completed = set?.completed;
+
+  setAmount.push(
+    <div
+      key={i}
+      className={`flex md:flex-row md:space-x-4 items-center justify-center ${
+        completed ? "opacity-50" : ""
+      }`}
+    >
+      <h3 className="mb-2 md:mb-0 text-center md:m-4 font-bold">
+        Set {i + 1}
+      </h3>
+      <input
+        placeholder={exerciseReps}
+        type="number"
+        name="reps"
+        value={repsValue || ""}
+        onChange={handleInputChange(i)}
+        disabled={completed}
+        className={`py-2 md:px-4 px-2 m-4 rounded-lg w-12 md:w-full text-center ${
+          completed ? "bg-gray-400 placeholder-white my-2 border-2" : "bg-white border-2 border-black my-2"
+        }`}
+      />
+      <input
+        placeholder={`${exerciseWeight}kg`}
+        name="weight"
+        value={weightValue || ""}
+        type="number"
+        pattern="^\d+(\.\d+)?$"
+        onChange={handleInputChange(i)}
+        disabled={completed}
+        className={`py-2 md:px-4 md:m-4 rounded-lg w-20 md:w-full text-center ${
+          completed ? "bg-gray-400 placeholder-white my-2 border-2" : "bg-white border-2 border-black my-2"
+        }`}
+      />
+      <button
+        className="btn-primary mt-2 m-4 text-xl"
+        onClick={handleDone(i)}
+        disabled={completed}
+      >
+        +
+      </button>
+      <hr className="bg-black md:m-4"></hr>
+    </div>
+  );
+}
+
 
   // be able to change to next exercise
   const handleNextExercise = () => {
@@ -150,16 +175,22 @@ function WorkoutPage() {
 
   const handleCompleteWorkout = (e) => {
     e.preventDefault();
-
+  
+    if (incompleteSets) {
+      alert('Please complete all exercise sets before completing the workout.');
+      return;
+    }
+  
     const workoutResults = {
       userID: user._id,
       workoutID: currentWorkout._id,
       workoutName: currentWorkout.name,
       exercises: exerciseData,
     };
-
+  
     dispatch(completeWorkout(workoutResults));
   };
+
 
   useEffect(() => {
     let timerId;

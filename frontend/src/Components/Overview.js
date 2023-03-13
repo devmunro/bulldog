@@ -35,21 +35,24 @@ export default function Overview({ user }) {
             ).toLocaleDateString();
             return workoutDate === date;
           });
-console.log(workouts)
+          console.log(workouts);
           if (workouts.length > 0) {
             return workouts.reduce((acc, workout) => {
               return (
                 acc +
                 workout.exercises.reduce((acc2, exercise) => {
-                  if (!exercise) {  // check if exercise is null
+                  if (!exercise) {
+                    // check if exercise is null
                     return acc2;
                   }
-                  console.log(acc2)
+                  console.log(acc2);
                   return (
                     acc2 +
                     exercise.sets.reduce((setAcc, set) => {
-                      if (set.weight === 0 || set.weight != null) {
-                        console.log(setAcc)
+                      if (set.weight !== null && set.weight > 0) {
+                        console.log("here", set.weight);
+                        const amount = setAcc + (set.weight || 0) * set.reps;
+                        console.log(amount)
                         return setAcc + (set.weight || 0) * set.reps;
                       } else {
                         return setAcc;
@@ -66,25 +69,28 @@ console.log(workouts)
 
         const totalReps = labels.map((date) => {
           const workouts = data.filter((workout) => {
-            const workoutDate = new Date(workout.createdAt).toLocaleDateString();
+            const workoutDate = new Date(
+              workout.createdAt
+            ).toLocaleDateString();
             return workoutDate === date;
           });
-        
+
           if (workouts.length > 0) {
             return workouts.reduce((acc, workout) => {
               return (
                 acc +
                 workout.exercises.reduce((acc2, exercise) => {
-                  if (!exercise) { // check if exercise is null
+                  if (!exercise) {
+                    // check if exercise is null
                     return acc2;
                   }
                   return (
                     acc2 +
                     exercise.sets.reduce((setAcc, set) => {
-                      if (set.weight === 0) {
-                        return setAcc;
-                      } else {
+                      if (set.weight === 0 || set.weight === null) {
                         return setAcc + set.reps;
+                      } else {
+                        return setAcc + set.reps || 0;
                       }
                     }, 0)
                   );
@@ -95,20 +101,19 @@ console.log(workouts)
             return null;
           }
         });
-        
 
-       // Get the total amount of exercises per name
-const exerciseNames = data
-.map((workout) => workout.exercises)
-.flat()
-.map((exercise) => {
-  if (exercise && exercise.name) {
-    return exercise.name;
-  } else {
-    return null; // or return a default value
-  }
-})
-.filter((name) => name !== null);
+        // Get the total amount of exercises per name
+        const exerciseNames = data
+          .map((workout) => workout.exercises)
+          .flat()
+          .map((exercise) => {
+            if (exercise && exercise.name) {
+              return exercise.name;
+            } else {
+              return null; // or return a default value
+            }
+          })
+          .filter((name) => name !== null);
 
         const exerciseCount = {};
         exerciseNames.forEach((name) => {
@@ -130,7 +135,7 @@ const exerciseNames = data
             },
           ],
         });
-
+        console.log(totalWeight);
         setChartData({
           labels,
 
@@ -155,7 +160,6 @@ const exerciseNames = data
     };
     getData();
   }, [user, dispatch]);
-
 
   return (
     <div className=" w-full justify-center p-4">
@@ -184,22 +188,18 @@ const exerciseNames = data
       <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1  gap-8 w-full  [&>*]:bg-[#1F2937] [&>*]:lg:p-8 [&>*]:rounded-md [&>*]:shadow-white [&>*]:shadow-lg">
         <div className="w-full min-h-48">
           {Object.keys(chartData).length > 0 ? (
-            
             <Bar
-            className="bg-black"
-
+              className="bg-black"
               data={chartData}
               options={{
                 color: "white",
                 plugins: {
-                  
                   title: {
                     display: true,
                     text: "Activity",
                     font: {
                       size: 24,
                       weight: "bold",
-                      
                     },
                   },
                 },
@@ -231,7 +231,7 @@ const exerciseNames = data
         <div className="w-full">
           {Object.keys(exerciseData).length > 0 ? (
             <Doughnut
-            className="bg-black"
+              className="bg-black"
               data={exerciseData}
               options={{
                 color: "white",
