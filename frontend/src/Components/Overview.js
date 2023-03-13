@@ -35,12 +35,15 @@ export default function Overview({ user }) {
             ).toLocaleDateString();
             return workoutDate === date;
           });
-
+console.log(workouts)
           if (workouts.length > 0) {
             return workouts.reduce((acc, workout) => {
               return (
                 acc +
                 workout.exercises.reduce((acc2, exercise) => {
+                  if (!exercise) {  // check if exercise is null
+                    return acc2;
+                  }
                   console.log(acc2)
                   return (
                     acc2 +
@@ -72,6 +75,9 @@ export default function Overview({ user }) {
               return (
                 acc +
                 workout.exercises.reduce((acc2, exercise) => {
+                  if (!exercise) { // check if exercise is null
+                    return acc2;
+                  }
                   return (
                     acc2 +
                     exercise.sets.reduce((setAcc, set) => {
@@ -91,11 +97,18 @@ export default function Overview({ user }) {
         });
         
 
-        // Get the total amount of exercises per name
-        const exerciseNames = data
-          .map((workout) => workout.exercises)
-          .flat()
-          .map((exercise) => exercise.name);
+       // Get the total amount of exercises per name
+const exerciseNames = data
+.map((workout) => workout.exercises)
+.flat()
+.map((exercise) => {
+  if (exercise && exercise.name) {
+    return exercise.name;
+  } else {
+    return null; // or return a default value
+  }
+})
+.filter((name) => name !== null);
 
         const exerciseCount = {};
         exerciseNames.forEach((name) => {

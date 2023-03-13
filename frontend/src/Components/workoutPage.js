@@ -130,6 +130,19 @@ function WorkoutPage() {
     setCurrentExerciseIndex(newNumber);
     setDisabledRows([]);
   };
+
+    // be able to change to prev exercise
+    const handlePrevExercise = () => {
+      const newNumber = currentExerciseIndex  -1;
+      console.log(newNumber);
+      if (newNumber === -1) {
+        return;
+      }
+      setCurrentExerciseIndex(newNumber);
+     
+    };
+
+
   console.log("cw:", currentWorkout);
   //complee workout
 
@@ -230,6 +243,19 @@ function WorkoutPage() {
             } btn-primary lg:w-2/3 w-full lg:mx-auto`}
           >
             Next Exercise
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setShowTimer(false);
+              setSecondsLeft(45);
+              handlePrevExercise();
+            }}
+            className={`${
+              showTimer && secondsLeft > 0 ? "hidden" : "block"
+            } btn-primary lg:w-2/3 w-full lg:mx-auto`}
+          >
+            Prev Exercise
           </button>
           <button
             onClick={handleCompleteWorkout}
