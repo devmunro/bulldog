@@ -46,7 +46,7 @@ function WorkoutPage() {
       };
       updatedExercise.sets[id] = {
         ...updatedExercise.sets[id],
-        [name]: parseInt(value) || 0,
+        [name]: (value),
       };
       const newState = [...prevState];
       newState[currentExerciseIndex] = updatedExercise;
@@ -100,6 +100,8 @@ function WorkoutPage() {
           name="weight"
           value={exerciseData[currentExerciseIndex]?.sets[i]?.weight || ""}
           type="number"
+          pattern="^\d+(\.\d+)?$"
+
           onChange={handleInputChange(i)}
           disabled={disabledRows.includes(i)}
           className={`py-2 md:px-4 md:m-4 rounded-lg w-20 md:w-full text-center ${
