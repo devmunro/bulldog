@@ -19,6 +19,18 @@ export const fetchExercise = createAsyncThunk(
   }
 );
 
+export const getAllExercises = createAsyncThunk(
+  "fitness/getAllExercises",
+  async () => {
+    try {
+      const response = await axios.get(`${API_URL}/exercises/getallexercises`);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
 export const createWorkout = createAsyncThunk(
   "fitness/createWorkout",
   async (workoutCreateData) => {
@@ -75,6 +87,7 @@ export const addExercise = createAsyncThunk(
         `${API_URL}workout/addexercise`,
         exercise
       );
+      return { message: response.data };
     } catch (error) {}
   }
 );
@@ -140,18 +153,52 @@ export const completeWorkout = createAsyncThunk(
     }
   }
 );
- 
+
 export const getUserWorkoutStats = createAsyncThunk(
   "fitness/getUserWorkoutStats",
   async (userID) => {
     console.log("user", userID);
-    
+
     try {
-      const response = await axios.get(
-        `${API_URL}workoutStats/getuserstats`,
-        { params: { userID: userID } }
-      )
- return response.data
+      const response = await axios.get(`${API_URL}workoutStats/getuserstats`, {
+        params: { userID: userID },
+      });
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+export const deleteExercise = createAsyncThunk(
+  "fitness/deleteExercise",
+  async (selectedExercise) => {
+    console.log("del", selectedExercise);
+
+    try {
+      const response = await axios.delete(`${API_URL}workout/deleteexercise`, {
+        data: selectedExercise,
+      });
+
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+export const editExercise = createAsyncThunk(
+  "fitness/editExercise",
+  async (details) => {
+    console.log("edit", details);
+
+    try {
+      const response = await axios.put(`${API_URL}workout/editexercise`, {
+        id: details.currentID,
+        exerciseDetails: details.exerciseInputs,
+      });
+
+      return response.data;
     } catch (error) {
       console.log(error);
     }
@@ -164,9 +211,15 @@ export const exerciseSlice = createSlice({
     defaultWorkout: JSON.parse(localStorage.getItem("defaultWorkout")),
     currentWorkout: JSON.parse(localStorage.getItem("currentWorkout")),
     loading: false,
+    alert: null,
+    completeExercises: [],
   },
 
-  reducers: {},
+  reducers: {
+    resetAlert: (state) => {
+      state.alert = null;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(createWorkout.fulfilled, (state, action) => {
       state.defaultWorkout = action.payload.workout;
@@ -188,6 +241,19 @@ export const exerciseSlice = createSlice({
     builder.addCase(setDefaultWorkout.fulfilled, (state, action) => {
       state.defaultWorkout = action.payload.defaultWorkout;
     });
+    builder.addCase(addExercise.fulfilled, (state, action) => {
+      state.alert = action.payload.message;
+    });
+    builder.addCase(deleteExercise.fulfilled, (state, action) => {
+      state.currentWorkout = action.payload.updatedWorkout;
+    });
+    builder.addCase(editExercise.fulfilled, (state, action) => {
+      state.currentWorkout = action.payload.updatedWorkout;
+    });
+  
   },
 });
+
+export const { resetAlert } = exerciseSlice.actions;
+
 export default exerciseSlice.reducer;

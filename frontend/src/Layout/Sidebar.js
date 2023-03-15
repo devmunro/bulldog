@@ -4,6 +4,7 @@ import {
   ChevronDoubleLeftIcon,
   ChevronDoubleRightIcon,
   ComputerDesktopIcon,
+  DocumentTextIcon,
   TrophyIcon,
   UsersIcon,
 } from "@heroicons/react/24/solid";
@@ -51,8 +52,14 @@ export default function Sidebar() {
             </li>
             <li className="hover:bg-[#2B2946] hover:text-white">
               <Link to="/dashboard/workout" className="flex">
+                <DocumentTextIcon className="md:h-6 md:w-6 h-5 w-5 text-white-500 md:mx-2 mx-1" />
+                Workout Planner
+              </Link>
+            </li>
+            <li className="hover:bg-[#2B2946] hover:text-white">
+              <Link to="/dashboard/record" className="flex">
                 <TrophyIcon className="md:h-6 md:w-6 h-5 w-5 text-white-500 md:mx-2 mx-1" />
-                Workout
+                Start Workout
               </Link>
             </li>
             {/* <li className="hover:bg-[#2B2946] hover:text-white">
@@ -81,6 +88,11 @@ export default function Sidebar() {
           </li>
           <li className="hover:bg-[#2B2946] hover:text-white">
             <Link to="/dashboard/workout">
+              <DocumentTextIcon className="md:h-6 md:w-6 h-5 w-5 text-white-500 md:mx-2" />
+            </Link>
+          </li>
+          <li className="hover:bg-[#2B2946] hover:text-white">
+            <Link to="/dashboard/record">
               <TrophyIcon className="md:h-6 md:w-6 h-5 w-5 text-white-500 md:mx-2" />
             </Link>
           </li>

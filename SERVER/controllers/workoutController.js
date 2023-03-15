@@ -1,5 +1,5 @@
 import { Workout } from "../models/workoutSchema.js";
-import { user } from "../models/userSchema.js"; 
+import { user } from "../models/userSchema.js";
 import { Exercise } from "../models/exerciseSchema.js";
 
 export const createWorkout = async (req, res) => {
@@ -45,7 +45,7 @@ export const findworkouts = async (req, res) => {
 export const findSingleWorkout = async (req, res) => {
   try {
     const { workoutID } = req.query;
-console.log(workoutID)
+    console.log(workoutID);
     const workouts = await Workout.findById(workoutID);
     res.status(200).json(workouts);
   } catch (error) {
@@ -62,12 +62,10 @@ export const addExercise = async (req, res) => {
     exerciseWeight,
     selectedWorkout,
   } = req.body;
-  console.log("hello")
-  console.log(selectedWorkout);
   const selectedFullWorkout = await Workout.findById(selectedWorkout);
 
   const selectedExercise = await Exercise.findById(exerciseID);
-console.log(selectedExercise)
+  console.log(selectedExercise);
   selectedFullWorkout.exercises.push({
     exercise: exerciseID,
     name: selectedExercise.name,
@@ -80,7 +78,9 @@ console.log(selectedExercise)
 
   await selectedFullWorkout.save();
 
-  res.status(200).send("Exercise added to workout");
+  res
+    .status(200)
+    .send(`${selectedExercise.name} added to ${selectedFullWorkout.name}`);
 };
 
 //###SET A WORKOUT TO DEFAULT###
@@ -93,6 +93,56 @@ export const setDefaultWorkout = async (req, res) => {
 
   await matchedUser.save();
 
-  res.status(200).json({workoutID});
+  res.status(200).json({ workoutID });
 };
 
+
+//###DELETE EXERCISE FROM WORKOUT
+export const deleteExercise = async (req, res) => {
+  const selectedExercise = req.body;
+
+  try {
+    const matchedWorkout = await Workout.findById(selectedExercise.workoutID);
+
+    const updatedExercises = matchedWorkout.exercises.filter(
+      (exercise) => exercise._id.toString() !== selectedExercise.exerciseID
+    );
+
+    await Workout.updateOne(
+      { _id: selectedExercise.workoutID },
+      { exercises: updatedExercises }
+    );
+    const updatedWorkout = await Workout.findById(selectedExercise.workoutID);
+
+    res.status(200).json({
+      message: "Exercise deleted successfully.",
+      updatedWorkout: updatedWorkout,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
+
+//### EDIT EXERCISES IN CURRENT WORKOUT
+export const editExercise = async (req, res) => {
+  const { id, exerciseDetails } = req.body;
+
+  try {
+    const matchedWorkout = await Workout.findById(id);
+
+    const updatedExercises = matchedWorkout.exercises.map((exercise) => {
+      const matchedExercise = exerciseDetails[exercise._id.toString()];
+      return matchedExercise ? { ...exercise, ...matchedExercise } : exercise;
+    });
+console.log(updatedExercises)
+    matchedWorkout.exercises = updatedExercises;
+    const updatedWorkout = await matchedWorkout.save();
+
+    res.status(200).json({ updatedWorkout });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
+};

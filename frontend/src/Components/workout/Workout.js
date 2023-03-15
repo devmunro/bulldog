@@ -6,7 +6,7 @@ import {
   setDefaultWorkout,
 } from "../../features/exerciseSlice";
 import Loading from "../Loading";
-import WorkoutPage from "../workoutPage";
+import WorkoutPage from "./workoutPage";
 import CreateWorkout from "./createWorkout";
 import CurrentWorkout from "./currentWorkout";
 
@@ -67,6 +67,7 @@ export default function Workout({ user }) {
     console.log(workout);
     return <WorkoutPage workout={workout} />;
   };
+  
 
   return (
     <div className="bg-[#2B2946] md:m-2 justify-center flex-col">
@@ -79,16 +80,16 @@ export default function Workout({ user }) {
           {!currentWorkout && <div>No current workout</div>}
 
           {/* OTHER WORKOUTs */}
-          <div className="text-gray-500 p-4">
+          <div className="text-gray-500 my-8 ">
             <h2 className="font-bold">Other Workouts</h2>
             {userWorkouts.length > 0 &&
               userWorkouts.map((workout) => {
-                if (workout._id !== currentWorkout._id) {
+                if (workout?._id !== currentWorkout?._id) {
                   // Check if workout has the same ID as default workout
 
                   return (
-                    <ul className="flex m-4 p-8 justify-between bg-gradient-to-l from-gray-700 via-gray-900 to-black">
-                      <li className="">{workout.name.toUpperCase()}</li>
+                    <ul className="flex w-full p-8 justify-between bg-gradient-to-l from-gray-700 via-gray-900 to-black">
+                      <li className="w-1/2">{workout.name.toUpperCase()}</li>
                       <button
                         className="btn-primary"
                         onClick={handleSetDefault}
