@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import Loading from "./Loading";
-import { addExercise, deleteExercise } from "../features/exerciseSlice";
-import { resetAlert } from "../features/exerciseSlice";
+import Loading from "../Loading";
+import { addExercise, deleteExercise } from "../../features/exerciseSlice";
+import { resetAlert } from "../../features/exerciseSlice";
 import { TrashIcon } from "@heroicons/react/24/solid";
 import { current } from "@reduxjs/toolkit";
 
@@ -19,7 +19,6 @@ export default function ExerciseList({
 
   const [currentPage, setCurrentPage] = useState("");
 
-  
   // set the current page in the useEffect hook
   useEffect(() => {
     setCurrentPage(window.location.pathname);
@@ -61,8 +60,6 @@ export default function ExerciseList({
     };
 
     const response = await dispatch(deleteExercise(deleteOneExercise));
-  
-  
   };
 
   return (

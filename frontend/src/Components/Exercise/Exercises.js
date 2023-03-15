@@ -4,7 +4,7 @@ import { MagnifyingGlassCircleIcon } from "@heroicons/react/24/solid";
 import ExerciseCatergories from "./exerciseCatergories";
 
 import ExerciseList from "./ExerciseList";
-import { getAllExercises } from "../features/exerciseSlice";
+import { getAllExercises } from "../../features/exerciseSlice";
 
 export default function Exercises() {
   const [exerciseList, setExerciseList] = useState();
@@ -20,16 +20,14 @@ export default function Exercises() {
 
   useEffect(() => {
     const getAll = async () => {
-     const response = await dispatch(getAllExercises());
-  console.log(response)
-  if(response) {
-    setCompleteExercises(response.payload)
-    setSearchList(response.payload)
-    
-  }
+      const response = await dispatch(getAllExercises());
+      console.log(response);
+      if (response) {
+        setCompleteExercises(response.payload);
+        setSearchList(response.payload);
+      }
     };
 
-    
     getAll();
   }, []);
 
@@ -37,14 +35,17 @@ export default function Exercises() {
     console.log(`Searching for "${searchTerm}"`);
     console.log(exerciseList);
     const searchExercises = completeExercises.filter((word) => {
-
-      const nameMatch = word.name.toLowerCase().includes(searchTerm.toLowerCase());
-      const bodyTypeMatch = word.body_type.some((type) => type.toLowerCase().includes(searchTerm.toLowerCase()));
-      return nameMatch || bodyTypeMatch ;
+      const nameMatch = word.name
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
+      const bodyTypeMatch = word.body_type.some((type) =>
+        type.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      return nameMatch || bodyTypeMatch;
     });
     setExerciseList(searchExercises);
-    setCompleteExercises(searchList)
-    setSearchTerm("")
+    setCompleteExercises(searchList);
+    setSearchTerm("");
     console.log(searchExercises);
   };
   return (

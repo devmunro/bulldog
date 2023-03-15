@@ -6,7 +6,7 @@ import {
   setDefaultWorkout,
 } from "../../features/exerciseSlice";
 import Loading from "../Loading";
-import WorkoutPage from "../workoutPage";
+import WorkoutPage from "./workoutPage";
 import CreateWorkout from "./createWorkout";
 import CurrentWorkout from "./currentWorkout";
 

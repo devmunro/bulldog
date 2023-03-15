@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { fetchExercise } from "../features/exerciseSlice";
+import { fetchExercise } from "../../features/exerciseSlice";
 
 export default function ExerciseCatergories({ setLoading, setExerciseList }) {
   const categories = [

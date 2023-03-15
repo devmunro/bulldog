@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { completeWorkout } from "../features/exerciseSlice";
+import { completeWorkout } from "../../features/exerciseSlice";
 import { Link } from "react-router-dom";
 
 function WorkoutPage() {
@@ -18,8 +18,6 @@ function WorkoutPage() {
   const [showTimer, setShowTimer] = useState(false);
   const [secondsLeft, setSecondsLeft] = useState(5);
   const [incompleteSets, setIncompleteSets] = useState(false);
-
-
 
 
   //exercisedata
@@ -292,7 +290,7 @@ for (let i = 0; i < exerciseSets; i++) {
           </button>
           <button
             onClick={handleCompleteWorkout}
-            className="lg:w-2/3 w-full lg:mx-auto bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mt-4"
+            className="lg:w-2/3 w-full flex justify-center lg:mx-auto bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mt-4"
           >
             Complete
           </button>
