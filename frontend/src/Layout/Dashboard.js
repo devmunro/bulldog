@@ -44,7 +44,7 @@ export default function Dashboard() {
         {/* // render the Sidebar component */}
         <Sidebar />
       </div>
-      <div className="flex-grow flex flex-col ml-10 md:ml-14 bg-[#1F2937] h-screen">
+      <div className="flex-grow flex flex-col ml-10 md:ml-14 bg-[#1F2937] h-full">
         {/* // render the Navbar component with handleLogout prop */}
         <Navbar handleLogout={handleLogout} />
         <Routes>
