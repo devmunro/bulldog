@@ -262,19 +262,8 @@ for (let i = 0; i < exerciseSets; i++) {
               </div>
             )}
           </form>
-          <button
-            type="button"
-            onClick={() => {
-              setShowTimer(false);
-              setSecondsLeft(45);
-              handleNextExercise();
-            }}
-            className={`${
-              showTimer && secondsLeft > 0 ? "hidden" : "block"
-            } btn-primary lg:w-2/3 w-full lg:mx-auto`}
-          >
-            Next Exercise
-          </button>
+         
+         <div className="flex justify-between">
           <button
             type="button"
             onClick={() => {
@@ -286,8 +275,22 @@ for (let i = 0; i < exerciseSets; i++) {
               showTimer && secondsLeft > 0 ? "hidden" : "block"
             } btn-primary lg:w-2/3 w-full lg:mx-auto`}
           >
-            Prev Exercise
+            Prev
           </button>
+          <button
+            type="button"
+            onClick={() => {
+              setShowTimer(false);
+              setSecondsLeft(45);
+              handleNextExercise();
+            }}
+            className={`${
+              showTimer && secondsLeft > 0 ? "hidden" : "block"
+            } btn-primary lg:w-2/3 w-full lg:mx-auto`}
+          >
+            Next
+          </button>
+          </div>
           <button
             onClick={handleCompleteWorkout}
             className="lg:w-2/3 w-full flex justify-center lg:mx-auto bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mt-4"
