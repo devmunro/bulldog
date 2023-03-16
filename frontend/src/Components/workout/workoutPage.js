@@ -19,8 +19,14 @@ function WorkoutPage() {
   const [secondsLeft, setSecondsLeft] = useState(5);
   const [incompleteSets, setIncompleteSets] = useState(false);
 
-
-  //exercisedata
+  //exerciseWorkoutdata
+  const [exerciseInputs, setExerciseInputs] = useState([
+    {
+      id: "",
+      name: "",
+      sets: [{ reps: "", weight: "", completed: false }],
+    },
+  ]);
 
   const [exerciseData, setExerciseData] = useState([
     {
@@ -62,7 +68,7 @@ function WorkoutPage() {
       return newState;
     });
   };
-
+console.log(exerciseData)
 
 const handleDone = (rowIndex) => (e) => {
   e.preventDefault();
@@ -168,7 +174,7 @@ for (let i = 0; i < exerciseSets; i++) {
     };
 
 
-  console.log("cw:", currentWorkout);
+  console.log("cw:", exerciseData);
   //complee workout
 
   const handleCompleteWorkout = (e) => {
@@ -186,6 +192,7 @@ for (let i = 0; i < exerciseSets; i++) {
       exercises: exerciseData,
     };
   
+
     dispatch(completeWorkout(workoutResults));
   };
 
@@ -263,7 +270,7 @@ for (let i = 0; i < exerciseSets; i++) {
             )}
           </form>
          
-         <div className="flex justify-between">
+         <div className="flex justify-evenly">
           <button
             type="button"
             onClick={() => {
@@ -273,7 +280,7 @@ for (let i = 0; i < exerciseSets; i++) {
             }}
             className={`${
               showTimer && secondsLeft > 0 ? "hidden" : "block"
-            } btn-primary lg:w-2/3 w-full lg:mx-auto`}
+            } btn-primary lg:w-1/6 w-full lg:mx-auto`}
           >
             Prev
           </button>
@@ -286,7 +293,7 @@ for (let i = 0; i < exerciseSets; i++) {
             }}
             className={`${
               showTimer && secondsLeft > 0 ? "hidden" : "block"
-            } btn-primary lg:w-2/3 w-full lg:mx-auto`}
+            } btn-primary lg:w-1/6 w-full lg:mx-auto`}
           >
             Next
           </button>
