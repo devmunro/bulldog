@@ -203,7 +203,7 @@ for (let i = 0; i < exerciseSets; i++) {
   }, [showTimer, secondsLeft]);
   console.log("SHOW EX",currentWorkout.exercises);
   return (
-    <section className="flex flex-col w-full justify-center">
+    <section className="flex flex-col w-full justify-center ">
       <h2 className="uppercase text-center m-4 p-4 bg-white -">
         {currentWorkout.name}
       </h2>
