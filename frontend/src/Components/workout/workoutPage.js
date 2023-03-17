@@ -17,6 +17,7 @@ function WorkoutPage() {
   const [showTimer, setShowTimer] = useState(false);
   const [secondsLeft, setSecondsLeft] = useState(5);
   const [currentSet, setCurrentSet] = useState(0);
+  const [completedWorkout, setCompletedWorkout] = useState(false);
   //exerciseWorkoutdata
 
   const [exerciseData, setExerciseData] = useState([
@@ -201,7 +202,7 @@ function WorkoutPage() {
 
   //complee workout
 
-  const handleCompleteWorkout = (e) => {
+  const handleCompleteWorkout = async (e) => {
     e.preventDefault();
 
     // if () {
@@ -216,7 +217,10 @@ function WorkoutPage() {
       exercises: exerciseData,
     };
 
-    dispatch(completeWorkout(workoutResults));
+    const res = await dispatch(completeWorkout(workoutResults));
+ 
+    setCompletedWorkout(true)
+
   };
 
   useEffect(() => {
@@ -231,6 +235,9 @@ function WorkoutPage() {
     };
   }, [showTimer, secondsLeft]);
 
+  //TOTAL WEIGHT LIFTED:
+
+  console.log(exerciseSets);
   return (
     <section className="flex flex-col w-full justify-center ">
       <h2 className="uppercase text-center m-4 p-4 bg-white -">
@@ -248,7 +255,7 @@ function WorkoutPage() {
         </div>
       )}
       {/* WORKOUT SECTION */}
-      {currentWorkout.exercises.length > 0 && (
+      {currentWorkout.exercises.length > 0 && !completedWorkout && (
         <div>
           <form className="bg-white rounded-lg shadow-lg p-8 lg:w-2/3 w-full lg:mx-auto">
             <h2 className="md:text-2xl text-l font-bold md:mb-4 text-center">
@@ -318,7 +325,7 @@ function WorkoutPage() {
               Next
             </button>
           </div>
-          {currentSet === exerciseSets.length && (
+          {currentSet === exerciseSets && (
             <button
               onClick={handleCompleteWorkout}
               className="lg:w-2/3 w-full flex justify-center lg:mx-auto bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mt-4"
@@ -326,6 +333,33 @@ function WorkoutPage() {
               Complete
             </button>
           )}
+        </div>
+      )}
+
+      {completedWorkout && (
+        <div className="bg-white rounded-lg shadow-lg p-8 lg:w-2/3 w-full lg:mx-auto">
+          <h2 className="font-bold">WORKOUT COMPLETED</h2>
+          <h2>Well Done {user.name}</h2>
+          <p className="font-semibold">
+            Total of Exercises Completed = {exerciseData.length}
+          </p>
+          {exerciseData.map((exercise) => {
+            let totalWeight = 0;
+            let totalReps = 0;
+            exercise.sets.forEach((set) => {
+              if (set.completed) {
+                totalWeight += set.weight * set.reps;
+                totalReps += parseInt(set.reps);
+              }
+            });
+            return (
+              <div key={exercise._id}>
+                <p className="font-semibold">
+                  {exercise.name}: {totalWeight} kg, {totalReps}reps
+                </p>
+              </div>
+            );
+          })}
         </div>
       )}
     </section>
