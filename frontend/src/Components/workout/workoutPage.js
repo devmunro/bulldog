@@ -14,10 +14,8 @@ function WorkoutPage() {
   const exerciseReps = currentExercise?.[currentExerciseIndex]?.reps;
   const exerciseWeight = currentExercise?.[currentExerciseIndex]?.weight;
 
-  const [disabledRows, setDisabledRows] = useState([]);
   const [showTimer, setShowTimer] = useState(false);
   const [secondsLeft, setSecondsLeft] = useState(5);
-  const [incompleteSets, setIncompleteSets] = useState(false);
   const [currentSet, setCurrentSet] = useState(0);
   //exerciseWorkoutdata
 
@@ -30,13 +28,6 @@ function WorkoutPage() {
   ]);
 
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    const hasIncompleteSets = exerciseData.some((exercise) =>
-      exercise.sets.some((set) => !set.reps || !set.weight)
-    );
-    setIncompleteSets(hasIncompleteSets);
-  }, [exerciseData]);
 
   //handle inputs
 
@@ -86,7 +77,6 @@ function WorkoutPage() {
       newState[currentExerciseIndex] = updatedExercise;
       return newState;
     });
-    setDisabledRows([...disabledRows, rowIndex]);
 
     setSecondsLeft(5);
     setShowTimer(true);
@@ -123,11 +113,7 @@ function WorkoutPage() {
               ? "bg-gray-400 text-white border-gray-400 cursor-not-allowed"
               : ""
           }
-          ${
-            completed
-              ? "bg-blue-900 text-white border-blue-900 border-2"
-              : ""
-          }
+          ${completed ? "bg-blue-900 text-white border-blue-900 border-2" : ""}
           
           `}
         />
@@ -140,11 +126,7 @@ function WorkoutPage() {
           onChange={handleInputChange(i)}
           disabled={completed || currentSet !== i}
           className={`py-2 md:px-4 md:m-4 rounded-lg w-20 md:w-full text-center bg-white border-2 border-black my-2 
-          ${
-            completed
-              ? "bg-blue-900 text-white border-blue-900 border-2"
-              : ""
-          }
+          ${completed ? "bg-blue-900 text-white border-blue-900 border-2" : ""}
           ${
             currentSet !== i
               ? "bg-gray-400 text-white border-gray-400 cursor-not-allowed"
@@ -181,8 +163,17 @@ function WorkoutPage() {
     if (newNumber === currentExercise.length) {
       return;
     }
+
     setCurrentExerciseIndex(newNumber);
-    setDisabledRows([]);
+
+    if (!exerciseData[newNumber]) {
+      setCurrentSet(0);
+      return;
+    }
+    const completedSets = exerciseData[newNumber].sets.filter(
+      (word) => word.completed === true
+    );
+    setCurrentSet(completedSets.length);
   };
 
   // be able to change to prev exercise
@@ -193,18 +184,30 @@ function WorkoutPage() {
       return;
     }
     setCurrentExerciseIndex(newNumber);
+
+    console.log(exerciseData[newNumber]);
+    if (
+      !exerciseData[newNumber] ||
+      exerciseData[newNumber].sets[0].completed === false
+    ) {
+      setCurrentSet(0);
+      return;
+    }
+    const completedSets = exerciseData[newNumber].sets.filter(
+      (word) => word.completed === true
+    );
+    setCurrentSet(completedSets.length);
   };
 
-  console.log("cw:", exerciseData);
   //complee workout
 
   const handleCompleteWorkout = (e) => {
     e.preventDefault();
 
-    if (incompleteSets) {
-      alert("Please complete all exercise sets before completing the workout.");
-      return;
-    }
+    // if () {
+    //   alert("Please complete all exercise sets before completing the workout.");
+    //   return;
+    // }
 
     const workoutResults = {
       userID: user._id,
@@ -227,7 +230,7 @@ function WorkoutPage() {
       clearTimeout(timerId);
     };
   }, [showTimer, secondsLeft]);
-  console.log("SHOW EX", currentWorkout.exercises);
+
   return (
     <section className="flex flex-col w-full justify-center ">
       <h2 className="uppercase text-center m-4 p-4 bg-white -">
@@ -315,12 +318,14 @@ function WorkoutPage() {
               Next
             </button>
           </div>
-          <button
-            onClick={handleCompleteWorkout}
-            className="lg:w-2/3 w-full flex justify-center lg:mx-auto bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mt-4"
-          >
-            Complete
-          </button>
+          {currentSet === exerciseSets.length && (
+            <button
+              onClick={handleCompleteWorkout}
+              className="lg:w-2/3 w-full flex justify-center lg:mx-auto bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mt-4"
+            >
+              Complete
+            </button>
+          )}
         </div>
       )}
     </section>
