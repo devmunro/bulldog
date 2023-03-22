@@ -41,29 +41,29 @@ export const loginUser = createAsyncThunk("auth/logUser", async (userdata) => {
 
 
 // Get user details //
-// export const getUserDetails = createAsyncThunk("auth/getDetails", async () => {
-//   const userToken = JSON.parse(localStorage.getItem("token"));
+export const getUserDetails = createAsyncThunk("auth/getDetails", async () => {
+  const userToken = JSON.parse(localStorage.getItem("token"));
 
-//   const headers = { Authorization: `Bearer ${userToken}` };
+  const headers = { Authorization: `Bearer ${userToken}` };
 
-//   try {
-//     const response = await axios.get(`${API_URL}profile`, { headers });
+  try {
+    const response = await axios.get(`${API_URL}profile`, { headers });
 
-//     if (response.data) {
-//       localStorage.setItem("user", JSON.stringify(response.data));
-//       localStorage.setItem(
-//         "defaultWorkout",
-//         JSON.stringify(response.data.defaultWorkout)
-//       );
+    if (response.data) {
+      localStorage.setItem("user", JSON.stringify(response.data));
+      localStorage.setItem(
+        "defaultWorkout",
+        JSON.stringify(response.data.defaultWorkout)
+      );
 
-//       return { user: response.data };
-//     } else {
-//       return null;
-//     }
-//   } catch (error) {
-//     throw new Error(error);
-//   }
-// });
+      return { user: response.data };
+    } else {
+      return null;
+    }
+  } catch (error) {
+    throw new Error(error);
+  }
+});
 
 // LOGOUT
 // export const logout = createAsyncThunk("auth/logout", async () => {
