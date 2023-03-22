@@ -3,6 +3,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import LoginForm from '../login';
 
 import Dashboard from '../home';
+import DashboardNavigate from './dashboardNavigate';
 
 const Stack = createStackNavigator();
 
@@ -12,7 +13,7 @@ function AuthNavigate() {
       <Stack.Screen name="Login" component={LoginForm} />
       <Stack.Screen
         name="Dashboard"
-        component={Dashboard}
+        component={DashboardNavigate}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
