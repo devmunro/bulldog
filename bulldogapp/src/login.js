@@ -44,7 +44,7 @@ export default function LoginForm() {
   useEffect(() => {
     if(success) {
       console.log("logged in the user")
-      navigation.navigate("Home")
+      navigation.navigate("Dashboard")
     }
   
   }, [success])
