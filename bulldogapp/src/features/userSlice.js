@@ -42,7 +42,7 @@ export const loginUser = createAsyncThunk("auth/logUser", async (userdata) => {
 
 // Get user details //
 export const getUserDetails = createAsyncThunk("auth/getDetails", async () => {
-  const userToken = JSON.parse(localStorage.getItem("token"));
+  const userToken = await AsyncStorage.getItem("token");
 
   const headers = { Authorization: `Bearer ${userToken}` };
 
@@ -50,8 +50,8 @@ export const getUserDetails = createAsyncThunk("auth/getDetails", async () => {
     const response = await axios.get(`${API_URL}profile`, { headers });
 
     if (response.data) {
-      localStorage.setItem("user", JSON.stringify(response.data));
-      localStorage.setItem(
+      await AsyncStorage.setItem("user", JSON.stringify(response.data));
+      await AsyncStorage.setItem(
         "defaultWorkout",
         JSON.stringify(response.data.defaultWorkout)
       );
@@ -64,6 +64,7 @@ export const getUserDetails = createAsyncThunk("auth/getDetails", async () => {
     throw new Error(error);
   }
 });
+
 
 // LOGOUT
 // export const logout = createAsyncThunk("auth/logout", async () => {
@@ -92,7 +93,7 @@ export const userSlice = createSlice({
   name: "auth",
   initialState: {
     token:null,
-    // user: user !== null ? JSON.parse(user) : null,
+    user:  null,
     loading: false,
     error: null,
     success: false,
@@ -133,14 +134,14 @@ export const userSlice = createSlice({
       // .addCase(getUserDetails.pending, (state) => {
       //   state.loading = true;
       // })
-      // .addCase(getUserDetails.fulfilled, (state, action) => {
-      //   state.loading = false;
-      //   state.user = action.payload.user;
-      // })
-      // .addCase(getUserDetails.rejected, (state, action) => {
-      //   state.loading = false;
-      //   state.error = action.error;
-      // })
+      .addCase(getUserDetails.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload.user;
+      })
+      .addCase(getUserDetails.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error;
+      })
       // .addCase(logout.fulfilled, (state) => {
       //   state.user = null;
       //   state.token = null;
