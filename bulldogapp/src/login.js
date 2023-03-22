@@ -70,7 +70,8 @@ console.log(success)
           onChangeText={(value) => handleInputChange("password", value)}
         />
         <TouchableOpacity style={styles.button} onPress={handleLogin}>
-          <Text style={styles.buttonText}>Login</Text>
+          {loading && <Text style={styles.buttonText}>LOADING...</Text> }
+          {!loading && <Text style={styles.buttonText}>Login</Text>}
         </TouchableOpacity>
       </View>
     </View>
