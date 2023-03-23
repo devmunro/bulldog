@@ -98,29 +98,36 @@ export default function Workout() {
     const completed = set?.completed;
 
     setAmount.push(
-      <View key={i}>
-        <Text>Set {i + 1}</Text>
+      <View key={i} style={styles.container}>
+        <Text style={styles.exerciseName}>Set {i + 1}</Text>
         <TextInput
           placeholder={`${exerciseReps}`}
           keyboardType="number-pad"
-          value={repsValue || ''}
-          onChangeText={text => handleInputChange(i, 'reps')(text)}
+          name="reps"
+          value={repsValue || ""}
+          onChangeText={(text) => handleInputChange(i, "reps")(text)}
           editable={!completed && currentSet === i}
+          style={styles.input}
         />
         <TextInput
           placeholder={`${exerciseWeight}kg`}
           keyboardType="decimal-pad"
-          value={weightValue || ''}
-          onChangeText={text => handleInputChange(i, 'weight')(text)}
+          name="weight"
+          value={weightValue || ""}
+          onChangeText={(text) => handleInputChange(i, "weight")(text)}
           editable={!completed && currentSet === i}
+          style={styles.input}
         />
         <TouchableOpacity
           onPress={handleDone(i)}
-          disabled={completed || currentSet !== i}>
-          <Text>+</Text>
+          disabled={completed || currentSet !== i}
+          style={completed || currentSet !== i ? styles.buttonDisabled : styles.button}
+        >
+          <Text style={styles.buttonText}>+</Text>
         </TouchableOpacity>
-      </View>,
+      </View>
     );
+    
   }
 
   // be able to change to next exercise
