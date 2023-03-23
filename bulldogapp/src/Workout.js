@@ -100,6 +100,7 @@ export default function Workout() {
     setAmount.push(
       <View key={i} style={styles.container}>
         <Text style={styles.exerciseName}>Set {i + 1}</Text>
+        <View style={styles.inputContainer}>
         <TextInput
           placeholder={`${exerciseReps}`}
           keyboardType="number-pad"
@@ -107,7 +108,10 @@ export default function Workout() {
           value={repsValue || ""}
           onChangeText={(text) => handleInputChange(i, "reps")(text)}
           editable={!completed && currentSet === i}
-          style={styles.input}
+          style={[
+            styles.input,
+            !completed && currentSet === i ? styles.inputEditable : styles.inputNonEditable,
+          ]}
         />
         <TextInput
           placeholder={`${exerciseWeight}kg`}
@@ -116,7 +120,10 @@ export default function Workout() {
           value={weightValue || ""}
           onChangeText={(text) => handleInputChange(i, "weight")(text)}
           editable={!completed && currentSet === i}
-          style={styles.input}
+          style={[
+            styles.input,
+            !completed && currentSet === i ? styles.inputEditable : styles.inputNonEditable,
+          ]}
         />
         <TouchableOpacity
           onPress={handleDone(i)}
@@ -125,6 +132,7 @@ export default function Workout() {
         >
           <Text style={styles.buttonText}>+</Text>
         </TouchableOpacity>
+        </View>
       </View>
     );
     
@@ -326,8 +334,14 @@ export default function Workout() {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    justifyContent: 'center',
     padding: 16,
+    backgroundColor: 'white',
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 8,
   },
   header: {
     textTransform: 'uppercase',
@@ -335,6 +349,7 @@ const styles = StyleSheet.create({
     margin: 16,
     padding: 16,
     backgroundColor: 'white',
+    fontWeight: 'bold',
   },
   noExercises: {
     backgroundColor: 'white',
@@ -348,111 +363,44 @@ const styles = StyleSheet.create({
   },
   workoutForm: {
     backgroundColor: 'white',
-    borderRadius: 16,
+    borderRadius: 8,
     padding: 16,
     marginVertical: 16,
     alignSelf: 'center',
     width: '100%',
+    borderWidth: 1,
+    borderColor: '#ccc',
   },
   exerciseName: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 16,
-    textAlign: 'center',
-  },
-  timerOverlay: {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 50,
-  },
-  timerBackground: {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-    backgroundColor: 'black',
-    opacity: 0.8,
-  },
-  timerContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 10,
-    paddingHorizontal: 32,
-    fontSize: 32,
-    backgroundColor: 'black',
-    fontWeight: 'bold',
-  },
-  timer: {
-    textAlign: 'center',
-    marginVertical: 16,
-  },
-  restText: {
-    fontWeight: 'bold',
-    color: 'red',
-  },
-  timerText: {
-    color: 'red',
-  },
-  timesUpText: {
-    color: 'red',
-  },
-  nextSetButton: {
-    backgroundColor: 'blue',
-    borderRadius: 4,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-  },
-  nextSetText: {
-    color: 'white',
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-  },
-  button: {
-    backgroundColor: 'blue',
-    borderRadius: 4,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    marginVertical: 16,
-  },
-  buttonText: {
-    color: 'white',
-  },
-  hidden: {
-    display: 'none',
-  },
-  completeButton: {
-    alignSelf: 'center',
-    backgroundColor: 'green',
-    borderRadius: 4,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    marginVertical: 16,
-    width: '100%',
-  },
-  completeButtonText: {
-    textAlign: 'center',
-    color: 'white',
-    fontWeight: 'bold',
-  },
-  workoutCompleted: {
-    backgroundColor: 'white',
-    borderRadius: 16,
-    padding: 16,
-    marginVertical: 16,
-    alignSelf: 'center',
-    width: '100%',
-  },
-  boldText: {
-    fontWeight: 'bold',
-  },
-  fontSemiBold: {
-    fontWeight: '600',
-  },
-  exerciseInfo: {
     marginBottom: 8,
+    textAlign: 'left',
   },
+  // ...other styles
+  buttonDisabled: {
+    backgroundColor: 'gray',
+    borderRadius: 4,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    marginHorizontal: 8,
+  },
+  // ...other styles
+  input: {
+    flex: 1,
+    borderWidth: 2,
+    borderColor: 'black',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    marginHorizontal: 8,
+    borderRadius: 4,
+  },
+  inputEditable: {
+    backgroundColor: 'white',
+  },
+  inputNonEditable: {
+    backgroundColor: '#f0f0f0',
+  },
+  
 });
+

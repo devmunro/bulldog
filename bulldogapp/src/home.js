@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { clearState, getUserDetails, loginUser } from './features/userSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import React, {useState, useEffect} from 'react';
+import {clearState, getUserDetails, loginUser} from './features/userSlice';
+import {useDispatch, useSelector} from 'react-redux';
 import {
   Keyboard,
   ScrollView,
@@ -11,13 +11,12 @@ import {
   View,
 } from 'react-native';
 import DashboardNavigate from './Navigate/dashboardNavigate';
-import { findSingleWorkout } from './features/exerciseSlice';
+import {findSingleWorkout} from './features/exerciseSlice';
 
 export default function Dashboard() {
   const dispatch = useDispatch();
   const [currentWorkoutLoaded, setCurrentWorkoutLoaded] = useState(false);
 
-  
   useEffect(() => {
     const getUser = async () => {
       const getDetails = await dispatch(getUserDetails());
@@ -29,23 +28,26 @@ export default function Dashboard() {
   useEffect(() => {
     const getCurrentWorkout = async () => {
       if (user && user.defaultWorkout) {
-        const getWorkout = await dispatch(findSingleWorkout(user.defaultWorkout));
+        const getWorkout = await dispatch(
+          findSingleWorkout(user.defaultWorkout),
+        );
         console.log(getWorkout);
         console.log(currentWorkout);
-        setCurrentWorkoutLoaded(true);
+        if (getWorkout) {
+          setCurrentWorkoutLoaded(true);
+        }
       }
     };
 
     getCurrentWorkout();
   }, [user]);
 
-  const { user } = useSelector((state) => state.auth);
-  const { currentWorkout } = useSelector((state) => state.fitness);
- 
+  const {user} = useSelector(state => state.auth);
+  const {currentWorkout} = useSelector(state => state.fitness);
 
   return (
     <View>
-      {user && currentWorkoutLoaded  && (
+      { (
         <View>
           <Text>hello {user.name}</Text>
           <Text>Your workout is {currentWorkout.name}</Text>
