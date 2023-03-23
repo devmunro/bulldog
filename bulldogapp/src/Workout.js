@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {
   View,
   Text,
+  TextInput,
   TouchableOpacity,
   StyleSheet,
   ScrollView,
@@ -40,7 +41,7 @@ export default function Workout() {
   //handle inputs
 
   const handleInputChange = id => e => {
-    e.preventDefault();
+   
     const {name, value} = e.target;
 
     setExerciseData(prevState => {
@@ -92,75 +93,37 @@ export default function Workout() {
   };
 
   const setAmount = [];
-  for (let i = 0; i < exerciseSets; i++) {
-    const set = exerciseData[currentExerciseIndex]?.sets[i];
-    const repsValue = set?.reps;
-    const weightValue = set?.weight;
-    const completed = set?.completed;
+for (let i = 0; i < exerciseSets; i++) {
+  const set = exerciseData[currentExerciseIndex]?.sets[i];
+  const repsValue = set?.reps;
+  const weightValue = set?.weight;
+  const completed = set?.completed;
 
-    setAmount.push(
-      <div
-        key={i}
-        className={`flex md:flex-row md:space-x-4 items-center justify-center ${
-          completed ? 'opacity-50' : ''
-        }`}>
-        <h3 className="mb-2 md:mb-0 text-center md:m-4 font-bold">
-          Set {i + 1}
-        </h3>
-        <input
-          placeholder={exerciseReps}
-          type="number"
-          name="reps"
-          value={repsValue || ''}
-          onChange={handleInputChange(i)}
-          disabled={completed || currentSet !== i}
-          className={`py-2 md:px-4 md:m-4 rounded-lg w-20 md:w-full text-center bg-white border-2 border-black my-2 
-          ${
-            currentSet !== i
-              ? 'bg-gray-400 text-white border-gray-400 cursor-not-allowed'
-              : ''
-          }
-          ${completed ? 'bg-blue-900 text-white border-blue-900 border-2' : ''}
-          
-          `}
-        />
-        <input
-          placeholder={`${exerciseWeight}kg`}
-          name="weight"
-          value={weightValue || ''}
-          type="number"
-          pattern="^\d+(\.\d+)?$"
-          onChange={handleInputChange(i)}
-          disabled={completed || currentSet !== i}
-          className={`py-2 md:px-4 md:m-4 rounded-lg w-20 md:w-full text-center bg-white border-2 border-black my-2 
-          ${completed ? 'bg-blue-900 text-white border-blue-900 border-2' : ''}
-          ${
-            currentSet !== i
-              ? 'bg-gray-400 text-white border-gray-400 cursor-not-allowed'
-              : ''
-          }
-          
-          `}
-        />
-        <button
-          className={`py-2 px-4 h-10 bg-blue-500 font-semibold rounded-lg shadow-md  focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 mt-2 m-4 text-xl ${
-            completed
-              ? 'bg-blue-900 border-blue-900 border-2'
-              : 'text-white hover:bg-blue-700'
-          }
-          ${
-            currentSet !== i
-              ? 'bg-gray-400 text-gray-400 hover:bg-gray-400 border-gray-400 cursor-not-allowed'
-              : ''
-          } `}
-          onClick={handleDone(i)}
-          disabled={completed || currentSet !== i}>
-          +
-        </button>
-        <hr className="bg-black md:m-4"></hr>
-      </div>,
-    );
-  }
+  setAmount.push(
+    <View key={i}>
+      <Text>Set {i + 1}</Text>
+      <TextInput
+        placeholder={`${exerciseReps}`}
+        keyboardType="number-pad"
+        onChangeText={handleInputChange(i)}
+        editable={!completed && currentSet === i}
+      />
+      <TextInput
+        placeholder={`${exerciseWeight}kg`}
+        keyboardType="decimal-pad"
+        onChangeText={handleInputChange(i)}
+        editable={!completed && currentSet === i}
+      />
+      <TouchableOpacity
+        onPress={handleDone(i)}
+        disabled={completed || currentSet !== i}
+      >
+        <Text>+</Text>
+      </TouchableOpacity>
+    </View>
+  );
+}
+
 
   // be able to change to next exercise
   const handleNextExercise = () => {
