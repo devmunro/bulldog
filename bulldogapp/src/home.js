@@ -33,7 +33,7 @@ export default function Dashboard() {
 
   const {user} = useSelector(state => state.auth);
   const {currentWorkout} = useSelector(state => state.fitness);
-
+console.log(currentWorkout)
   return (
     <View >
       {user && currentWorkout && (

@@ -2,21 +2,18 @@ import React, {useState, useEffect} from 'react';
 import {clearState, loginUser} from './features/userSlice';
 import {useDispatch, useSelector} from 'react-redux';
 import {
-  Keyboard,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
   View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
 } from 'react-native';
-import { completeWorkout } from './features/exerciseSlice';
+import {completeWorkout} from './features/exerciseSlice';
 
 export default function Workout() {
-
-    const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
-  const { currentWorkout } = useSelector((state) => state.fitness);
-  const { user } = useSelector((state) => state.auth);
+  const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
+  const {currentWorkout} = useSelector(state => state.fitness);
+  const {user} = useSelector(state => state.auth);
   const currentExercise = currentWorkout?.exercises;
   const exerciseID = currentExercise?.[currentExerciseIndex]?.exercise;
   const exerciseName = currentExercise?.[currentExerciseIndex]?.name;
@@ -32,9 +29,9 @@ export default function Workout() {
 
   const [exerciseData, setExerciseData] = useState([
     {
-      id: "",
-      name: "",
-      sets: [{ reps: "", weight: "", completed: false }],
+      id: '',
+      name: '',
+      sets: [{reps: '', weight: '', completed: false}],
     },
   ]);
 
@@ -42,16 +39,16 @@ export default function Workout() {
 
   //handle inputs
 
-  const handleInputChange = (id) => (e) => {
+  const handleInputChange = id => e => {
     e.preventDefault();
-    const { name, value } = e.target;
+    const {name, value} = e.target;
 
-    setExerciseData((prevState) => {
+    setExerciseData(prevState => {
       const updatedExercise = {
         id: exerciseID,
         name: exerciseName,
         sets: prevState[currentExerciseIndex]?.sets || [
-          { reps: exerciseReps, weight: exerciseWeight, completed: false },
+          {reps: exerciseReps, weight: exerciseWeight, completed: false},
         ],
       };
       updatedExercise.sets[id] = {
@@ -65,7 +62,7 @@ export default function Workout() {
   };
   console.log(exerciseData);
 
-  const handleDone = (rowIndex) => (e) => {
+  const handleDone = rowIndex => e => {
     e.preventDefault();
 
     const repsValue = exerciseData[currentExerciseIndex]?.sets[rowIndex]?.reps;
@@ -73,13 +70,13 @@ export default function Workout() {
       exerciseData[currentExerciseIndex]?.sets[rowIndex]?.weight;
 
     if (!repsValue || !weightValue) {
-      alert("complete all fields");
+      alert('complete all fields');
       return;
     }
 
     const updatedSets = [...exerciseData[currentExerciseIndex].sets];
     updatedSets[rowIndex].completed = true;
-    setExerciseData((prevState) => {
+    setExerciseData(prevState => {
       const updatedExercise = {
         ...prevState[currentExerciseIndex],
         sets: updatedSets,
@@ -105,9 +102,8 @@ export default function Workout() {
       <div
         key={i}
         className={`flex md:flex-row md:space-x-4 items-center justify-center ${
-          completed ? "opacity-50" : ""
-        }`}
-      >
+          completed ? 'opacity-50' : ''
+        }`}>
         <h3 className="mb-2 md:mb-0 text-center md:m-4 font-bold">
           Set {i + 1}
         </h3>
@@ -115,33 +111,33 @@ export default function Workout() {
           placeholder={exerciseReps}
           type="number"
           name="reps"
-          value={repsValue || ""}
+          value={repsValue || ''}
           onChange={handleInputChange(i)}
           disabled={completed || currentSet !== i}
           className={`py-2 md:px-4 md:m-4 rounded-lg w-20 md:w-full text-center bg-white border-2 border-black my-2 
           ${
             currentSet !== i
-              ? "bg-gray-400 text-white border-gray-400 cursor-not-allowed"
-              : ""
+              ? 'bg-gray-400 text-white border-gray-400 cursor-not-allowed'
+              : ''
           }
-          ${completed ? "bg-blue-900 text-white border-blue-900 border-2" : ""}
+          ${completed ? 'bg-blue-900 text-white border-blue-900 border-2' : ''}
           
           `}
         />
         <input
           placeholder={`${exerciseWeight}kg`}
           name="weight"
-          value={weightValue || ""}
+          value={weightValue || ''}
           type="number"
           pattern="^\d+(\.\d+)?$"
           onChange={handleInputChange(i)}
           disabled={completed || currentSet !== i}
           className={`py-2 md:px-4 md:m-4 rounded-lg w-20 md:w-full text-center bg-white border-2 border-black my-2 
-          ${completed ? "bg-blue-900 text-white border-blue-900 border-2" : ""}
+          ${completed ? 'bg-blue-900 text-white border-blue-900 border-2' : ''}
           ${
             currentSet !== i
-              ? "bg-gray-400 text-white border-gray-400 cursor-not-allowed"
-              : ""
+              ? 'bg-gray-400 text-white border-gray-400 cursor-not-allowed'
+              : ''
           }
           
           `}
@@ -149,21 +145,20 @@ export default function Workout() {
         <button
           className={`py-2 px-4 h-10 bg-blue-500 font-semibold rounded-lg shadow-md  focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 mt-2 m-4 text-xl ${
             completed
-              ? "bg-blue-900 border-blue-900 border-2"
-              : "text-white hover:bg-blue-700"
+              ? 'bg-blue-900 border-blue-900 border-2'
+              : 'text-white hover:bg-blue-700'
           }
           ${
             currentSet !== i
-              ? "bg-gray-400 text-gray-400 hover:bg-gray-400 border-gray-400 cursor-not-allowed"
-              : ""
+              ? 'bg-gray-400 text-gray-400 hover:bg-gray-400 border-gray-400 cursor-not-allowed'
+              : ''
           } `}
           onClick={handleDone(i)}
-          disabled={completed || currentSet !== i}
-        >
+          disabled={completed || currentSet !== i}>
           +
         </button>
         <hr className="bg-black md:m-4"></hr>
-      </div>
+      </div>,
     );
   }
 
@@ -182,7 +177,7 @@ export default function Workout() {
       return;
     }
     const completedSets = exerciseData[newNumber].sets.filter(
-      (word) => word.completed === true
+      word => word.completed === true,
     );
     setCurrentSet(completedSets.length);
   };
@@ -205,14 +200,14 @@ export default function Workout() {
       return;
     }
     const completedSets = exerciseData[newNumber].sets.filter(
-      (word) => word.completed === true
+      word => word.completed === true,
     );
     setCurrentSet(completedSets.length);
   };
 
   //complee workout
 
-  const handleCompleteWorkout = async (e) => {
+  const handleCompleteWorkout = async e => {
     e.preventDefault();
 
     // if () {
@@ -228,16 +223,15 @@ export default function Workout() {
     };
 
     const res = await dispatch(completeWorkout(workoutResults));
- 
-    setCompletedWorkout(true)
 
+    setCompletedWorkout(true);
   };
 
   useEffect(() => {
     let timerId;
     if (showTimer && secondsLeft > 0) {
       timerId = setTimeout(() => {
-        setSecondsLeft((prevSecondsLeft) => prevSecondsLeft - 1);
+        setSecondsLeft(prevSecondsLeft => prevSecondsLeft - 1);
       }, 1000);
     }
     return () => {
@@ -249,9 +243,249 @@ export default function Workout() {
 
   console.log(exerciseSets);
   return (
-    <View style>
-      <Text style>Workout</Text>
-      
-    </View>
+    <ScrollView contentContainerStyle={styles.container}>
+      <Text style={styles.header}>{currentWorkout.name}</Text>
+
+      {/* NO WORKOUT SECTION */}
+      {!currentWorkout && <Text>Loading...</Text>}
+      {currentWorkout.exercises.length === 0 && (
+        <View style={styles.noExercises}>
+          <Text>No Exercises found, please add exercises to start</Text>
+          {/* Replace the following line with a react-navigation link */}
+          <Text style={styles.link}>Click Here to Start</Text>
+        </View>
+      )}
+
+      {/* WORKOUT SECTION */}
+      {currentWorkout.exercises.length > 0 && !completedWorkout && (
+        <View>
+          <View style={styles.workoutForm}>
+            <Text style={styles.exerciseName}>{exerciseName}</Text>
+            {setAmount}
+            {showTimer && (
+              <View style={styles.timerOverlay}>
+                <View style={styles.timerBackground} />
+                <View style={styles.timerContainer}>
+                  {showTimer && secondsLeft !== 0 && (
+                    <View style={styles.timer}>
+                      <Text style={styles.restText}>REST</Text>
+                      <Text style={styles.timerText}>{secondsLeft} secs</Text>
+                    </View>
+                  )}
+                  {showTimer && secondsLeft === 0 && (
+                    <View style={styles.timer}>
+                      <Text style={styles.timesUpText}>Time's up!</Text>
+                      <TouchableOpacity
+                        onPress={() => {
+                          setShowTimer(false);
+                        }}
+                        style={styles.nextSetButton}>
+                        <Text style={styles.nextSetText}>NEXT SET</Text>
+                      </TouchableOpacity>
+                    </View>
+                  )}
+                </View>
+              </View>
+            )}
+          </View>
+
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              onPress={() => {
+                setShowTimer(false);
+                setSecondsLeft(45);
+                handlePrevExercise();
+              }}
+              style={[
+                styles.button,
+                showTimer && secondsLeft > 0 && styles.hidden,
+              ]}>
+              <Text style={styles.buttonText}>Prev</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                setShowTimer(false);
+                setSecondsLeft(45);
+                handleNextExercise();
+              }}
+              style={[
+                styles.button,
+                showTimer && secondsLeft > 0 && styles.hidden,
+              ]}>
+              <Text style={styles.buttonText}>Next</Text>
+            </TouchableOpacity>
+          </View>
+          {currentSet === exerciseSets && (
+            <TouchableOpacity
+              onPress={handleCompleteWorkout}
+              style={styles.completeButton}>
+              <Text style={styles.completeButtonText}>Complete</Text>
+            </TouchableOpacity>
+          )}
+        </View>
+      )}
+
+      {completedWorkout && (
+        <View style={styles.workoutCompleted}>
+          <Text style={styles.boldText}>WORKOUT COMPLETED</Text>
+          <Text>Well Done {user.name}</Text>
+          <Text style={styles.fontSemiBold}>
+            Total of Exercises Completed = {exerciseData.length}
+          </Text>
+          {exerciseData.map(exercise => {
+            let totalWeight = 0;
+            let totalReps = 0;
+            exercise.sets.forEach(set => {
+              if (set.completed) {
+                totalWeight += set.weight * set.reps;
+                totalReps += parseInt(set.reps);
+              }
+            });
+            return (
+              <View key={exercise._id}>
+                <Text style={styles.fontSemiBold}>
+                  {exercise.name}: {totalWeight} kg, {totalReps} reps
+                </Text>
+              </View>
+            );
+          })}
+        </View>
+      )}
+    </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    padding: 16,
+  },
+  header: {
+    textTransform: 'uppercase',
+    textAlign: 'center',
+    margin: 16,
+    padding: 16,
+    backgroundColor: 'white',
+  },
+  noExercises: {
+    backgroundColor: 'white',
+    padding: 16,
+    margin: 16,
+    justifyContent: 'center',
+  },
+  link: {
+    textDecorationLine: 'underline',
+    color: 'blue',
+  },
+  workoutForm: {
+    backgroundColor: 'white',
+    borderRadius: 16,
+    padding: 16,
+    marginVertical: 16,
+    alignSelf: 'center',
+    width: '100%',
+  },
+  exerciseName: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 16,
+    textAlign: 'center',
+  },
+  timerOverlay: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 50,
+  },
+  timerBackground: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'black',
+    opacity: 0.8,
+  },
+  timerContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 10,
+    paddingHorizontal: 32,
+    fontSize: 32,
+    backgroundColor: 'black',
+    fontWeight: 'bold',
+  },
+  timer: {
+    textAlign: 'center',
+    marginVertical: 16,
+  },
+  restText: {
+    fontWeight: 'bold',
+    color: 'red',
+  },
+  timerText: {
+    color: 'red',
+  },
+  timesUpText: {
+    color: 'red',
+  },
+  nextSetButton: {
+    backgroundColor: 'blue',
+    borderRadius: 4,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+  },
+  nextSetText: {
+    color: 'white',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+  },
+  button: {
+    backgroundColor: 'blue',
+    borderRadius: 4,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    marginVertical: 16,
+  },
+  buttonText: {
+    color: 'white',
+  },
+  hidden: {
+    display: 'none',
+  },
+  completeButton: {
+    alignSelf: 'center',
+    backgroundColor: 'green',
+    borderRadius: 4,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    marginVertical: 16,
+    width: '100%',
+  },
+  completeButtonText: {
+    textAlign: 'center',
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  workoutCompleted: {
+    backgroundColor: 'white',
+    borderRadius: 16,
+    padding: 16,
+    marginVertical: 16,
+    alignSelf: 'center',
+    width: '100%',
+  },
+  boldText: {
+    fontWeight: 'bold',
+  },
+  fontSemiBold: {
+    fontWeight: '600',
+  },
+  exerciseInfo: {
+    marginBottom: 8,
+  },
+});
+
