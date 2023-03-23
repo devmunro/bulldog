@@ -15,6 +15,8 @@ import { findSingleWorkout } from './features/exerciseSlice';
 
 export default function Dashboard() {
   const dispatch = useDispatch();
+  const [currentWorkoutLoaded, setCurrentWorkoutLoaded] = useState(false);
+
   
   useEffect(() => {
     const getUser = async () => {
@@ -30,6 +32,7 @@ export default function Dashboard() {
         const getWorkout = await dispatch(findSingleWorkout(user.defaultWorkout));
         console.log(getWorkout);
         console.log(currentWorkout);
+        setCurrentWorkoutLoaded(true);
       }
     };
 
@@ -38,11 +41,11 @@ export default function Dashboard() {
 
   const { user } = useSelector((state) => state.auth);
   const { currentWorkout } = useSelector((state) => state.fitness);
-  console.log(currentWorkout);
+ 
 
   return (
     <View>
-      {user && currentWorkout && (
+      {user && currentWorkoutLoaded  && (
         <View>
           <Text>hello {user.name}</Text>
           <Text>Your workout is {currentWorkout.name}</Text>
