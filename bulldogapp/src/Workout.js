@@ -40,27 +40,25 @@ export default function Workout() {
 
   //handle inputs
 
-  const handleInputChange = id => e => {
-   
-    const {name, value} = e.target;
-
-    setExerciseData(prevState => {
+  const handleInputChange = (id, name) => (text) => {
+    setExerciseData((prevState) => {
       const updatedExercise = {
         id: exerciseID,
         name: exerciseName,
         sets: prevState[currentExerciseIndex]?.sets || [
-          {reps: exerciseReps, weight: exerciseWeight, completed: false},
+          { reps: exerciseReps, weight: exerciseWeight, completed: false },
         ],
       };
       updatedExercise.sets[id] = {
         ...updatedExercise.sets[id],
-        [name]: value,
+        [name]: text,
       };
       const newState = [...prevState];
       newState[currentExerciseIndex] = updatedExercise;
       return newState;
     });
   };
+  
   console.log(exerciseData);
 
   const handleDone = rowIndex => e => {
@@ -93,37 +91,37 @@ export default function Workout() {
   };
 
   const setAmount = [];
-for (let i = 0; i < exerciseSets; i++) {
-  const set = exerciseData[currentExerciseIndex]?.sets[i];
-  const repsValue = set?.reps;
-  const weightValue = set?.weight;
-  const completed = set?.completed;
+  for (let i = 0; i < exerciseSets; i++) {
+    const set = exerciseData[currentExerciseIndex]?.sets[i];
+    const repsValue = set?.reps;
+    const weightValue = set?.weight;
+    const completed = set?.completed;
 
-  setAmount.push(
-    <View key={i}>
-      <Text>Set {i + 1}</Text>
-      <TextInput
-        placeholder={`${exerciseReps}`}
-        keyboardType="number-pad"
-        onChangeText={handleInputChange(i)}
-        editable={!completed && currentSet === i}
-      />
-      <TextInput
-        placeholder={`${exerciseWeight}kg`}
-        keyboardType="decimal-pad"
-        onChangeText={handleInputChange(i)}
-        editable={!completed && currentSet === i}
-      />
-      <TouchableOpacity
-        onPress={handleDone(i)}
-        disabled={completed || currentSet !== i}
-      >
-        <Text>+</Text>
-      </TouchableOpacity>
-    </View>
-  );
-}
-
+    setAmount.push(
+      <View key={i}>
+        <Text>Set {i + 1}</Text>
+        <TextInput
+          placeholder={`${exerciseReps}`}
+          keyboardType="number-pad"
+          value={repsValue || ''}
+          onChangeText={text => handleInputChange(i, 'reps')(text)}
+          editable={!completed && currentSet === i}
+        />
+        <TextInput
+          placeholder={`${exerciseWeight}kg`}
+          keyboardType="decimal-pad"
+          value={weightValue || ''}
+          onChangeText={text => handleInputChange(i, 'weight')(text)}
+          editable={!completed && currentSet === i}
+        />
+        <TouchableOpacity
+          onPress={handleDone(i)}
+          disabled={completed || currentSet !== i}>
+          <Text>+</Text>
+        </TouchableOpacity>
+      </View>,
+    );
+  }
 
   // be able to change to next exercise
   const handleNextExercise = () => {
@@ -451,4 +449,3 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
 });
-
