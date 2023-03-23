@@ -27,7 +27,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     const getCurrentWorkout = async () => {
-      if (user && user.defaultWorkout) {
+      if (user) {
         const getWorkout = await dispatch(
           findSingleWorkout(user.defaultWorkout),
         );
@@ -47,10 +47,15 @@ export default function Dashboard() {
 
   return (
     <View>
-      { (
+      {user && currentWorkoutLoaded && (
         <View>
           <Text>hello {user.name}</Text>
           <Text>Your workout is {currentWorkout.name}</Text>
+        </View>
+      )}
+      {user && !currentWorkoutLoaded && (
+        <View>
+          <Text>hello {user.name}</Text>
         </View>
       )}
     </View>

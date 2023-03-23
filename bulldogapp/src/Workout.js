@@ -334,7 +334,7 @@ export default function Workout() {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    padding: 16,
+    padding: 8,
     backgroundColor: 'white',
   },
   inputContainer: {
@@ -348,7 +348,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     margin: 16,
     padding: 16,
-    backgroundColor: 'white',
+    backgroundColor: 'black',
+    color: 'white',
     fontWeight: 'bold',
   },
   noExercises: {
@@ -377,7 +378,22 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     textAlign: 'left',
   },
-  // ...other styles
+  // ...button styles
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+  },
+
+  button: {
+    backgroundColor: 'blue',
+    borderRadius: 4,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    marginHorizontal: 8,
+  },
+  buttonText: {
+    color: 'white',
+  },
   buttonDisabled: {
     backgroundColor: 'gray',
     borderRadius: 4,
@@ -400,6 +416,56 @@ const styles = StyleSheet.create({
   },
   inputNonEditable: {
     backgroundColor: '#f0f0f0',
+  },
+
+  //timer styles
+
+  timerOverlay: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 50,
+  },
+  timerBackground: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'black',
+    opacity: 0.8,
+  },
+  timerContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 10,
+    paddingHorizontal: 32,
+    fontSize: 32,
+    backgroundColor: 'black',
+    fontWeight: 'bold',
+  },
+  timer: {
+    textAlign: 'center',
+    marginVertical: 16,
+  },
+  restText: {
+    fontWeight: 'bold',
+    color: 'red',
+  },
+  timerText: {
+    color: 'red',
+  },
+  timesUpText: {
+    color: 'red',
+  },
+  nextSetButton: {
+    backgroundColor: 'blue',
+    borderRadius: 4,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+  },
+  nextSetText: {
+    color: 'white',
   },
   
 });
