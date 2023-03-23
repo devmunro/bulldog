@@ -47,7 +47,7 @@ export default function Dashboard() {
 
   return (
     <View>
-      {user && currentWorkoutLoaded && (
+      {user  && (
         <View>
           <Text>hello {user.name}</Text>
           <Text>Your workout is {currentWorkout.name}</Text>
