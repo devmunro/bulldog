@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react';
-import {clearState, getUserDetails, loginUser} from './features/userSlice';
-import {useDispatch, useSelector} from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { clearState, getUserDetails, loginUser } from './features/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Keyboard,
   ScrollView,
@@ -11,15 +11,19 @@ import {
   View,
 } from 'react-native';
 import DashboardNavigate from './Navigate/dashboardNavigate';
-import {findSingleWorkout} from './features/exerciseSlice';
+import { findSingleWorkout } from './features/exerciseSlice';
 
 export default function Dashboard() {
   const dispatch = useDispatch();
-  const [currentWorkoutLoaded, setCurrentWorkoutLoaded] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  const { user } = useSelector((state) => state.auth);
+  const { currentWorkout } = useSelector((state) => state.fitness);
 
   useEffect(() => {
     const getUser = async () => {
-      const getDetails = await dispatch(getUserDetails());
+      await dispatch(getUserDetails());
+      setLoading(false);
     };
 
     getUser();
@@ -28,22 +32,22 @@ export default function Dashboard() {
   useEffect(() => {
     const getCurrentWorkout = async () => {
       if (user) {
-        const getWorkout = await dispatch(
-          findSingleWorkout(user.defaultWorkout),
-        );
-        console.log(getWorkout);
-        console.log(currentWorkout);
-        if (getWorkout) {
-          setCurrentWorkoutLoaded(true);
-        }
+        setLoading(true);
+        await dispatch(findSingleWorkout(user.defaultWorkout));
+        setLoading(false);
       }
     };
 
     getCurrentWorkout();
   }, [user]);
 
-  const {user} = useSelector(state => state.auth);
-  const {currentWorkout} = useSelector(state => state.fitness);
+  if (loading) {
+    return (
+      <View>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
 
   return (
     <View>
@@ -53,7 +57,7 @@ export default function Dashboard() {
           <Text>Your workout is {currentWorkout.name}</Text>
         </View>
       )}
-      {user && !currentWorkoutLoaded && (
+      {user && !currentWorkout && (
         <View>
           <Text>hello {user.name}</Text>
         </View>
