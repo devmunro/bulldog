@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { getUserWorkoutStats } from "../features/exerciseSlice";
 import { Bar, Doughnut } from "react-chartjs-2";
 import Chart from "chart.js/auto";
+import { Link } from 'react-router-dom';
+
 
 export default function Overview({ user }) {
   const dispatch = useDispatch();
@@ -179,9 +181,11 @@ export default function Overview({ user }) {
               ? currentWorkout.name.toUpperCase()
               : "No Current Workout"}
           </h2>
+          <Link to="record">
           <button className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md mt-4 inline-block">
             START NOW
           </button>
+          </Link>
         </div>
       </div>
 
