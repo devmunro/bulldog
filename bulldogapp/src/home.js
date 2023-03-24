@@ -13,13 +13,18 @@ import {
 import DashboardNavigate from './Navigate/dashboardNavigate';
 import { findSingleWorkout } from './features/exerciseSlice';
 
+// Define Dashboard component
 export default function Dashboard() {
-  const dispatch = useDispatch();
-  const [loading, setLoading] = useState(true);
+  // Initialize dispatch
+  const dispatch = useDispatch(); 
+  // Initialize loading state
+  const [loading, setLoading] = useState(true); 
 
+  // Get user and currentWorkout from Redux store
   const { user } = useSelector((state) => state.auth);
   const { currentWorkout } = useSelector((state) => state.fitness);
 
+  // Load user details when component mounts
   useEffect(() => {
     const getUser = async () => {
       await dispatch(getUserDetails());
@@ -29,6 +34,7 @@ export default function Dashboard() {
     getUser();
   }, []);
 
+  // Load current workout when user is available
   useEffect(() => {
     const getCurrentWorkout = async () => {
       if (user) {
@@ -41,6 +47,7 @@ export default function Dashboard() {
     getCurrentWorkout();
   }, [user]);
 
+  // Show loading indicator while loading
   if (loading) {
     return (
       <View>
@@ -49,6 +56,7 @@ export default function Dashboard() {
     );
   }
 
+  // Show user details and workout information
   return (
     <View>
       {user && currentWorkout && (
