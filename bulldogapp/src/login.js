@@ -83,15 +83,19 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: '#000',
+    color: '#fff',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
+    color: '#fff',
   },
   form: {
     width: '80%',
+    color: '#fff',
+  
   },
   input: {
     borderWidth: 1,
@@ -99,6 +103,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     marginBottom: 10,
+    color: '#fff',
   },
   button: {
     backgroundColor: '#007AFF',
