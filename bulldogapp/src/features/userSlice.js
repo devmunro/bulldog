@@ -67,27 +67,27 @@ export const getUserDetails = createAsyncThunk("auth/getDetails", async () => {
 
 
 // LOGOUT
-// export const logout = createAsyncThunk("auth/logout", async () => {
-//   // Clear the localStorage items for user and token
+export const logout = createAsyncThunk("auth/logout", async () => {
+  // Clear the localStorage items for user and token
 
-//   console.log("Clearing localStorage data...");
+  console.log("Clearing localStorage data...");
 
-//   localStorage.removeItem("user");
-//   localStorage.removeItem("token");
-//   localStorage.removeItem("defaultWorkout");
+  AsyncStorage.removeItem("user");
+  AsyncStorage.removeItem("token");
+  AsyncStorage.removeItem("defaultWorkout");
 
-//   // delete the user token from the server
-//   const userToken = JSON.parse(localStorage.getItem("token"));
-//   const headers = { Authorization: `Bearer ${userToken}` };
+  // delete the user token from the server
+  const userToken = AsyncStorage.getItem("token");
+  const headers = { Authorization: `Bearer ${userToken}` };
 
-//   try {
-//     await axios.delete(`${API_URL}logout`, { headers });
-//     console.log("User has been logged out");
-//     return;
-//   } catch (error) {
-//     console.log(error);
-//   }
-// });
+  try {
+    await axios.delete(`${API_URL}logout`, { headers });
+    console.log("User has been logged out");
+    return;
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 export const userSlice = createSlice({
   name: "auth",
@@ -142,12 +142,12 @@ export const userSlice = createSlice({
         state.loading = false;
         state.error = action.error;
       })
-      // .addCase(logout.fulfilled, (state) => {
-      //   state.user = null;
-      //   state.token = null;
-      //   AsyncStorage.removeItem("user"); // remove user data from local storage
-      //   AsyncStorage.removeItem("token"); // remove user token from local storage
-      // });
+      .addCase(logout.fulfilled, (state) => {
+        state.user = null;
+        state.token = null;
+        AsyncStorage.removeItem("user"); // remove user data from local storage
+        AsyncStorage.removeItem("token"); // remove user token from local storage
+      });
   },
 });
 
