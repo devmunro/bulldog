@@ -13,7 +13,7 @@ function AuthNavigate() {
     <Stack.Navigator initialRouteName="Login" 
       
       >
-      <Stack.Screen name="Login" component={LoginForm} />
+      <Stack.Screen name="Login" component={LoginForm} options={{headerShown: false}} />
       <Stack.Screen
         name="Dashboard"
         component={DashboardNavigate}
