@@ -28,7 +28,8 @@ const workoutStatsSchema = new mongoose.Schema(
           type: String,
           required: true,
         },
-
+        body_type: [String],
+        equipment: [String],
         sets: [
           {
             reps: {
