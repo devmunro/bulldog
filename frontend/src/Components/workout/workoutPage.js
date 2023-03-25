@@ -22,85 +22,78 @@ function WorkoutPage() {
   const [completedWorkout, setCompletedWorkout] = useState(false);
   //exerciseWorkoutdata
 
-  const [exerciseData, setExerciseData] = useState([
-    {
-      id: "",
-      name: "",
-      type: [],
-      equipment: [],
-      sets: [{ reps: "", weight: "", completed: false }],
-    },
-  ]);
+  const [exerciseData, setExerciseData] = useState([]);
+  const [completeWorkoutData, setCompleteWorkoutData] = useState([]);
 
   const dispatch = useDispatch();
 
- // Handle input changes
-const handleInputChange = (id) => (e) => {
-  e.preventDefault();
-  const { name, value } = e.target;
+  // Handle input changes
+  const handleInputChange = (id) => (e) => {
+    e.preventDefault();
+    const { name, value } = e.target;
 
-  // Update exercise data
-  setExerciseData((prevState) => {
-    // Create an updated exercise object
-    const updatedExercise = {
-      id: exerciseID,
-      name: exerciseName,
-      type: exerciseType,
-      equipment: exerciseEquipment,
-      sets: prevState[currentExerciseIndex]?.sets || [
-        { reps: exerciseReps, weight: exerciseWeight, completed: false },
-      ],
-    };
+    // Update exercise data
+    setExerciseData((prevState) => {
+      // Create an updated exercise object
+      const updatedExercise = {
+        id: exerciseID,
+        name: exerciseName,
+        type: exerciseType,
+        equipment: exerciseEquipment,
+        sets: prevState[currentExerciseIndex]?.sets || [
+          { reps: exerciseReps, weight: exerciseWeight, completed: false },
+        ],
+      };
 
-    // Update the current set with new data
-    updatedExercise.sets[id] = {
-      ...updatedExercise.sets[id],
-      [name]: value,
-    };
+      // Update the current set with new data
+      updatedExercise.sets[id] = {
+        ...updatedExercise.sets[id],
+        [name]: value,
+      };
 
-    // Replace the current exercise in the state with the updated exercise
-    const newState = [...prevState];
-    newState[currentExerciseIndex] = updatedExercise;
-    return newState;
-  });
-};
-console.log(exerciseData);
+      // Replace the current exercise in the state with the updated exercise
+      const newState = [...prevState];
+      newState[currentExerciseIndex] = updatedExercise;
+      return newState;
+    });
+  };
+  console.log(exerciseData);
 
-// Handle completion of a set
-const handleDone = (rowIndex) => (e) => {
-  e.preventDefault();
+  // Handle completion of a set
+  const handleDone = (rowIndex) => (e) => {
+    e.preventDefault();
 
-  // Retrieve reps and weight values for the current set
-  const repsValue = exerciseData[currentExerciseIndex]?.sets[rowIndex]?.reps;
-  const weightValue = exerciseData[currentExerciseIndex]?.sets[rowIndex]?.weight;
+    // Retrieve reps and weight values for the current set
+    const repsValue = exerciseData[currentExerciseIndex]?.sets[rowIndex]?.reps;
+    const weightValue =
+      exerciseData[currentExerciseIndex]?.sets[rowIndex]?.weight;
 
-  // Validate that both reps and weight values are provided
-  if (!repsValue || !weightValue) {
-    alert("Complete all fields");
-    return;
-  }
+    // Validate that both reps and weight values are provided
+    if (!repsValue || !weightValue) {
+      alert("Complete all fields");
+      return;
+    }
 
-  // Mark the set as completed
-  const updatedSets = [...exerciseData[currentExerciseIndex].sets];
-  updatedSets[rowIndex].completed = true;
+    // Mark the set as completed
+    const updatedSets = [...exerciseData[currentExerciseIndex].sets];
+    updatedSets[rowIndex].completed = true;
 
-  // Update exercise data with the new completed set
-  setExerciseData((prevState) => {
-    const updatedExercise = {
-      ...prevState[currentExerciseIndex],
-      sets: updatedSets,
-    };
-    const newState = [...prevState];
-    newState[currentExerciseIndex] = updatedExercise;
-    return newState;
-  });
+    // Update exercise data with the new completed set
+    setExerciseData((prevState) => {
+      const updatedExercise = {
+        ...prevState[currentExerciseIndex],
+        sets: updatedSets,
+      };
+      const newState = [...prevState];
+      newState[currentExerciseIndex] = updatedExercise;
+      return newState;
+    });
 
-  // Start the timer and increment the current set
-  setSecondsLeft(5);
-  setShowTimer(true);
-  setCurrentSet(currentSet + 1);
-};
-
+    // Start the timer and increment the current set
+    setSecondsLeft(5);
+    setShowTimer(true);
+    setCurrentSet(currentSet + 1);
+  };
 
   const setAmount = [];
   for (let i = 0; i < exerciseSets; i++) {
@@ -219,20 +212,32 @@ const handleDone = (rowIndex) => (e) => {
   };
 
   //complee workout
-
   const handleCompleteWorkout = async (e) => {
     e.preventDefault();
 
-    // if () {
-    //   alert("Please complete all exercise sets before completing the workout.");
-    //   return;
-    // }
+    const validExercises = exerciseData
+      .filter((exercise) => exercise !== null && exercise !== undefined) // Filter out null and undefined exercises
+      .filter((exercise) => {
+        // Check if all sets are marked as completed
+        const allSetsCompleted = exercise.sets.every((set) => set.completed);
+        console.log(allSetsCompleted)
+        return allSetsCompleted;
+      });
+
+      console.log(validExercises)
+    
+    // If there are no valid exercises, alert the user and return
+    if (validExercises.length === 0) {
+      alert("Please complete all exercise sets before completing the workout.");
+      return;
+    }
+    setCompleteWorkoutData(validExercises)
 
     const workoutResults = {
       userID: user._id,
       workoutID: currentWorkout._id,
       workoutName: currentWorkout.name,
-      exercises: exerciseData,
+      exercises: validExercises,
     };
 
     const res = await dispatch(completeWorkout(workoutResults));
@@ -358,9 +363,9 @@ const handleDone = (rowIndex) => (e) => {
           <h2 className="font-bold">WORKOUT COMPLETED</h2>
           <h2>Well Done {user.name}</h2>
           <p className="font-semibold">
-            Total of Exercises Completed = {exerciseData.length}
+            Total of Exercises Completed = {completeWorkoutData.length}
           </p>
-          {exerciseData.map((exercise) => {
+          {completeWorkoutData.map((exercise) => {
             let totalWeight = 0;
             let totalReps = 0;
             exercise.sets.forEach((set) => {
