@@ -10,6 +10,8 @@ function WorkoutPage() {
   const currentExercise = currentWorkout?.exercises;
   const exerciseID = currentExercise?.[currentExerciseIndex]?.exercise;
   const exerciseName = currentExercise?.[currentExerciseIndex]?.name;
+  const exerciseType = currentExercise?.[currentExerciseIndex]?.body_type;
+  const exerciseEquipment = currentExercise?.[currentExerciseIndex]?.equipment;
   const exerciseSets = currentExercise?.[currentExerciseIndex]?.sets;
   const exerciseReps = currentExercise?.[currentExerciseIndex]?.reps;
   const exerciseWeight = currentExercise?.[currentExerciseIndex]?.weight;
@@ -24,6 +26,8 @@ function WorkoutPage() {
     {
       id: "",
       name: "",
+      type: [],
+      equipment: [],
       sets: [{ reps: "", weight: "", completed: false }],
     },
   ]);
@@ -40,6 +44,8 @@ function WorkoutPage() {
       const updatedExercise = {
         id: exerciseID,
         name: exerciseName,
+        type: exerciseType,
+        equipment: exerciseEquipment,
         sets: prevState[currentExerciseIndex]?.sets || [
           { reps: exerciseReps, weight: exerciseWeight, completed: false },
         ],
@@ -218,9 +224,8 @@ function WorkoutPage() {
     };
 
     const res = await dispatch(completeWorkout(workoutResults));
- 
-    setCompletedWorkout(true)
 
+    setCompletedWorkout(true);
   };
 
   useEffect(() => {
