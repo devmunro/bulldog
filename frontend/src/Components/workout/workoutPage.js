@@ -34,61 +34,73 @@ function WorkoutPage() {
 
   const dispatch = useDispatch();
 
-  //handle inputs
+ // Handle input changes
+const handleInputChange = (id) => (e) => {
+  e.preventDefault();
+  const { name, value } = e.target;
 
-  const handleInputChange = (id) => (e) => {
-    e.preventDefault();
-    const { name, value } = e.target;
+  // Update exercise data
+  setExerciseData((prevState) => {
+    // Create an updated exercise object
+    const updatedExercise = {
+      id: exerciseID,
+      name: exerciseName,
+      type: exerciseType,
+      equipment: exerciseEquipment,
+      sets: prevState[currentExerciseIndex]?.sets || [
+        { reps: exerciseReps, weight: exerciseWeight, completed: false },
+      ],
+    };
 
-    setExerciseData((prevState) => {
-      const updatedExercise = {
-        id: exerciseID,
-        name: exerciseName,
-        type: exerciseType,
-        equipment: exerciseEquipment,
-        sets: prevState[currentExerciseIndex]?.sets || [
-          { reps: exerciseReps, weight: exerciseWeight, completed: false },
-        ],
-      };
-      updatedExercise.sets[id] = {
-        ...updatedExercise.sets[id],
-        [name]: value,
-      };
-      const newState = [...prevState];
-      newState[currentExerciseIndex] = updatedExercise;
-      return newState;
-    });
-  };
-  console.log(exerciseData);
+    // Update the current set with new data
+    updatedExercise.sets[id] = {
+      ...updatedExercise.sets[id],
+      [name]: value,
+    };
 
-  const handleDone = (rowIndex) => (e) => {
-    e.preventDefault();
+    // Replace the current exercise in the state with the updated exercise
+    const newState = [...prevState];
+    newState[currentExerciseIndex] = updatedExercise;
+    return newState;
+  });
+};
+console.log(exerciseData);
 
-    const repsValue = exerciseData[currentExerciseIndex]?.sets[rowIndex]?.reps;
-    const weightValue =
-      exerciseData[currentExerciseIndex]?.sets[rowIndex]?.weight;
+// Handle completion of a set
+const handleDone = (rowIndex) => (e) => {
+  e.preventDefault();
 
-    if (!repsValue || !weightValue) {
-      alert("complete all fields");
-      return;
-    }
+  // Retrieve reps and weight values for the current set
+  const repsValue = exerciseData[currentExerciseIndex]?.sets[rowIndex]?.reps;
+  const weightValue = exerciseData[currentExerciseIndex]?.sets[rowIndex]?.weight;
 
-    const updatedSets = [...exerciseData[currentExerciseIndex].sets];
-    updatedSets[rowIndex].completed = true;
-    setExerciseData((prevState) => {
-      const updatedExercise = {
-        ...prevState[currentExerciseIndex],
-        sets: updatedSets,
-      };
-      const newState = [...prevState];
-      newState[currentExerciseIndex] = updatedExercise;
-      return newState;
-    });
+  // Validate that both reps and weight values are provided
+  if (!repsValue || !weightValue) {
+    alert("Complete all fields");
+    return;
+  }
 
-    setSecondsLeft(5);
-    setShowTimer(true);
-    setCurrentSet(currentSet + 1);
-  };
+  // Mark the set as completed
+  const updatedSets = [...exerciseData[currentExerciseIndex].sets];
+  updatedSets[rowIndex].completed = true;
+
+  // Update exercise data with the new completed set
+  setExerciseData((prevState) => {
+    const updatedExercise = {
+      ...prevState[currentExerciseIndex],
+      sets: updatedSets,
+    };
+    const newState = [...prevState];
+    newState[currentExerciseIndex] = updatedExercise;
+    return newState;
+  });
+
+  // Start the timer and increment the current set
+  setSecondsLeft(5);
+  setShowTimer(true);
+  setCurrentSet(currentSet + 1);
+};
+
 
   const setAmount = [];
   for (let i = 0; i < exerciseSets; i++) {
