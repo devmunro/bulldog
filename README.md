@@ -33,4 +33,7 @@ Stay tuned for updates as we continue to improve the Fitness Record Gym Website!
 
 ## Preview
 
-![Beige Elegant Tablet Mockup Pinterest Pin](https://user-images.githubusercontent.com/57059357/223763769-42c47fc1-f0a1-47d3-9068-3b4ef03296cd.png)
+## ACTIVE AI Project
+
+| <p align="left">This website was created using:</p> <ul align="left">   <li> ![MERN](https://img.shields.io/badge/MERN-%231572B6.svg?style=for-the-badge&logo=MERN&logoColor=white) </li>   <li>![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)</li>   <li>![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)</li>   <li>![Chart.js](https://img.shields.io/badge/chart.js-F5788D.svg?style=for-the-badge&logo=chart.js&logoColor=white)</li></ul> <p align="center">CHECK OUT OUT THE SITE HERE: <a href="https://bulldog-two.vercel.app/">demo</a></p> | ![Beige Elegant Tablet Mockup Pinterest Pin](https://user-images.githubusercontent.com/57059357/223713553-5506cd0c-173c-4705-aa61-3de677ae899e.png) |
+| --- | --- |
