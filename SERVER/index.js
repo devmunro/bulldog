@@ -8,6 +8,7 @@ import { UserRouter } from "./routes/userRoutes.js";
 import { exerciseRoutes } from "./routes/exerciseRoutes.js";
 import { WorkoutRouter } from "./routes/workoutRoutes.js";
 import { WorkoutStatsRouter } from "./routes/workoutStatsRoutes.js";
+import { getCompletion } from "./openai.js";
 
 
 const { host, user, password, port } = config;
