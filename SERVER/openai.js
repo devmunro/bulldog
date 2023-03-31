@@ -19,7 +19,3 @@ export const getCompletion = async (prompt) => {
     throw error;
   }
 };
-
-getCompletion("this is a test").then((result) => {
-  console.log(result);
-});
