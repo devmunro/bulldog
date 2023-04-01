@@ -13,6 +13,7 @@ const RegisterForm = () => {
     password: "",
     passwordConfirmation: "",
   });
+  const [passwordFail, setPasswordFail] = useState(false);
 
   const { loading, error, success } = useSelector((state) => state.auth);
 
@@ -28,8 +29,12 @@ const RegisterForm = () => {
 
   //handle submit
   const handleSubmit = async (event) => {
-    console.log("check if click working");
     event.preventDefault();
+    setPasswordFail(false);
+    if (formData.passwordConfirmation !== formData.password) {
+      setPasswordFail(true);
+      return;
+    }
 
     const { passwordConfirmation, ...userData } = formData;
 
@@ -55,14 +60,16 @@ const RegisterForm = () => {
 
   return (
     <div>
-      {error && (
+      {error || passwordFail ? (
         <div
           className="flex items-center justify-center w-full bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded "
           role="alert"
         >
-          <strong className="font-bold space-x-2">{error}</strong>
+          <strong className="font-bold space-x-2">
+            {error || "Passwords do not match"}
+          </strong>
         </div>
-      )}
+      ) : null}
       <div className="w-full md:p-4 lg:px-8 bg-black border-2 border-white ">
         <div className="w-full flex flex-col items-center">
           <h2 className="text-3xl lg:text-4xl font-bold text-white mb-2">

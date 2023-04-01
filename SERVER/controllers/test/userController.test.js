@@ -2,11 +2,10 @@ import request from "supertest";
 import app, { connectToMongo } from "../../index.js";
 import { user } from "../../models/userSchema.js";
 
-
 //### REGISTRATION TEST ###
 describe("Registration API", () => {
   beforeAll(async () => {
-    await connectToMongo(); 
+    await connectToMongo();
   });
 
   beforeEach(async () => {
@@ -25,8 +24,6 @@ describe("Registration API", () => {
       .post("/api/signup")
       .send(userInfo)
       .expect(201);
-
-      console.log(response.body); // add this line to log the response body
 
     expect(response.body.message).toBe("User created successfully");
     expect(response.body.token).toBeTruthy();
