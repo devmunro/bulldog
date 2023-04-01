@@ -9,7 +9,6 @@ import { exerciseRoutes } from "./routes/exerciseRoutes.js";
 import { WorkoutRouter } from "./routes/workoutRoutes.js";
 import { WorkoutStatsRouter } from "./routes/workoutStatsRoutes.js";
 
-
 const { host, user, password, port } = config;
 
 const dbConnect = `mongodb+srv://${user}:${password}@${host}`;
@@ -17,19 +16,21 @@ mongoose.set("strictQuery", true);
 
 const app = express();
 
-
-app.use(cors({
-  origin: ["https://bulldog-two.vercel.app", "http://localhost:3000"],
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true
-}));
-
+app.use(
+  cors({
+    origin: ["https://bulldog-two.vercel.app", "http://localhost:3000"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
 
 const connectToMongo = async () => {
   try {
     await mongoose.connect(dbConnect);
-    console.log("Connected to MongoDB");
+    if (process.env.NODE_ENV !== "test") {
+      console.log("Connected to MongoDB");
+    }
   } catch (error) {
     console.log(error);
   }
@@ -42,10 +43,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/api", UserRouter());
 app.use("/api/exercises", exerciseRoutes());
 app.use("/api/workout", WorkoutRouter());
-app.use("/api/workoutStats", WorkoutStatsRouter())
-
-
+app.use("/api/workoutStats", WorkoutStatsRouter());
 
 app.listen(port, () => {
-  console.log(`API SERVER IS NOW RUNNING on port: ${port}`);
+  if (process.env.NODE_ENV !== "test") {
+    console.log(`API SERVER IS NOW RUNNING on port: ${port}`);
+  }
 });
+
+export default app;
+
+export { connectToMongo };
