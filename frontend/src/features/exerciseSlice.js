@@ -219,6 +219,10 @@ export const exerciseSlice = createSlice({
     resetAlert: (state) => {
       state.alert = null;
     },
+    resetWorkout: (state) => {
+      state.currentWorkout = null;
+      state.defaultWorkout = null;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(createWorkout.fulfilled, (state, action) => {
@@ -254,6 +258,6 @@ export const exerciseSlice = createSlice({
   },
 });
 
-export const { resetAlert } = exerciseSlice.actions;
+export const { resetAlert, resetWorkout } = exerciseSlice.actions;
 
 export default exerciseSlice.reducer;

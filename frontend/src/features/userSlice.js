@@ -70,12 +70,10 @@ export const getUserDetails = createAsyncThunk("auth/getDetails", async () => {
 export const logout = createAsyncThunk("auth/logout", async () => {
   // Clear the localStorage items for user and token
 
-  console.log("Clearing localStorage data...");
-
   localStorage.removeItem("user");
   localStorage.removeItem("token");
   localStorage.removeItem("defaultWorkout");
-  
+  localStorage.removeItem("currentWorkout");
 
   // delete the user token from the server
   const userToken = JSON.parse(localStorage.getItem("token"));
@@ -146,8 +144,6 @@ export const userSlice = createSlice({
       .addCase(logout.fulfilled, (state) => {
         state.user = null;
         state.token = null;
-        localStorage.removeItem("user"); // remove user data from local storage
-        localStorage.removeItem("token"); // remove user token from local storage
       });
   },
 });

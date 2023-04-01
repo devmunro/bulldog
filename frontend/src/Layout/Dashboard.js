@@ -9,6 +9,7 @@ import WorkoutPage from "../Components/workout/workoutPage"; // import the Worko
 import { useDispatch, useSelector } from "react-redux"; // import useDispatch and useSelector from react-redux
 import { getUserDetails, logout } from "../features/userSlice"; // import getUserDetails and logout from ../features/userSlice
 import Loading from "../Components/Loading"; // import the Loading component
+import { resetWorkout } from "../features/exerciseSlice";
 
 export default function Dashboard() {
   const { user, token, loading } = useSelector((state) => state.auth); // select user, token and loading from the state using useSelector
@@ -31,8 +32,8 @@ export default function Dashboard() {
 
   const handleLogout = (e) => {
     e.preventDefault(); // prevent the default behaviour of the form
-
     dispatch(logout()); // dispatch the logout action to log the user out
+    dispatch(resetWorkout())
   };
 
   return (
