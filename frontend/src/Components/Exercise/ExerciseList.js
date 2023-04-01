@@ -65,7 +65,7 @@ export default function ExerciseList({
   return (
     <div className="md:mx-2">
       <p className=" text-gray-400 bg-red-900 uppercase text-sm text-center">
-        Current Workout:<strong>{currentWorkout.name}</strong>
+        Current Workout:<strong>{currentWorkout?.name}</strong>
       </p>
       {!loading &&
         exerciseList &&
