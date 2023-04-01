@@ -208,8 +208,8 @@ export const editExercise = createAsyncThunk(
 export const exerciseSlice = createSlice({
   name: "fitness",
   initialState: {
-    defaultWorkout: JSON.parse(localStorage.getItem("defaultWorkout")),
-    currentWorkout: JSON.parse(localStorage.getItem("currentWorkout")),
+    defaultWorkout: null,
+    currentWorkout: null,
     loading: false,
     alert: null,
     completeExercises: [],
@@ -218,6 +218,10 @@ export const exerciseSlice = createSlice({
   reducers: {
     resetAlert: (state) => {
       state.alert = null;
+    },
+    resetWorkout: (state) => {
+      state.currentWorkout = null;
+      state.defaultWorkout = null;
     },
   },
   extraReducers: (builder) => {
@@ -254,6 +258,6 @@ export const exerciseSlice = createSlice({
   },
 });
 
-export const { resetAlert } = exerciseSlice.actions;
+export const { resetAlert, resetWorkout } = exerciseSlice.actions;
 
 export default exerciseSlice.reducer;

@@ -51,12 +51,7 @@ const LoginForm = () => {
     }
   }, [dispatch, loading, success, error, navigate]);
 
-  const handleClick = () => {
-    navigate("/register");
-  };
 
-  console.log("state:", user);
-  console.log("local:", localStorage.getItem("user"));
   return (
     <div>
   {error && (
