@@ -16,7 +16,7 @@ export default function ExerciseList({
   const { alert } = useSelector((state) => state.fitness);
   const { currentWorkout } = useSelector((state) => state.fitness);
   const [showAlert, setShowAlert] = useState(false);
-
+console.log("currentworkout here",currentWorkout)
   const [currentPage, setCurrentPage] = useState("");
 
   // set the current page in the useEffect hook
