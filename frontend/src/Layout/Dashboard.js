@@ -9,14 +9,12 @@ import WorkoutPage from "../Components/workout/workoutPage"; // import the Worko
 import { useDispatch, useSelector } from "react-redux"; // import useDispatch and useSelector from react-redux
 import { getUserDetails, logout } from "../features/userSlice"; // import getUserDetails and logout from ../features/userSlice
 import Loading from "../Components/Loading"; // import the Loading component
+import { resetWorkout } from "../features/exerciseSlice";
 
 export default function Dashboard() {
   const { user, token, loading } = useSelector((state) => state.auth); // select user, token and loading from the state using useSelector
   const dispatch = useDispatch(); // use dispatch to dispatch actions to the store
   const navigate = useNavigate(); // useNavigate is a hook that returns a navigate function to navigate to a different route
-
-  console.log("User state:", user);
-  console.log("Token state:", token);
 
   //check if authorised
   useEffect(() => {
@@ -30,12 +28,12 @@ export default function Dashboard() {
     if (token !== null) {
       dispatch(getUserDetails()); // if token is not null, dispatch the getUserDetails action to fetch the user details
     }
-  }, [token]);
+  }, [token, dispatch]);
 
   const handleLogout = (e) => {
     e.preventDefault(); // prevent the default behaviour of the form
-
     dispatch(logout()); // dispatch the logout action to log the user out
+    dispatch(resetWorkout())
   };
 
   return (

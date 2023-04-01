@@ -16,7 +16,7 @@ export default function ExerciseList({
   const { alert } = useSelector((state) => state.fitness);
   const { currentWorkout } = useSelector((state) => state.fitness);
   const [showAlert, setShowAlert] = useState(false);
-
+console.log("currentworkout here",currentWorkout)
   const [currentPage, setCurrentPage] = useState("");
 
   // set the current page in the useEffect hook
@@ -65,7 +65,7 @@ export default function ExerciseList({
   return (
     <div className="md:mx-2">
       <p className=" text-gray-400 bg-red-900 uppercase text-sm text-center">
-        Current Workout:<strong>{currentWorkout.name}</strong>
+        Current Workout:<strong>{currentWorkout?.name}</strong>
       </p>
       {!loading &&
         exerciseList &&

@@ -13,6 +13,7 @@ const RegisterForm = () => {
     password: "",
     passwordConfirmation: "",
   });
+  const [passwordFail, setPasswordFail] = useState(false);
 
   const { loading, error, success } = useSelector((state) => state.auth);
 
@@ -29,21 +30,26 @@ const RegisterForm = () => {
   //handle submit
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setPasswordFail(false);
+    if (formData.passwordConfirmation !== formData.password) {
+      setPasswordFail(true);
+      return;
+    }
 
     const { passwordConfirmation, ...userData } = formData;
 
     const registerDataResult = await dispatch(registerUser(userData));
-    console.log(registerDataResult.response);
+  };
 
+  useEffect(() => {
     if (success) {
-      navigate("/");
-      console.log("User created");
+      navigate("/dashboard");
     }
 
     if (error) {
       console.log(error);
     }
-  };
+  }, [dispatch, loading, success, error, navigate]);
 
   // clear state on unmount
   useEffect(() => {
@@ -52,20 +58,18 @@ const RegisterForm = () => {
     };
   }, [dispatch]);
 
-  const handleClick = () => {
-    navigate("/");
-  };
-
   return (
     <div>
-      {error && (
+      {error || passwordFail ? (
         <div
           className="flex items-center justify-center w-full bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded "
           role="alert"
         >
-          <strong className="font-bold space-x-2">{error}</strong>
+          <strong className="font-bold space-x-2">
+            {error || "Passwords do not match"}
+          </strong>
         </div>
-      )}
+      ) : null}
       <div className="w-full md:p-4 lg:px-8 bg-black border-2 border-white ">
         <div className="w-full flex flex-col items-center">
           <h2 className="text-3xl lg:text-4xl font-bold text-white mb-2">
@@ -162,17 +166,21 @@ const RegisterForm = () => {
             </div>
 
             <div className="mt-6 w-full">
-              {!loading ? (
-                <button onClick={handleSubmit} className="btn-primary w-full" type="submit">
-                  Register
+              {!loading && (
+                <button
+                  onClick={handleSubmit}
+                  className="w-full bg-purple-600 text-white py-2 px-4 rounded hover:bg-purple-700"
+                >
+                  Submit
                 </button>
-              ) : (
+              )}
+
+              {loading && (
                 <button
                   disabled
-                  className=" w-full items-center bg-blue-800 text-white font-bold"
-                  type="submit"
+                  className="w-full bg-purple-600 text-white py-2 px-4 rounded"
                 >
-                  <Loading text="REGISTERING" />
+                  <Loading />
                 </button>
               )}
             </div>
