@@ -28,22 +28,23 @@ const RegisterForm = () => {
 
   //handle submit
   const handleSubmit = async (event) => {
+    console.log("check if click working");
     event.preventDefault();
 
     const { passwordConfirmation, ...userData } = formData;
 
     const registerDataResult = await dispatch(registerUser(userData));
-    console.log(registerDataResult.response);
+  };
 
+  useEffect(() => {
     if (success) {
-      navigate("/");
-      console.log("User created");
+      navigate("/dashboard");
     }
 
     if (error) {
       console.log(error);
     }
-  };
+  }, [dispatch, loading, success, error, navigate]);
 
   // clear state on unmount
   useEffect(() => {
@@ -51,10 +52,6 @@ const RegisterForm = () => {
       dispatch(clearState());
     };
   }, [dispatch]);
-
-  const handleClick = () => {
-    navigate("/");
-  };
 
   return (
     <div>
@@ -162,17 +159,21 @@ const RegisterForm = () => {
             </div>
 
             <div className="mt-6 w-full">
-              {!loading ? (
-                <button onClick={handleSubmit} className="btn-primary w-full" type="submit">
-                  Register
+              {!loading && (
+                <button
+                  onClick={handleSubmit}
+                  className="w-full bg-purple-600 text-white py-2 px-4 rounded hover:bg-purple-700"
+                >
+                  Submit
                 </button>
-              ) : (
+              )}
+
+              {loading && (
                 <button
                   disabled
-                  className=" w-full items-center bg-blue-800 text-white font-bold"
-                  type="submit"
+                  className="w-full bg-purple-600 text-white py-2 px-4 rounded"
                 >
-                  <Loading text="REGISTERING" />
+                  <Loading />
                 </button>
               )}
             </div>

@@ -15,9 +15,6 @@ export default function Dashboard() {
   const dispatch = useDispatch(); // use dispatch to dispatch actions to the store
   const navigate = useNavigate(); // useNavigate is a hook that returns a navigate function to navigate to a different route
 
-  console.log("User state:", user);
-  console.log("Token state:", token);
-
   //check if authorised
   useEffect(() => {
     if (token === null) {
@@ -30,7 +27,7 @@ export default function Dashboard() {
     if (token !== null) {
       dispatch(getUserDetails()); // if token is not null, dispatch the getUserDetails action to fetch the user details
     }
-  }, [token]);
+  }, [token, dispatch]);
 
   const handleLogout = (e) => {
     e.preventDefault(); // prevent the default behaviour of the form
