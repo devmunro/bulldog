@@ -10,11 +10,15 @@ export const registerUser = createAsyncThunk(
   async (userdata) => {
     try {
       const response = await axios.post(`${API_URL}signup`, userdata);
-      return response.data;
+      if (response.data.token) {
+        localStorage.setItem("token", JSON.stringify(response.data.token));
+
+        return response.data;
+      }
     } catch (error) {
       console.log(error.response.data.error);
 
-      throw new Error(error.response.data.error );
+      throw new Error(error.response.data.error);
     }
   }
 );
@@ -31,7 +35,7 @@ export const loginUser = createAsyncThunk("auth/logUser", async (userdata) => {
       return response.data;
     }
   } catch (error) {
-    throw new Error(error.response.data.error );
+    throw new Error(error.response.data.error);
   }
 });
 
@@ -109,7 +113,7 @@ export const userSlice = createSlice({
       .addCase(registerUser.fulfilled, (state) => {
         state.loading = false;
         state.success = true;
-        localStorage.removeItem("token"); // remove old user token
+        state.token = JSON.parse(localStorage.getItem("token"));
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.loading = false;
