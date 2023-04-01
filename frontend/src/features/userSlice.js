@@ -75,6 +75,7 @@ export const logout = createAsyncThunk("auth/logout", async () => {
   localStorage.removeItem("user");
   localStorage.removeItem("token");
   localStorage.removeItem("defaultWorkout");
+  
 
   // delete the user token from the server
   const userToken = JSON.parse(localStorage.getItem("token"));
