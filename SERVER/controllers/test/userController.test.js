@@ -15,10 +15,10 @@ describe("Registration API", () => {
 
   it("should register a user and return a token", async () => {
     const userInfo = {
-      name: "John Doe",
+      name: "cola",
       dob: "1990-01-01",
-      email: "johndoe@example.com",
-      password: "password123",
+      email: "cola@example.com",
+      password: "cheese",
     };
 
     const response = await request(app)
