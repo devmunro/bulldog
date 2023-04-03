@@ -3,8 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getUserWorkoutStats } from "../features/exerciseSlice";
 import { Bar, Doughnut } from "react-chartjs-2";
 import Chart from "chart.js/auto";
-import { Link } from 'react-router-dom';
-
+import { Link } from "react-router-dom";
 
 export default function Overview({ user }) {
   const dispatch = useDispatch();
@@ -54,7 +53,7 @@ export default function Overview({ user }) {
                       if (set.weight !== null && set.weight > 0) {
                         console.log("here", set.weight);
                         const amount = setAcc + (set.weight || 0) * set.reps;
-                        console.log(amount)
+                        console.log(amount);
                         return setAcc + (set.weight || 0) * set.reps;
                       } else {
                         return setAcc;
@@ -164,99 +163,80 @@ export default function Overview({ user }) {
   }, [user, dispatch]);
 
   return (
-    <div className=" w-full justify-center p-4">
-      <div className="md:m-4 my-2 md:p-4 grid md:grid-cols-2 bg-gradient-to-bl from-blue-700 via-blue-800 to-gray-900 text-white">
-        <div>
-          <h2 className="text-white p-4 text-sm md:text-lg font-bold mb-2 md:mb-8">
-            Welcome {user && user.name.toUpperCase()},
-            <p className="text-sm">We hope you enjoy your workout!</p>
-          </h2>
-        </div>
-
-        <div className="bg-gray-900 p-4 md:block text-sm md:text-lg ">
-          <h3 className="text-gray-400 uppercase">Current Workout</h3>
-          <h2 className="text-white mt-2">
-            -{" "}
-            {currentWorkout
-              ? currentWorkout.name.toUpperCase()
-              : "No Current Workout"}
-          </h2>
-          <Link to="record">
-          <button className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md mt-4 inline-block">
-            START NOW
-          </button>
-          </Link>
-        </div>
+    <div className="grid lg:grid-cols-6 md:grid-cols-3 grid-cols-1 gap-4 w-full [&>*]:rounded-xl justify-center p-4">
+      <div className="w-full  bg-gray-400">
+        <h2 className=" p-4 text-sm md:text-lg font-bold mb-2 md:mb-8">
+          Welcome {user && user.name.toUpperCase()},
+          <p className="text-sm">We hope you enjoy your workout!</p>
+        </h2>
       </div>
 
-      <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1  gap-8 w-full  [&>*]:bg-[#1F2937] [&>*]:lg:p-8 [&>*]:rounded-md [&>*]:shadow-white [&>*]:shadow-lg">
-        <div className="w-full min-h-48">
-          {Object.keys(chartData).length > 0 ? (
-            <Bar
-              className="bg-black"
-              data={chartData}
-              options={{
-                color: "white",
-                plugins: {
+      <div className="w-full bg-black">
+        {Object.keys(chartData).length > 0 ? (
+          <Bar
+            className="bg-black"
+            data={chartData}
+            options={{
+              color: "white",
+              plugins: {
+                title: {
+                  display: true,
+                  text: "Activity",
+                  font: {
+                    size: 24,
+                    weight: "bold",
+                  },
+                },
+              },
+              scales: {
+                y: {
+                  position: "left",
                   title: {
                     display: true,
-                    text: "Activity",
-                    font: {
-                      size: 24,
-                      weight: "bold",
-                    },
+                    text: "Total Weight Lifted (KG)",
+                    color: "white",
                   },
                 },
-                scales: {
-                  y: {
-                    position: "left",
-                    title: {
-                      display: true,
-                      text: "Total Weight Lifted (KG)",
-                      color: "white",
-                    },
-                  },
-                  y1: {
-                    position: "right",
-                    title: {
-                      display: true,
-                      text: "Total Reps Lifted",
-                      color: "white",
-                    },
-                  },
-                },
-                maintainAspectRatio: true,
-                responsive: true,
-                aspectRatio: 1,
-              }}
-            />
-          ) : null}
-        </div>
-        <div className="w-full">
-          {Object.keys(exerciseData).length > 0 ? (
-            <Doughnut
-              className="bg-black"
-              data={exerciseData}
-              options={{
-                color: "white",
-                plugins: {
+                y1: {
+                  position: "right",
                   title: {
                     display: true,
-                    text: "Type",
-                    font: {
-                      size: 24,
-                      weight: "bold",
-                    },
+                    text: "Total Reps Lifted",
+                    color: "white",
                   },
                 },
-                maintainAspectRatio: true,
-                responsive: true,
-                hoverOffset: 20,
-                aspectRatio: 1,
-              }}
-            />
-          ) : null}
-        </div>
+              },
+              maintainAspectRatio: true,
+              responsive: true,
+              aspectRatio: 1,
+            }}
+          />
+        ) : null}
+      </div>
+      <div className="w-full">
+        {Object.keys(exerciseData).length > 0 ? (
+          <Doughnut
+            className="bg-black"
+            data={exerciseData}
+            options={{
+              color: "white",
+              plugins: {
+                title: {
+                  display: true,
+                  text: "Type",
+                  font: {
+                    size: 24,
+                    weight: "bold",
+                  },
+                },
+              },
+              maintainAspectRatio: true,
+              responsive: true,
+              hoverOffset: 20,
+              aspectRatio: 1,
+            }}
+          />
+        ) : null}
       </div>
     </div>
   );
