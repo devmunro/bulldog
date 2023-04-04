@@ -51,8 +51,8 @@ export default function Overview({ user }) {
 
         const endDate = new Date();
         const startDate = new Date();
-        startDate.setDate(endDate.getDate() - 6);
-        const labels = [...Array(7)].map((_, i) => {
+        startDate.setDate(endDate.getDate() - 4);
+        const labels = [...Array(5)].map((_, i) => {
           const date = new Date(startDate);
           date.setDate(startDate.getDate() + i);
           return date.toLocaleDateString();
@@ -156,6 +156,7 @@ export default function Overview({ user }) {
           datasets: [
             {
               data: Object.values(exerciseCount),
+
               backgroundColor: [
                 "#FF6384",
                 "#36A2EB",
@@ -203,13 +204,11 @@ export default function Overview({ user }) {
         </h2>
       </div>
 
-      <div className="w-full bg-black">
+      <div className="w-full bg-black rounded-xl p-2">
         {Object.keys(chartData).length > 0 ? (
           <Bar
-            className="bg-black"
             data={chartData}
             options={{
-              color: "white",
               plugins: {
                 title: {
                   display: true,
@@ -217,24 +216,66 @@ export default function Overview({ user }) {
                   font: {
                     size: 24,
                     weight: "bold",
+                    family: "'Roboto', sans-serif",
                   },
+                  color: "white",
+                },
+                legend: {
+                  display: false,
                 },
               },
               scales: {
+                x: {
+                  grid: {
+                    display: false,
+                    color: "rgba(255, 255, 255, 0.1)",
+                  },
+                  ticks: {
+                    color: "white",
+                    font: {
+                      family: "'Roboto', sans-serif",
+                    },
+                  },
+                },
                 y: {
                   position: "left",
                   title: {
                     display: true,
-                    text: "Total Weight Lifted (KG)",
+                    text: "Total Weight (KG)",
                     color: "white",
+                    font: {
+                      family: "'Roboto', sans-serif",
+                    },
+                  },
+                  grid: {
+                    display: true,
+                    color: "rgba(255, 255, 255, 0.1)",
+                  },
+                  ticks: {
+                    color: "white",
+                    font: {
+                      family: "'Roboto', sans-serif",
+                    },
                   },
                 },
                 y1: {
                   position: "right",
                   title: {
                     display: true,
-                    text: "Total Reps Lifted",
+                    text: "Total Reps",
                     color: "white",
+                    font: {
+                      family: "'Roboto', sans-serif",
+                    },
+                  },
+                  grid: {
+                    display: false,
+                  },
+                  ticks: {
+                    color: "white",
+                    font: {
+                      family: "'Roboto', sans-serif",
+                    },
                   },
                 },
               },
@@ -245,40 +286,42 @@ export default function Overview({ user }) {
           />
         ) : null}
       </div>
-      <div className="w-full">
+
+      <div className="w-full bg-black rounded-xl p-2">
         {Object.keys(exerciseData).length > 0 ? (
           <Doughnut
-            className="bg-black"
-            data={exerciseData}
-            options={{
-              color: "white",
-              plugins: {
-                title: {
-                  display: true,
-                  text: "Type",
+          data={exerciseData}
+          options={{
+            plugins: {
+              title: {
+                display: true,
+                text: "Activity",
+                font: {
+                  size: 24,
+                  weight: "bold",
+                  family: "'Roboto', sans-serif",
+                },
+                color: "white",
+              },
+              legend: {
+                display: true,
+                position: "bottom",
+                labels: {
+                  color: "white",
                   font: {
-                    size: 24,
-                    weight: "bold",
+                    family: "'Roboto', sans-serif",
                   },
                 },
-                legend: {
-                  position: "top",
-                  pointStyle: "circle",
-                },
-                subtitle: {
-                  display: true,
-                  text: "Muscle Used in the last 7 Days",
-                },
               },
-              maintainAspectRatio: true,
-              responsive: true,
-              hoverOffset: 20,
-              aspectRatio: 1,
-            }}
-          />
+            },
+            maintainAspectRatio: true,
+            responsive: true,
+            aspectRatio: 1,
+          }}
+        />
         ) : null}
       </div>
-      <div className="w-full bg-black flex flex-col items-center py-4">
+      <div className="w-full bg-black flex flex-col items-center p-4">
         <h2 className="text-white font-semibold text-xl mb-4">Activity</h2>
         <Calendar
           onChange={onChange}
