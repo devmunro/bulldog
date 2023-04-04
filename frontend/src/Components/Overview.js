@@ -4,6 +4,9 @@ import { getUserWorkoutStats } from "../features/exerciseSlice";
 import { Bar, Doughnut } from "react-chartjs-2";
 import Chart from "chart.js/auto";
 import { Link } from "react-router-dom";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+import "./calendarStyles.css";
 
 export default function Overview({ user }) {
   const dispatch = useDispatch();
@@ -12,6 +15,32 @@ export default function Overview({ user }) {
 
   const [chartData, setChartData] = useState({});
   const [exerciseData, setExerciseData] = useState({});
+
+  const workouts = [
+    { date: new Date(2023, 3, 10), workout: "Running" },
+    { date: new Date(2023, 3, 15), workout: "Swimming" },
+    { date: new Date(2023, 3, 20), workout: "Cycling" },
+  ];
+
+  const [value, onChange] = useState(new Date());
+
+  const tileClassName = ({ date, view }) => {
+    if (view === "month") {
+      console.log("Workouts array: ", workouts); // Debug workouts array
+
+      const workoutDay = workouts.find(
+        (workout) =>
+          workout.date.getDate() === date.getDate() &&
+          workout.date.getMonth() === date.getMonth() &&
+          workout.date.getFullYear() === date.getFullYear()
+      );
+
+      if (workoutDay) {
+        return "workout-day";
+      }
+    }
+    return null;
+  };
 
   useEffect(() => {
     const getData = async () => {
@@ -28,6 +57,7 @@ export default function Overview({ user }) {
           date.setDate(startDate.getDate() + i);
           return date.toLocaleDateString();
         });
+        console.log(labels);
 
         const totalWeight = labels.map((date) => {
           const workouts = data.filter((workout) => {
@@ -148,8 +178,6 @@ export default function Overview({ user }) {
               borderColor: "#000",
               yAxisID: "y",
               borderRadius: 10,
-             
-             
             },
             {
               label: "Total Reps Lifted",
@@ -239,8 +267,8 @@ export default function Overview({ user }) {
                 },
                 subtitle: {
                   display: true,
-                  text: 'Muscle Used in the last 7 Days'
-              }
+                  text: "Muscle Used in the last 7 Days",
+                },
               },
               maintainAspectRatio: true,
               responsive: true,
@@ -249,6 +277,15 @@ export default function Overview({ user }) {
             }}
           />
         ) : null}
+      </div>
+      <div className="w-full bg-black flex flex-col items-center py-4">
+        <h2 className="text-white font-semibold text-xl mb-4">Activity</h2>
+        <Calendar
+          onChange={onChange}
+          value={value}
+          tileClassName={tileClassName}
+          disabled={true}
+        />
       </div>
     </div>
   );
