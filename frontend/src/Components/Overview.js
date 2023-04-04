@@ -195,7 +195,7 @@ export default function Overview({ user }) {
   }, [user, dispatch]);
 
   return (
-    <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4 w-full [&>*]:rounded-xl justify-center p-4">
+    <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-4 w-full [&>*]:rounded-xl justify-center p-4">
       <div className="w-full  bg-gray-400">
         <h2 className=" p-4 text-sm md:text-lg font-bold mb-2 md:mb-8">
           Welcome {user && user.name.toUpperCase()},
