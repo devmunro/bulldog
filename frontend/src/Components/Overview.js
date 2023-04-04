@@ -144,16 +144,20 @@ export default function Overview({ user }) {
             {
               label: "Total Weight Lifted(KG)",
               data: totalWeight,
-              backgroundColor: "#fff",
+              backgroundColor: "white",
               borderColor: "#000",
               yAxisID: "y",
+              borderRadius: 10,
+             
+             
             },
             {
               label: "Total Reps Lifted",
               data: totalReps,
-              backgroundColor: "#f34",
+              backgroundColor: "gray",
               borderColor: "#000",
               yAxisID: "y1",
+              borderSkipped: "middle",
             },
           ],
         });
@@ -163,7 +167,7 @@ export default function Overview({ user }) {
   }, [user, dispatch]);
 
   return (
-    <div className="grid lg:grid-cols-6 md:grid-cols-3 grid-cols-1 gap-4 w-full [&>*]:rounded-xl justify-center p-4">
+    <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4 w-full [&>*]:rounded-xl justify-center p-4">
       <div className="w-full  bg-gray-400">
         <h2 className=" p-4 text-sm md:text-lg font-bold mb-2 md:mb-8">
           Welcome {user && user.name.toUpperCase()},
@@ -229,6 +233,14 @@ export default function Overview({ user }) {
                     weight: "bold",
                   },
                 },
+                legend: {
+                  position: "top",
+                  pointStyle: "circle",
+                },
+                subtitle: {
+                  display: true,
+                  text: 'Muscle Used in the last 7 Days'
+              }
               },
               maintainAspectRatio: true,
               responsive: true,
