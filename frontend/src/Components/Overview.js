@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { getUserWorkoutStats } from "../features/exerciseSlice";
 import { Bar, Doughnut } from "react-chartjs-2";
 import Chart from "chart.js/auto";
-import { Link } from "react-router-dom";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "./calendarStyles.css";
@@ -16,30 +15,21 @@ export default function Overview({ user }) {
   const [chartData, setChartData] = useState({});
   const [exerciseData, setExerciseData] = useState({});
 
-  const workouts = [
-    { date: new Date(2023, 3, 10), workout: "Running" },
-    { date: new Date(2023, 3, 15), workout: "Swimming" },
-    { date: new Date(2023, 3, 20), workout: "Cycling" },
-  ];
-
   const [value, onChange] = useState(new Date());
 
   const tileClassName = ({ date, view }) => {
-    if (view === "month") {
-      console.log("Workouts array: ", workouts); // Debug workouts array
-
-      const workoutDay = workouts.find(
-        (workout) =>
-          workout.date.getDate() === date.getDate() &&
-          workout.date.getMonth() === date.getMonth() &&
-          workout.date.getFullYear() === date.getFullYear()
-      );
-
-      if (workoutDay) {
-        return "workout-day";
-      }
-    }
-    return null;
+    // if (view === "month") {
+    //   const workoutDay = workouts.find(
+    //     (workout) =>
+    //       workout.date.getDate() === date.getDate() &&
+    //       workout.date.getMonth() === date.getMonth() &&
+    //       workout.date.getFullYear() === date.getFullYear()
+    //   );
+    //   if (workoutDay) {
+    //     return "workout-day";
+    //   }
+    // }
+    // return null;
   };
 
   useEffect(() => {
@@ -48,25 +38,37 @@ export default function Overview({ user }) {
         const res = await dispatch(getUserWorkoutStats(user._id));
         const data = res.payload;
         console.log(data);
-
         const endDate = new Date();
         const startDate = new Date();
-        startDate.setDate(endDate.getDate() - 4);
-        const labels = [...Array(5)].map((_, i) => {
+        startDate.setDate(endDate.getDate() - 6);
+        const dateLabels = [...Array(7)].map((_, i) => {
           const date = new Date(startDate);
           date.setDate(startDate.getDate() + i);
-          return date.toLocaleDateString();
+          return {
+            weekday: [
+              "Sun",
+              "Mon",
+              "Tue",
+              "Wed",
+              "Thu",
+              "Fri",
+              "Sat",
+            ][date.getDay()],
+            fullDate: date.toLocaleDateString(),
+          };
         });
-        console.log(labels);
+        console.log(dateLabels);
 
-        const totalWeight = labels.map((date) => {
+        const totalWeight = dateLabels.map((label) => {
           const workouts = data.filter((workout) => {
             const workoutDate = new Date(
               workout.createdAt
             ).toLocaleDateString();
-            return workoutDate === date;
+            return workoutDate === label.fullDate;
           });
-          console.log(workouts);
+
+          console.log(workouts)
+
           if (workouts.length > 0) {
             return workouts.reduce((acc, workout) => {
               return (
@@ -76,14 +78,10 @@ export default function Overview({ user }) {
                     // check if exercise is null
                     return acc2;
                   }
-                  console.log(acc2);
                   return (
                     acc2 +
                     exercise.sets.reduce((setAcc, set) => {
                       if (set.weight !== null && set.weight > 0) {
-                        console.log("here", set.weight);
-                        const amount = setAcc + (set.weight || 0) * set.reps;
-                        console.log(amount);
                         return setAcc + (set.weight || 0) * set.reps;
                       } else {
                         return setAcc;
@@ -97,13 +95,13 @@ export default function Overview({ user }) {
             return null;
           }
         });
-
-        const totalReps = labels.map((date) => {
+        
+        const totalReps = dateLabels.map((label) => {
           const workouts = data.filter((workout) => {
             const workoutDate = new Date(
               workout.createdAt
             ).toLocaleDateString();
-            return workoutDate === date;
+            return workoutDate === label.fullDate;
           });
 
           if (workouts.length > 0) {
@@ -168,8 +166,9 @@ export default function Overview({ user }) {
           ],
         });
         console.log(totalWeight);
+
         setChartData({
-          labels,
+          labels: dateLabels.map((label) => label.weekday),
 
           datasets: [
             {
@@ -196,7 +195,7 @@ export default function Overview({ user }) {
   }, [user, dispatch]);
 
   return (
-    <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-4 w-full [&>*]:rounded-xl justify-center p-4">
+    <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4 w-full [&>*]:rounded-xl justify-center p-4">
       <div className="w-full  bg-gray-400">
         <h2 className=" p-4 text-sm md:text-lg font-bold mb-2 md:mb-8">
           Welcome {user && user.name.toUpperCase()},
@@ -212,7 +211,7 @@ export default function Overview({ user }) {
               plugins: {
                 title: {
                   display: true,
-                  text: "Activity",
+                  text: "Total Lifted",
                   font: {
                     size: 24,
                     weight: "bold",
@@ -221,7 +220,7 @@ export default function Overview({ user }) {
                   color: "white",
                 },
                 legend: {
-                  display: false,
+                  display: true,
                 },
               },
               scales: {
@@ -235,6 +234,9 @@ export default function Overview({ user }) {
                     font: {
                       family: "'Roboto', sans-serif",
                     },
+                    autoSkip: false,
+                    maxRotation: 0,
+                    minRotation: 0,
                   },
                 },
                 y: {
@@ -290,35 +292,35 @@ export default function Overview({ user }) {
       <div className="w-full bg-black rounded-xl p-2">
         {Object.keys(exerciseData).length > 0 ? (
           <Doughnut
-          data={exerciseData}
-          options={{
-            plugins: {
-              title: {
-                display: true,
-                text: "Activity",
-                font: {
-                  size: 24,
-                  weight: "bold",
-                  family: "'Roboto', sans-serif",
-                },
-                color: "white",
-              },
-              legend: {
-                display: true,
-                position: "bottom",
-                labels: {
-                  color: "white",
+            data={exerciseData}
+            options={{
+              plugins: {
+                title: {
+                  display: true,
+                  text: "Exercise Types",
                   font: {
+                    size: 24,
+                    weight: "bold",
                     family: "'Roboto', sans-serif",
+                  },
+                  color: "white",
+                },
+                legend: {
+                  display: true,
+                  position: "bottom",
+                  labels: {
+                    color: "white",
+                    font: {
+                      family: "'Roboto', sans-serif",
+                    },
                   },
                 },
               },
-            },
-            maintainAspectRatio: true,
-            responsive: true,
-            aspectRatio: 1,
-          }}
-        />
+              maintainAspectRatio: true,
+              responsive: true,
+              aspectRatio: 1,
+            }}
+          />
         ) : null}
       </div>
       <div className="w-full bg-black flex flex-col items-center p-4">
