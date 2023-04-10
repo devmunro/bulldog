@@ -4,7 +4,7 @@ import Navbar from "./Navbar"; // import the Navbar component
 import { Routes, Route, useNavigate } from "react-router-dom"; // import necessary components from react-router-dom
 import Exercises from "../Components/Exercise/Exercises"; // import the Exercises component
 import Overview from "../Components/Overview"; // import the Overview component
-import Workout from "../Components/workout/Workout";// import the Workout component
+import Workout from "../Components/workout/WorkoutManager";// import the Workout component
 import WorkoutPage from "../Components/workout/workoutPage"; // import the WorkoutPage component
 import { useDispatch, useSelector } from "react-redux"; // import useDispatch and useSelector from react-redux
 import { getUserDetails, logout } from "../features/userSlice"; // import getUserDetails and logout from ../features/userSlice
@@ -16,6 +16,7 @@ export default function Dashboard() {
   const dispatch = useDispatch(); // use dispatch to dispatch actions to the store
   const navigate = useNavigate(); // useNavigate is a hook that returns a navigate function to navigate to a different route
 
+  console.log(user)
   //check if authorised
   useEffect(() => {
     if (token === null) {
@@ -38,24 +39,24 @@ export default function Dashboard() {
 
   return (
     <div className="flex min-h-screen">
-      <div className="fixed left-0 top-0 w-10 bg-gray-800">
-        {/* // render the Sidebar component */}
-        <Sidebar />
-      </div>
-      <div className="flex-grow flex flex-col ml-10 md:ml-14 bg-[#1F2937]">
-        {/* // render the Navbar component with handleLogout prop */}
-        <Navbar handleLogout={handleLogout} />
-        <Routes>
-          {/* // render the Overview component when path is "/" */}
-          <Route path="/" element={<Overview user={user} />} />
-          {/* // render the Overview component when path is "/" */}
-          <Route path="/exerciselist" element={<Exercises />} />
-          {/* // render the Workout component when path is "/workout" */}
-          <Route path="/workout" element={<Workout user={user} />} />
-          {/* // render the WorkoutPage component when path is "/record" */}
-          <Route path="/record" element={<WorkoutPage user={user} />} />
-        </Routes>
-      </div>
+      {!user ? (
+        <Loading />
+      ) : (
+        <>
+          <div className="fixed left-0 top-0 w-10 bg-gray-800">
+            <Sidebar />
+          </div>
+          <div className="flex-grow flex flex-col ml-10 md:ml-14 bg-[#1F2937]">
+            <Navbar handleLogout={handleLogout} />
+            <Routes>
+              <Route path="/" element={<Overview user={user} />} />
+              <Route path="/exerciselist" element={<Exercises />} />
+              <Route path="/workout" element={<Workout user={user} />} />
+              <Route path="/record" element={<WorkoutPage user={user} />} />
+            </Routes>
+          </div>
+        </>
+      )}
     </div>
   );
 }

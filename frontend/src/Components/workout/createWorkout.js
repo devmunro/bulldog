@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { createWorkout, findSingleWorkout } from "../../features/exerciseSlice";
+import { createWorkout } from "../../features/exerciseSlice";
+import { getUserDetails } from "../../features/userSlice";
 
 function CreateWorkout({user, findUserWorkouts }) {
     const [workoutCreateBox, setWorkoutCreateBox] = useState(false);
@@ -30,8 +31,7 @@ function CreateWorkout({user, findUserWorkouts }) {
     };
 
     await dispatch(createWorkout(workoutForm));
-
-    findUserWorkouts();
+    await dispatch(getUserDetails()); // Fetch the updated user details after setting the default workout
   };
 
 
