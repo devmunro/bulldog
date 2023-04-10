@@ -11,7 +11,7 @@ import { editExercise } from "../../features/exerciseSlice";
 
 export default function CurrentWorkout() {
   const [showExerciseForWorkout, setShowExerciseForWorkout] = useState(false);
-  const { defaultWorkout, loading, currentWorkout } = useSelector(
+  const { loading, currentWorkout } = useSelector(
     (state) => state.fitness
   );
   const [disabled, setDisabled] = useState(true);
