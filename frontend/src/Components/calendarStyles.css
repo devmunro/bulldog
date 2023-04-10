@@ -1,0 +1,15 @@
+/* Change the background color of the selected day */
+.react-calendar__tile--active {
+  background-color: gray;
+}
+
+/* Change the font color of the days from the neighboring months */
+.react-calendar__tile--neighboringMonth {
+  color: #999;
+}
+
+.workout-day {
+  background-color: blue;
+  border-radius: 25%;
+  color: white
+}

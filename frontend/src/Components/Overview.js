@@ -3,8 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { getUserWorkoutStats } from "../features/exerciseSlice";
 import { Bar, Doughnut } from "react-chartjs-2";
 import Chart from "chart.js/auto";
-import { Link } from 'react-router-dom';
-
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+import "./calendarStyles.css";
 
 export default function Overview({ user }) {
   const dispatch = useDispatch();
@@ -14,30 +15,60 @@ export default function Overview({ user }) {
   const [chartData, setChartData] = useState({});
   const [exerciseData, setExerciseData] = useState({});
 
+  const [value, onChange] = useState(new Date());
+
+  const tileClassName = ({ date, view }) => {
+    // if (view === "month") {
+    //   const workoutDay = workouts.find(
+    //     (workout) =>
+    //       workout.date.getDate() === date.getDate() &&
+    //       workout.date.getMonth() === date.getMonth() &&
+    //       workout.date.getFullYear() === date.getFullYear()
+    //   );
+    //   if (workoutDay) {
+    //     return "workout-day";
+    //   }
+    // }
+    // return null;
+  };
+
   useEffect(() => {
     const getData = async () => {
       if (user) {
         const res = await dispatch(getUserWorkoutStats(user._id));
         const data = res.payload;
         console.log(data);
-
         const endDate = new Date();
         const startDate = new Date();
         startDate.setDate(endDate.getDate() - 6);
-        const labels = [...Array(7)].map((_, i) => {
+        const dateLabels = [...Array(7)].map((_, i) => {
           const date = new Date(startDate);
           date.setDate(startDate.getDate() + i);
-          return date.toLocaleDateString();
+          return {
+            weekday: [
+              "Sun",
+              "Mon",
+              "Tue",
+              "Wed",
+              "Thu",
+              "Fri",
+              "Sat",
+            ][date.getDay()],
+            fullDate: date.toLocaleDateString(),
+          };
         });
+        console.log(dateLabels);
 
-        const totalWeight = labels.map((date) => {
+        const totalWeight = dateLabels.map((label) => {
           const workouts = data.filter((workout) => {
             const workoutDate = new Date(
               workout.createdAt
             ).toLocaleDateString();
-            return workoutDate === date;
+            return workoutDate === label.fullDate;
           });
-          console.log(workouts);
+
+          console.log(workouts)
+
           if (workouts.length > 0) {
             return workouts.reduce((acc, workout) => {
               return (
@@ -47,14 +78,10 @@ export default function Overview({ user }) {
                     // check if exercise is null
                     return acc2;
                   }
-                  console.log(acc2);
                   return (
                     acc2 +
                     exercise.sets.reduce((setAcc, set) => {
                       if (set.weight !== null && set.weight > 0) {
-                        console.log("here", set.weight);
-                        const amount = setAcc + (set.weight || 0) * set.reps;
-                        console.log(amount)
                         return setAcc + (set.weight || 0) * set.reps;
                       } else {
                         return setAcc;
@@ -68,13 +95,13 @@ export default function Overview({ user }) {
             return null;
           }
         });
-
-        const totalReps = labels.map((date) => {
+        
+        const totalReps = dateLabels.map((label) => {
           const workouts = data.filter((workout) => {
             const workoutDate = new Date(
               workout.createdAt
             ).toLocaleDateString();
-            return workoutDate === date;
+            return workoutDate === label.fullDate;
           });
 
           if (workouts.length > 0) {
@@ -127,6 +154,7 @@ export default function Overview({ user }) {
           datasets: [
             {
               data: Object.values(exerciseCount),
+
               backgroundColor: [
                 "#FF6384",
                 "#36A2EB",
@@ -138,23 +166,26 @@ export default function Overview({ user }) {
           ],
         });
         console.log(totalWeight);
+
         setChartData({
-          labels,
+          labels: dateLabels.map((label) => label.weekday),
 
           datasets: [
             {
               label: "Total Weight Lifted(KG)",
               data: totalWeight,
-              backgroundColor: "#fff",
+              backgroundColor: "white",
               borderColor: "#000",
               yAxisID: "y",
+              borderRadius: 10,
             },
             {
               label: "Total Reps Lifted",
               data: totalReps,
-              backgroundColor: "#f34",
+              backgroundColor: "gray",
               borderColor: "#000",
               yAxisID: "y1",
+              borderSkipped: "middle",
             },
           ],
         });
@@ -164,99 +195,142 @@ export default function Overview({ user }) {
   }, [user, dispatch]);
 
   return (
-    <div className=" w-full justify-center p-4">
-      <div className="md:m-4 my-2 md:p-4 grid md:grid-cols-2 bg-gradient-to-bl from-blue-700 via-blue-800 to-gray-900 text-white">
-        <div>
-          <h2 className="text-white p-4 text-sm md:text-lg font-bold mb-2 md:mb-8">
-            Welcome {user && user.name.toUpperCase()},
-            <p className="text-sm">We hope you enjoy your workout!</p>
-          </h2>
-        </div>
-
-        <div className="bg-gray-900 p-4 md:block text-sm md:text-lg ">
-          <h3 className="text-gray-400 uppercase">Current Workout</h3>
-          <h2 className="text-white mt-2">
-            -{" "}
-            {currentWorkout
-              ? currentWorkout.name.toUpperCase()
-              : "No Current Workout"}
-          </h2>
-          <Link to="record">
-          <button className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md mt-4 inline-block">
-            START NOW
-          </button>
-          </Link>
-        </div>
+    <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4 w-full [&>*]:rounded-xl justify-center p-4">
+      <div className="w-full  bg-gray-400">
+        <h2 className=" p-4 text-sm md:text-lg font-bold mb-2 md:mb-8">
+          Welcome {user && user.name.toUpperCase()},
+          <p className="text-sm">We hope you enjoy your workout!</p>
+        </h2>
       </div>
 
-      <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1  gap-8 w-full  [&>*]:bg-[#1F2937] [&>*]:lg:p-8 [&>*]:rounded-md [&>*]:shadow-white [&>*]:shadow-lg">
-        <div className="w-full min-h-48">
-          {Object.keys(chartData).length > 0 ? (
-            <Bar
-              className="bg-black"
-              data={chartData}
-              options={{
-                color: "white",
-                plugins: {
+      <div className="w-full bg-black rounded-xl p-2">
+        {Object.keys(chartData).length > 0 ? (
+          <Bar
+            data={chartData}
+            options={{
+              plugins: {
+                title: {
+                  display: true,
+                  text: "Total Lifted",
+                  font: {
+                    size: 24,
+                    weight: "bold",
+                    family: "'Roboto', sans-serif",
+                  },
+                  color: "white",
+                },
+                legend: {
+                  display: true,
+                },
+              },
+              scales: {
+                x: {
+                  grid: {
+                    display: false,
+                    color: "rgba(255, 255, 255, 0.1)",
+                  },
+                  ticks: {
+                    color: "white",
+                    font: {
+                      family: "'Roboto', sans-serif",
+                    },
+                    autoSkip: false,
+                    maxRotation: 0,
+                    minRotation: 0,
+                  },
+                },
+                y: {
+                  position: "left",
                   title: {
                     display: true,
-                    text: "Activity",
+                    text: "Total Weight (KG)",
+                    color: "white",
                     font: {
-                      size: 24,
-                      weight: "bold",
+                      family: "'Roboto', sans-serif",
+                    },
+                  },
+                  grid: {
+                    display: true,
+                    color: "rgba(255, 255, 255, 0.1)",
+                  },
+                  ticks: {
+                    color: "white",
+                    font: {
+                      family: "'Roboto', sans-serif",
                     },
                   },
                 },
-                scales: {
-                  y: {
-                    position: "left",
-                    title: {
-                      display: true,
-                      text: "Total Weight Lifted (KG)",
-                      color: "white",
-                    },
-                  },
-                  y1: {
-                    position: "right",
-                    title: {
-                      display: true,
-                      text: "Total Reps Lifted",
-                      color: "white",
-                    },
-                  },
-                },
-                maintainAspectRatio: true,
-                responsive: true,
-                aspectRatio: 1,
-              }}
-            />
-          ) : null}
-        </div>
-        <div className="w-full">
-          {Object.keys(exerciseData).length > 0 ? (
-            <Doughnut
-              className="bg-black"
-              data={exerciseData}
-              options={{
-                color: "white",
-                plugins: {
+                y1: {
+                  position: "right",
                   title: {
                     display: true,
-                    text: "Type",
+                    text: "Total Reps",
+                    color: "white",
                     font: {
-                      size: 24,
-                      weight: "bold",
+                      family: "'Roboto', sans-serif",
+                    },
+                  },
+                  grid: {
+                    display: false,
+                  },
+                  ticks: {
+                    color: "white",
+                    font: {
+                      family: "'Roboto', sans-serif",
                     },
                   },
                 },
-                maintainAspectRatio: true,
-                responsive: true,
-                hoverOffset: 20,
-                aspectRatio: 1,
-              }}
-            />
-          ) : null}
-        </div>
+              },
+              maintainAspectRatio: true,
+              responsive: true,
+              aspectRatio: 1,
+            }}
+          />
+        ) : null}
+      </div>
+
+      <div className="w-full bg-black rounded-xl p-2">
+        {Object.keys(exerciseData).length > 0 ? (
+          <Doughnut
+            data={exerciseData}
+            options={{
+              plugins: {
+                title: {
+                  display: true,
+                  text: "Exercise Types",
+                  font: {
+                    size: 24,
+                    weight: "bold",
+                    family: "'Roboto', sans-serif",
+                  },
+                  color: "white",
+                },
+                legend: {
+                  display: true,
+                  position: "bottom",
+                  labels: {
+                    color: "white",
+                    font: {
+                      family: "'Roboto', sans-serif",
+                    },
+                  },
+                },
+              },
+              maintainAspectRatio: true,
+              responsive: true,
+              aspectRatio: 1,
+            }}
+          />
+        ) : null}
+      </div>
+      <div className="w-full bg-black flex flex-col items-center p-4">
+        <h2 className="text-white font-semibold text-xl mb-4">Activity</h2>
+        <Calendar
+          onChange={onChange}
+          value={value}
+          tileClassName={tileClassName}
+          disabled={true}
+        />
       </div>
     </div>
   );

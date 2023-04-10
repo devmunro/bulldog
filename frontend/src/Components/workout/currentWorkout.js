@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ExerciseList from "../Exercise/ExerciseList";
 import {
@@ -6,34 +6,29 @@ import {
   ChevronDoubleUpIcon,
 } from "@heroicons/react/24/solid";
 import FirebaseStorage from "../../images/firebaseStorage";
-import Loading from "../Loading";
 import { editExercise } from "../../features/exerciseSlice";
 
 export default function CurrentWorkout() {
   const [showExerciseForWorkout, setShowExerciseForWorkout] = useState(false);
-  const { defaultWorkout, loading, currentWorkout } = useSelector(
-    (state) => state.fitness
-  );
+  const { loading, currentWorkout } = useSelector((state) => state.fitness);
   const [disabled, setDisabled] = useState(true);
   const [exerciseInputs, setExerciseInputs] = useState({});
   const [swapButton, setSwapButton] = useState(true);
   const dispatch = useDispatch();
 
-  //handle edit exercise for current workout
+  //## Handle editing an exercise for the current workout
   const handleEditExercise = async (id) => {
     setDisabled(false);
     setSwapButton(false);
   };
 
-  //handleShowExercises - display exercises for current workout
-
+  //## Toggle exercises display for the current workout
   const handleShowExercises = (e) => {
     e.preventDefault();
-
     setShowExerciseForWorkout(!showExerciseForWorkout);
   };
 
-  //handle Save exercise for current workout
+  //## Save edited exercise for the current workout
   const handleSaveExercise = async () => {
     const currentID = currentWorkout._id;
     const editedDetails = {
@@ -49,7 +44,7 @@ export default function CurrentWorkout() {
     setSwapButton(true);
   };
 
-  //handlechange for inputs
+  //## Handle changes for exercise input fields
   const handleChange = async (id, e) => {
     const { name, value } = e.target;
     setExerciseInputs((prevState) => ({
@@ -60,6 +55,7 @@ export default function CurrentWorkout() {
       },
     }));
   };
+
 
   return (
     <div className="w-full text-black bg-gradient-to-bl from-blue-700 via-blue-800 to-gray-900">
