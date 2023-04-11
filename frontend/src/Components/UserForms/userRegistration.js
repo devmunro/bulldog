@@ -70,19 +70,22 @@ const RegisterForm = () => {
           </strong>
         </div>
       ) : null}
-      <div className="w-full md:p-4 lg:px-8 bg-black border-2 border-white ">
-        <div className="w-full flex flex-col items-center">
-          <h2 className="text-3xl lg:text-4xl font-bold text-white mb-2">
+      <div class="flex justify-center  md:p-4 lg:px-8">
+        <div class="flex flex-col items-center mx-auto lg:w-1/2  w-full">
+          <h2 class="text-xl font-bold text-white mb-2 md:text-2xl">
             Sign Up Here
           </h2>
-          <p className="text-gray-300 text-lg mb-">
+          <p class="text-gray-500 text-lg mb-">
             Create your account in just a few clicks.
           </p>
 
-          <form className="w-full mx-auto p-4 bg-gray-800 rounded-md border-2 border-gray-300 ">
-            <div className="grid grid-cols-1 gap-4 ">
+          <form class="w-full p-6 space-y-4 md:space-y-6 bg-gray-800 text-white rounded-lg shadow ">
+            <div class="grid grid-cols-1 gap-4">
               <div>
-                <label htmlFor="name" className="block text-white mb-2">
+                <label
+                  htmlFor="name"
+                  class="block mb-2 text-sm font-medium text-white"
+                >
                   Name
                 </label>
                 <input
@@ -93,12 +96,12 @@ const RegisterForm = () => {
                   value={formData.name}
                   onChange={handleInputChange}
                   required
-                  className="w-full py-2 px-3 bg-gray-800 border border-gray-300 rounded-md shadow-sm text-gray-300 focus:outline-none focus:border-purple-600 focus:ring focus:ring-purple-600 focus:ring-opacity-50"
+                  className="bg-gray-500 border-gray-300  text-white sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 />
               </div>
 
               <div>
-                <label htmlFor="dob" className="block text-white mb-2">
+                <label htmlFor="dob" class="block mb-2 text-sm font-medium">
                   Date of Birth
                 </label>
                 <input
@@ -109,12 +112,12 @@ const RegisterForm = () => {
                   value={formData.dob}
                   onChange={handleInputChange}
                   required
-                  className="w-full py-2 px-3 bg-gray-800 border border-gray-300 rounded-md shadow-sm text-gray-300 focus:outline-none focus:border-purple-600 focus:ring focus:ring-purple-600 focus:ring-opacity-50"
+                  className="bg-gray-500 border border-gray-300 text-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 />
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-white mb-2">
+                <label htmlFor="email" class="block mb-2 text-sm font-medium">
                   Email
                 </label>
                 <input
@@ -125,12 +128,15 @@ const RegisterForm = () => {
                   value={formData.email}
                   onChange={handleInputChange}
                   required
-                  className="w-full py-2 px-3 bg-gray-800 border border-gray-300 rounded-md shadow-sm text-gray-300 focus:outline-none focus:border-purple-600 focus:ring focus:ring-purple-600 focus:ring-opacity-50"
+                  className="bg-gray-500 border-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 />
               </div>
 
               <div>
-                <label htmlFor="password" className="block text-white mb-2">
+                <label
+                  htmlFor="password"
+                  class="block mb-2 text-sm font-medium "
+                >
                   Password
                 </label>
                 <input
@@ -141,14 +147,14 @@ const RegisterForm = () => {
                   value={formData.password}
                   onChange={handleInputChange}
                   required
-                  className="w-full py-2 px-3 bg-gray-800 border border-gray-300 rounded-md shadow-sm text-gray-300 focus:outline-none focus:border-purple-600 focus:ring focus:ring-purple-600 focus:ring-opacity-50"
+                  className="bg-gray-500  border border-gray-300 e sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 />
               </div>
 
               <div>
                 <label
                   htmlFor="passwordConfirmation"
-                  className="block text-white mb-2"
+                  className="block mb-2 text-sm font-medium "
                 >
                   Password Confirmation
                 </label>
@@ -160,7 +166,7 @@ const RegisterForm = () => {
                   value={formData.passwordConfirmation}
                   onChange={handleInputChange}
                   required
-                  className="w-full py-2 px-3 bg-gray-800 border border-gray-300 rounded-md shadow-sm text-gray-300 focus:outline-none focus:border-purple-600 focus:ring focus:ring-purple-600 focus:ring-opacity-50"
+                  className="bg-gray-500 border border-gray-300  sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 />
               </div>
             </div>
@@ -169,7 +175,7 @@ const RegisterForm = () => {
               {!loading && (
                 <button
                   onClick={handleSubmit}
-                  className="w-full bg-purple-600 text-white py-2 px-4 rounded hover:bg-purple-700"
+                  className="w-full text-white bg-black hover:bg-primary-700 dark:hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:focus:ring-primary-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                 >
                   Submit
                 </button>
@@ -178,17 +184,20 @@ const RegisterForm = () => {
               {loading && (
                 <button
                   disabled
-                  className="w-full bg-purple-600 text-white py-2 px-4 rounded"
+                  className="w-full text-white bg-primary-600 dark:bg-primary-600 py-2 px-4 rounded"
                 >
                   <Loading />
                 </button>
               )}
             </div>
           </form>
-          {/* <p className="w-full text-center pt-2 pb-4 text-white">
+          {/* <p className="text-sm font-light text-gray-500 dark:text-gray-400 w-full text-center pt-2 pb-4">
             Already have an account?
             <span>
-              <button onClick={handleClick} className="text-blue-400 px-2 italic">
+              <button
+                onClick={handleClick}
+                className="text-primary-600 dark:text-primary-500 hover:underline px-2 italic"
+              >
                 Click Here
               </button>
             </span>
