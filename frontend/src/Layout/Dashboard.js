@@ -38,12 +38,12 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="flex min-h-screen">
+    <div className="bg-primary h-screen">
       {!user ? (
         <Loading />
       ) : (
         <>
-          <div className="bg-primary flex w-full">
+          <div className=" flex w-full">
             <Sidebar handleLogout={handleLogout} />
             <div className="bg-secondary my-4 md:m-4 w-full rounded-2xl p-4">
               <Routes>

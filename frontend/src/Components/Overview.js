@@ -149,13 +149,7 @@ export default function Overview({ user }) {
             {
               data: Object.values(exerciseCount),
 
-              backgroundColor: [
-                "#FF6384",
-                "#36A2EB",
-                "#FFCE56",
-                "#36EBAF",
-                "#AB37EB",
-              ],
+              backgroundColor: ["#BFDBFE", "#4F46E5", "#000000", "#fff"],
             },
           ],
         });
@@ -168,7 +162,7 @@ export default function Overview({ user }) {
             {
               label: "Total Weight Lifted(KG)",
               data: totalWeight,
-              backgroundColor: "white",
+              backgroundColor: "#4F46E5",
               borderColor: "#000",
               yAxisID: "y",
               borderRadius: 10,
@@ -176,7 +170,8 @@ export default function Overview({ user }) {
             {
               label: "Total Reps Lifted",
               data: totalReps,
-              backgroundColor: "gray",
+              backgroundColor: "#BFDBFE",
+              textcolor: "black",
               borderColor: "#000",
               yAxisID: "y1",
               borderSkipped: "middle",
@@ -189,12 +184,12 @@ export default function Overview({ user }) {
   }, [user, dispatch]);
 
   return (
-    <div className="w-full">
+    <div className="w-full h-full">
       <div className="w-full">
         <h2 className=" pb-4 text-sm md:text-lg font-bold ">Overview</h2>
       </div>
-      <div className="grid grid-cols-3 grid-rows-2 gap-4">
-        <div className="row-span-2 bg-primary text-white rounded-xl flex flex-col items-center p-8 space-y-8">
+       <div className="grid grid-cols-3 grid-rows-2 gap-4">
+        <div className="row-span-2 bg-primary text-white rounded-xl flex flex-col items-center p-8 space-y-8 ">
           <img
             alt="avatar"
             src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/20625/avatar-bg.png"
@@ -218,7 +213,7 @@ export default function Overview({ user }) {
           </ul>
         </div>
 
-        <div className="w-full bg-black rounded-xl p-2">
+        <div className="w-full bg-white rounded-xl h-full">
           {Object.keys(chartData).length > 0 ? (
             <Bar
               data={chartData}
@@ -227,12 +222,12 @@ export default function Overview({ user }) {
                   title: {
                     display: true,
                     text: "Total Lifted",
+
                     font: {
                       size: 24,
                       weight: "bold",
                       family: "'Roboto', sans-serif",
                     },
-                    color: "white",
                   },
                   legend: {
                     display: true,
@@ -242,7 +237,6 @@ export default function Overview({ user }) {
                   x: {
                     grid: {
                       display: false,
-                      color: "rgba(255, 255, 255, 0.1)",
                     },
                     ticks: {
                       color: "white",
@@ -259,7 +253,7 @@ export default function Overview({ user }) {
                     title: {
                       display: true,
                       text: "Total Weight (KG)",
-                      color: "white",
+
                       font: {
                         family: "'Roboto', sans-serif",
                       },
@@ -269,7 +263,6 @@ export default function Overview({ user }) {
                       color: "rgba(255, 255, 255, 0.1)",
                     },
                     ticks: {
-                      color: "white",
                       font: {
                         family: "'Roboto', sans-serif",
                       },
@@ -280,7 +273,7 @@ export default function Overview({ user }) {
                     title: {
                       display: true,
                       text: "Total Reps",
-                      color: "white",
+
                       font: {
                         family: "'Roboto', sans-serif",
                       },
@@ -289,7 +282,6 @@ export default function Overview({ user }) {
                       display: false,
                     },
                     ticks: {
-                      color: "white",
                       font: {
                         family: "'Roboto', sans-serif",
                       },
@@ -338,9 +330,6 @@ export default function Overview({ user }) {
             />
           ) : null}
         </div>
-
-        
-        
       </div>
     </div>
   );
