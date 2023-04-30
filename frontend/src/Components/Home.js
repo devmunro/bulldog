@@ -20,7 +20,7 @@ export default function Home() {
     <div>
       <div>
         {/* Header */}
-        <header className="bg-secondary text-tertiary py-4 px-6 md:px-8 lg:px-16">
+        <header className="bg-white text-tertiary py-4 px-6 md:px-8 lg:px-16">
           <div className="flex items-center justify-between">
             <Link to="/" className="font-bold text-lg sm:text-xl">
               Active AI
