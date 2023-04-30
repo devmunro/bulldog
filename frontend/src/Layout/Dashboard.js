@@ -43,12 +43,11 @@ export default function Dashboard() {
         <Loading />
       ) : (
         <>
-          <div className="fixed left-0 top-0 w-10 bg-gray-800">
-            <Sidebar />
+          <div className="fixed left-0 top-0 w-10">
+            <Sidebar handleLogout={handleLogout} />
           </div>
-          <div className="flex-grow flex flex-col ml-10 md:ml-14 bg-[#1F2937]">
-            <Navbar handleLogout={handleLogout} />
-            <Routes>
+          <div className="flex-grow flex flex-col ml-10 md:ml-14 bg-secondary">
+             <Routes>
               <Route path="/" element={<Overview user={user} />} />
               <Route path="/exerciselist" element={<Exercises />} />
               <Route path="/workout" element={<Workout user={user} />} />

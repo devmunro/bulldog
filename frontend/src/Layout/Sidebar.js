@@ -19,7 +19,7 @@ export default function Sidebar() {
   };
 
   return (
-    <div className="fixed min-h-screen flex-col text-gray-400 bg-black">
+    <div className="fixed min-h-screen flex-col bg-primary">
       <div className="flex justify-between">
         {!hideSidebar && (
           <h1 className="text-white mt-6 md:ml-10 ml-2 px-2 font-bold">BULLDOG</h1>
