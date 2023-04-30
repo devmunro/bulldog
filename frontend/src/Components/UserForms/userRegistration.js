@@ -4,8 +4,9 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Loading from "../Loading";
+import { XMarkIcon } from "@heroicons/react/24/solid";
 
-const RegisterForm = () => {
+const RegisterForm = ({showRegistration}) => {
   const [formData, setFormData] = useState({
     name: "",
     dob: "",
@@ -59,7 +60,12 @@ const RegisterForm = () => {
   }, [dispatch]);
 
   return (
-    <div>
+    <div className="relative">
+     
+      {/* CLOSE BOX */}
+      <div className="absolute top-0 right-0 p-2">
+        <XMarkIcon width="24" height="24" onClick={showRegistration} className="text-white cursor-pointer" />
+      </div>
       {error || passwordFail ? (
         <div
           className="flex items-center justify-center bg-tertiary text-white px- py-3 rounded"

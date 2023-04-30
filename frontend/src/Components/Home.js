@@ -25,10 +25,7 @@ export default function Home() {
             <Link to="/" className="font-bold text-lg sm:text-xl">
               Active AI
             </Link>
-            <button
-              onClick={openModal}
-              className="btn-primary"
-            >
+            <button onClick={openModal} className="btn-primary">
               Log In
             </button>
           </div>
@@ -53,10 +50,7 @@ export default function Home() {
                 <p className="text-gray-300 text-xl mb-6">
                   Join Active AI today and take control of your fitness journey.
                 </p>
-                <button
-                  onClick={showRegistration}
-                  className="btn-secondary"
-                >
+                <button onClick={showRegistration} className="btn-secondary">
                   Sign Up
                 </button>
               </div>
@@ -156,12 +150,12 @@ export default function Home() {
           />
           <div className="md:w-1/2 w-full z-10 p-4">
             {/* Your LoginForm component here */}
-            <LoginForm />
+            <LoginForm openModal={openModal} />
           </div>
         </div>
       )}
 
-{/* REGistration The modal */}
+      {/* REGistration The modal */}
       {showRegistrationBox && (
         <div className="fixed w-full h-full top-0 left-0 z-50 flex items-center justify-center">
           <div
@@ -170,7 +164,7 @@ export default function Home() {
           />
           <div className="md:w-1/2 w-full z-10 sm:p-8">
             {/* Your Reguster component here */}
-            <RegisterForm />
+            <RegisterForm showRegistration={showRegistration} />
           </div>
         </div>
       )}

@@ -4,8 +4,9 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Loading from "../Loading";
+import { XMarkIcon } from "@heroicons/react/24/solid";
 
-const LoginForm = () => {
+const LoginForm = ({openModal}) => {
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
@@ -52,7 +53,12 @@ const LoginForm = () => {
   }, [dispatch, loading, success, error, navigate]);
 
   return (
-    <div>
+    <div className="relative">
+     
+      {/* CLOSE BOX */}
+      <div className="absolute top-0 right-0 p-2">
+        <XMarkIcon width="24" height="24" onClick={openModal} className="text-white cursor-pointer" />
+      </div>
       {error && (
         <div class="flex items-center justify-center bg-tertiary text-white px- py-3 rounded">
           <strong class="f ont-bold space-x-2">{error}</strong>
