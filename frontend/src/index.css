@@ -3,23 +3,32 @@
 @tailwind utilities;
 
 @layer components {
-    .btn-primary {
-      @apply py-2 px-4 h-10 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75;
-    }
+  .btn-primary {
+    @apply  py-2 px-4 text-secondary;
+    gap: 10px;
+    width: 90px;
+    height: 39px; 
+    background-color: theme('colors.primary');
+    border-radius: 30px;
+    text-align: center;
+    @apply hover:bg-tertiary;
 
-    .btn-secondary {
-      @apply md:py-2 md:px-4 m-2 px-1 text-sm text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700
-    }
-    .input {
-
-      @apply md:w-16 md:h-16 w-10 h-10 text-center md:text-xl rounded text-gray-400 bg-black
-    }
-    .input-edit {
-
-      @apply md:w-16 md:h-16 w-10 h-10 text-center md:text-xl rounded text-black bg-white
-    }
+    
+    
   }
 
+  .btn-secondary {
+    @apply  py-2 px-4 text-tertiary;
+    gap: 10px;
+    width: 100px;
+    height: 39px; 
+    background-color: theme('colors.secondary');
+    border-radius: 30px;
+    text-align: center;
+    @apply hover:bg-tertiary hover:text-secondary;
+    
+  }
+}
 
 .App {
 
