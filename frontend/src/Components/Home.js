@@ -74,7 +74,7 @@ export default function Home() {
             </p>
           </div>
           <div className="  grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className=" text-secondary bg-primary p-8 rounded-lg shadow-lg flex flex-col items-center">
+            <div className=" text-white bg-primary p-8 rounded-lg shadow-lg flex flex-col items-center">
               <h3 className="font-bold text-2xl mb-4 text-center">
                 Fitness Tracking
               </h3>
@@ -99,7 +99,7 @@ export default function Home() {
       <section className="text-secondary bg-primary py-20 md:py-24">
         <div className="container mx-auto px-4 md:px-8 lg:px-16">
           <div className="mb-12 text-center">
-            <h2 className="font-bold text-3xl sm:text-4xl mb-4">
+            <h2 className="font-bold text-3xl text-white sm:text-4xl mb-4">
               More Exciting Features Coming Soon!
             </h2>
             <p className="text-gray-300 text-xl">
