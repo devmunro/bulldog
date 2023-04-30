@@ -189,7 +189,7 @@ export default function Overview({ user }) {
         <h2 className=" pb-4 text-sm md:text-lg font-bold ">Overview</h2>
       </div>
       <div className="grid grid-cols-3 grid-rows-2 gap-8 h-[90%]  ">
-        <div className="row-span-2 bg-primary text-white rounded-xl flex flex-col items-center p-8 space-y-8 h-full">
+        <div className="row-span-2 bg-primary text-white rounded-xl flex flex-col items-center p-8 space-y-16 h-full">
           <img
             alt="avatar"
             src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/20625/avatar-bg.png"
@@ -211,6 +211,8 @@ export default function Overview({ user }) {
               <p className="text-primary">Height</p>
             </li>
           </ul>
+
+          <div className="p-12 bg-white text-tertiary my-16 rounded-xl font-semibold">CHATGPT FEATURE COMING SOON!</div>
         </div>
 
         <div className="w-full bg-white rounded-xl ">

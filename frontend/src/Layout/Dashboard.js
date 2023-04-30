@@ -40,7 +40,7 @@ export default function Dashboard() {
   return (
     <div className="bg-primary ">
       {!user ? (
-        <Loading />
+        <Loading hScreen={"h-screen"}/>
       ) : (
         <>
           <div className=" flex w-full h-screen">
