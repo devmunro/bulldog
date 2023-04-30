@@ -2,7 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .btn-primary {
+    @apply  py-2 px-4 text-secondary;
+    gap: 10px;
+    width: 90px;
+    height: 39px; 
+    background-color: theme('colors.primary');
+    border-radius: 30px;
+    text-align: center;
+    @apply hover:bg-tertiary;
 
+    
+    
+  }
+
+  .btn-secondary {
+    @apply  py-2 px-4 text-tertiary;
+    gap: 10px;
+    width: 100px;
+    height: 39px; 
+    background-color: theme('colors.secondary');
+    border-radius: 30px;
+    text-align: center;
+    @apply hover:bg-tertiary hover:text-secondary;
+    
+  }
+}
 
 .App {
 
