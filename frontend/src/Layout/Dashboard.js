@@ -43,9 +43,9 @@ export default function Dashboard() {
         <Loading />
       ) : (
         <>
-          <div className="bg-primary flex">
+          <div className="bg-primary flex w-full">
             <Sidebar handleLogout={handleLogout} />
-            <div className="bg-secondary m-4">
+            <div className="bg-secondary my-4 md:m-4 w-full rounded-2xl p-4">
               <Routes>
                 <Route path="/" element={<Overview user={user} />} />
                 <Route path="/exerciselist" element={<Exercises />} />
