@@ -149,12 +149,12 @@ export default function Home() {
 
       {/* LOGIN The modal */}
       {showModal && (
-        <div className="fixed w-full h-full top-0 left-0 z-50 flex items-center justify-center">
+        <div className="fixed w-full h-full top-0 left-0 z-50 flex items-center justify-center ">
           <div
-            className="absolute inset-0 bg-black opacity-90"
+            className="absolute inset-0  bg-tertiary opacity-80"
             onClick={openModal}
           />
-          <div className="md:w-1/2 w-full z-10 px-8">
+          <div className="md:w-1/2 w-full z-10 p-4">
             {/* Your LoginForm component here */}
             <LoginForm />
           </div>
@@ -165,7 +165,7 @@ export default function Home() {
       {showRegistrationBox && (
         <div className="fixed w-full h-full top-0 left-0 z-50 flex items-center justify-center">
           <div
-            className="absolute inset-0 bg-black opacity-90"
+            className="absolute inset-0 "
             onClick={showRegistration}
           />
           <div className="md:w-1/2 w-full z-10 px-8">
