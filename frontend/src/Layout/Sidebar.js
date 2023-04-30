@@ -12,7 +12,7 @@ import {
 import { ChartBarIcon } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
 
-export default function Sidebar() {
+export default function Sidebar({handleLogout}) {
   const [hideSidebar, setHideSideBar] = useState(true);
 
   const handleSidebar = () => {
@@ -48,7 +48,7 @@ export default function Sidebar() {
           </Link>
         </li>
         <li className="hover:bg-secondary hover:text-tertiary">
-          <Link to="/dashboard/record" className="flex">
+          <Link to="/dashboard/record" className="flex" onClick={handleLogout}>
             <BackspaceIcon className="h-6 w-6 mx-2 " />
             Logout
           </Link>
@@ -86,7 +86,7 @@ export default function Sidebar() {
           </Link>
         </li>
         <li className="hover:bg-secondary hover:text-tertiary">
-          <Link to="/dashboard/record" className="flex">
+          <Link to="/dashboard/record" className="flex" onClick={handleLogout}>
             <BackspaceIcon className="h-5 w-5 " />
           </Link>
         </li>
