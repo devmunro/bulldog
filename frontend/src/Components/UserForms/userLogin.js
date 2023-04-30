@@ -54,7 +54,7 @@ const LoginForm = () => {
   return (
     <div>
       {error && (
-        <div class="flex items-center justify-center  bg-red-100 border border-red-400 text-red-700 px- py-3 rounded">
+        <div class="flex items-center justify-center bg-tertiary text-white px- py-3 rounded">
           <strong class="font-bold space-x-2">{error}</strong>
         </div>
       )}
@@ -97,7 +97,7 @@ const LoginForm = () => {
             {loading && (
               <button
                 disabled
-                className="bg-purple-600 text-white py-2 px-4 rounded"
+                className="btn-secondary text-black w-full hover:bg-tertiary"
               >
                 <Loading />
               </button>
