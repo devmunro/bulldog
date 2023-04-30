@@ -49,6 +49,7 @@ export default function Exercises() {
     console.log(searchExercises);
   };
   return (
+    
     <div className="flex justify-center flex-col ">
       <div className=" md:p-4 bg-gradient-to-bl from-blue-800 to-gray-900">
         <div className="w-full md:flex  px-4 items-center">

@@ -6,6 +6,7 @@ import Chart from "chart.js/auto";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "./calendarStyles.css";
+import Loading from "./Loading";
 
 export default function Overview({ user }) {
   const dispatch = useDispatch();
@@ -15,23 +16,7 @@ export default function Overview({ user }) {
   const [chartData, setChartData] = useState({});
   const [exerciseData, setExerciseData] = useState({});
 
-  const [value, onChange] = useState(new Date());
-
-  const tileClassName = ({ date, view }) => {
-    // if (view === "month") {
-    //   const workoutDay = workouts.find(
-    //     (workout) =>
-    //       workout.date.getDate() === date.getDate() &&
-    //       workout.date.getMonth() === date.getMonth() &&
-    //       workout.date.getFullYear() === date.getFullYear()
-    //   );
-    //   if (workoutDay) {
-    //     return "workout-day";
-    //   }
-    // }
-    // return null;
-  };
-
+ 
   useEffect(() => {
     const getData = async () => {
       if (user) {
@@ -184,6 +169,9 @@ export default function Overview({ user }) {
   }, [user, dispatch]);
 
   return (
+    <>
+    {!chartData && <Loading/>}
+    {chartData && (
     <div className="w-full h-full ">
       <div className="w-full">
         <h2 className=" pb-4 text-sm md:text-lg font-bold ">Overview</h2>
@@ -442,6 +430,7 @@ export default function Overview({ user }) {
           ) : null}
         </div>
       </div>
-    </div>
+    </div> )}
+    </>
   );
 }
