@@ -46,7 +46,7 @@ export default function Dashboard() {
           <div className="fixed left-0 top-0 w-10">
             <Sidebar handleLogout={handleLogout} />
           </div>
-          <div className="flex-grow flex flex-col ml-10 md:ml-14 bg-secondary">
+          <div className="flex-grow flex flex-col ml-10 md:ml-14 bg-primary">
              <Routes>
               <Route path="/" element={<Overview user={user} />} />
               <Route path="/exerciselist" element={<Exercises />} />
