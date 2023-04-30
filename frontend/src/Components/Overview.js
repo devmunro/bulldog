@@ -184,12 +184,12 @@ export default function Overview({ user }) {
   }, [user, dispatch]);
 
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full ">
       <div className="w-full">
         <h2 className=" pb-4 text-sm md:text-lg font-bold ">Overview</h2>
       </div>
-       <div className="grid grid-cols-3 grid-rows-2 gap-4">
-        <div className="row-span-2 bg-primary text-white rounded-xl flex flex-col items-center p-8 space-y-8 ">
+      <div className="grid grid-cols-3 grid-rows-2 gap-8 h-[90%]  ">
+        <div className="row-span-2 bg-primary text-white rounded-xl flex flex-col items-center p-8 space-y-8 h-full">
           <img
             alt="avatar"
             src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/20625/avatar-bg.png"
@@ -213,7 +213,7 @@ export default function Overview({ user }) {
           </ul>
         </div>
 
-        <div className="w-full bg-white rounded-xl h-full">
+        <div className="w-full bg-white rounded-xl ">
           {Object.keys(chartData).length > 0 ? (
             <Bar
               data={chartData}
@@ -235,9 +235,7 @@ export default function Overview({ user }) {
                 },
                 scales: {
                   x: {
-                    grid: {
-                      display: false,
-                    },
+                    
                     ticks: {
                       color: "white",
                       font: {
@@ -278,9 +276,7 @@ export default function Overview({ user }) {
                         family: "'Roboto', sans-serif",
                       },
                     },
-                    grid: {
-                      display: false,
-                    },
+                   
                     ticks: {
                       font: {
                         family: "'Roboto', sans-serif",
@@ -288,7 +284,7 @@ export default function Overview({ user }) {
                     },
                   },
                 },
-                maintainAspectRatio: true,
+                maintainAspectRatio: false,
                 responsive: true,
                 aspectRatio: 1,
               }}
@@ -296,7 +292,7 @@ export default function Overview({ user }) {
           ) : null}
         </div>
 
-        <div className="w-full bg-black rounded-xl p-2">
+        <div className="w-full bg-white rounded-xl ">
           {Object.keys(exerciseData).length > 0 ? (
             <Doughnut
               data={exerciseData}
@@ -310,20 +306,133 @@ export default function Overview({ user }) {
                       weight: "bold",
                       family: "'Roboto', sans-serif",
                     },
-                    color: "white",
+                    color: "black",
                   },
                   legend: {
                     display: true,
-                    position: "bottom",
+                    position: "right",
                     labels: {
-                      color: "white",
+                      color: "black",
                       font: {
                         family: "'Roboto', sans-serif",
                       },
                     },
                   },
                 },
-                maintainAspectRatio: true,
+                maintainAspectRatio: false,
+                responsive: true,
+                aspectRatio: 1,
+              }}
+            />
+          ) : null}
+        </div>
+        <div className="w-full bg-white rounded-xl ">
+          {Object.keys(chartData).length > 0 ? (
+            <Bar
+              data={chartData}
+              options={{
+                plugins: {
+                  title: {
+                    display: true,
+                    text: "Total Lifted",
+
+                    font: {
+                      size: 24,
+                      weight: "bold",
+                      family: "'Roboto', sans-serif",
+                    },
+                  },
+                  legend: {
+                    display: true,
+                  },
+                },
+                scales: {
+                  x: {
+                    
+                    ticks: {
+                      color: "white",
+                      font: {
+                        family: "'Roboto', sans-serif",
+                      },
+                      autoSkip: false,
+                      maxRotation: 0,
+                      minRotation: 0,
+                    },
+                  },
+                  y: {
+                    position: "left",
+                    title: {
+                      display: true,
+                      text: "Total Weight (KG)",
+
+                      font: {
+                        family: "'Roboto', sans-serif",
+                      },
+                    },
+                    grid: {
+                      display: true,
+                      color: "rgba(255, 255, 255, 0.1)",
+                    },
+                    ticks: {
+                      font: {
+                        family: "'Roboto', sans-serif",
+                      },
+                    },
+                  },
+                  y1: {
+                    position: "right",
+                    title: {
+                      display: true,
+                      text: "Total Reps",
+
+                      font: {
+                        family: "'Roboto', sans-serif",
+                      },
+                    },
+                    
+                    ticks: {
+                      font: {
+                        family: "'Roboto', sans-serif",
+                      },
+                    },
+                  },
+                },
+                maintainAspectRatio: false,
+                responsive: true,
+                aspectRatio: 1,
+              }}
+            />
+          ) : null}
+        </div>
+
+        <div className="w-full bg-white rounded-xl ">
+          {Object.keys(exerciseData).length > 0 ? (
+            <Doughnut
+              data={exerciseData}
+              options={{
+                plugins: {
+                  title: {
+                    display: true,
+                    text: "Exercise Types",
+                    font: {
+                      size: 24,
+                      weight: "bold",
+                      family: "'Roboto', sans-serif",
+                    },
+                    color: "black",
+                  },
+                  legend: {
+                    display: true,
+                    position: "right",
+                    labels: {
+                      color: "black",
+                      font: {
+                        family: "'Roboto', sans-serif",
+                      },
+                    },
+                  },
+                },
+                maintainAspectRatio: false,
                 responsive: true,
                 aspectRatio: 1,
               }}

@@ -38,13 +38,13 @@ export default function Sidebar() {
         <li className="hover:bg-secondary hover:text-tertiary">
           <Link to="/dashboard/workout" className="flex">
             <DocumentTextIcon className="h-6 w-6 mx-2 " />
-            Workout Planner
+            Planner
           </Link>
         </li>
         <li className="hover:bg-secondary hover:text-tertiary">
           <Link to="/dashboard/record" className="flex">
             <TrophyIcon className="h-6 w-6 mx-2 " />
-            Start Workout
+            Workout
           </Link>
         </li>
         <li className="hover:bg-secondary hover:text-tertiary">
