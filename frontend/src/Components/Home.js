@@ -165,10 +165,10 @@ export default function Home() {
       {showRegistrationBox && (
         <div className="fixed w-full h-full top-0 left-0 z-50 flex items-center justify-center">
           <div
-            className="absolute inset-0 "
+            className="absolute inset-0 bg-tertiary opacity-80"
             onClick={showRegistration}
           />
-          <div className="md:w-1/2 w-full z-10 px-8">
+          <div className="md:w-1/2 w-full z-10 sm:p-8">
             {/* Your Reguster component here */}
             <RegisterForm />
           </div>

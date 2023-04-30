@@ -62,7 +62,7 @@ const RegisterForm = () => {
     <div>
       {error || passwordFail ? (
         <div
-          className="flex items-center justify-center w-full bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded "
+          className="flex items-center justify-center bg-tertiary text-white px- py-3 rounded"
           role="alert"
         >
           <strong className="font-bold space-x-2">
@@ -70,24 +70,16 @@ const RegisterForm = () => {
           </strong>
         </div>
       ) : null}
-      <div class="flex justify-center  md:p-4 lg:px-8">
-        <div class="flex flex-col items-center mx-auto lg:w-1/2  w-full">
-          <h2 class="text-xl font-bold text-white mb-2 md:text-2xl">
+      <div class="flex justify-center  bg-primary p-12 text-center text-secondary">
+        <div class="flex flex-col items-center w-full">
+          <h2 class="text-4xl font-bold text-white p-4 ">
             Sign Up Here
           </h2>
-          <p class="text-gray-500 text-lg mb-">
-            Create your account in just a few clicks.
-          </p>
+          <p class="text-lg mb-">Create your account in just a few clicks.</p>
 
-          <form class="w-full p-6 space-y-4 md:space-y-6 bg-gray-800 text-white rounded-lg shadow ">
+          <form class="w-full p-6 space-y-4 md:space-y-6 text-tertiary rounded-lg ">
             <div class="grid grid-cols-1 gap-4">
               <div>
-                <label
-                  htmlFor="name"
-                  class="block mb-2 text-sm font-medium text-white"
-                >
-                  Name
-                </label>
                 <input
                   type="text"
                   name="name"
@@ -96,14 +88,11 @@ const RegisterForm = () => {
                   value={formData.name}
                   onChange={handleInputChange}
                   required
-                  className="bg-gray-500 border-gray-300  text-white sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="sm:text-sm rounded-lg w-full p-2.5"
                 />
               </div>
 
               <div>
-                <label htmlFor="dob" class="block mb-2 text-sm font-medium">
-                  Date of Birth
-                </label>
                 <input
                   type="date"
                   name="dob"
@@ -112,14 +101,11 @@ const RegisterForm = () => {
                   value={formData.dob}
                   onChange={handleInputChange}
                   required
-                  className="bg-gray-500 border border-gray-300 text-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className=" sm:text-sm rounded-lg w-full p-2.5 "
                 />
               </div>
 
               <div>
-                <label htmlFor="email" class="block mb-2 text-sm font-medium">
-                  Email
-                </label>
                 <input
                   type="email"
                   name="email"
@@ -128,17 +114,10 @@ const RegisterForm = () => {
                   value={formData.email}
                   onChange={handleInputChange}
                   required
-                  className="bg-gray-500 border-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                />
+                  className=" sm:text-sm rounded-lg w-full p-2.5 "                />
               </div>
 
               <div>
-                <label
-                  htmlFor="password"
-                  class="block mb-2 text-sm font-medium "
-                >
-                  Password
-                </label>
                 <input
                   type="password"
                   name="password"
@@ -147,17 +126,10 @@ const RegisterForm = () => {
                   value={formData.password}
                   onChange={handleInputChange}
                   required
-                  className="bg-gray-500  border border-gray-300 e sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                />
+                  className=" sm:text-sm rounded-lg w-full p-2.5 "                />
               </div>
 
               <div>
-                <label
-                  htmlFor="passwordConfirmation"
-                  className="block mb-2 text-sm font-medium "
-                >
-                  Password Confirmation
-                </label>
                 <input
                   type="password"
                   name="passwordConfirmation"
@@ -166,16 +138,15 @@ const RegisterForm = () => {
                   value={formData.passwordConfirmation}
                   onChange={handleInputChange}
                   required
-                  className="bg-gray-500 border border-gray-300  sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                />
+                  className=" sm:text-sm rounded-lg w-full p-2.5 "                />
               </div>
             </div>
 
-            <div className="mt-6 w-full">
+            <div className="pt-8">
               {!loading && (
                 <button
                   onClick={handleSubmit}
-                  className="w-full text-white bg-black hover:bg-primary-700 dark:hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:focus:ring-primary-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                  className="btn-secondary w-full"
                 >
                   Submit
                 </button>
@@ -184,7 +155,7 @@ const RegisterForm = () => {
               {loading && (
                 <button
                   disabled
-                  className="w-full text-white bg-primary-600 dark:bg-primary-600 py-2 px-4 rounded"
+                  className="btn-secondary hover:bg-tertiary w-full"
                 >
                   <Loading />
                 </button>

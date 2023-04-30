@@ -55,7 +55,7 @@ const LoginForm = () => {
     <div>
       {error && (
         <div class="flex items-center justify-center bg-tertiary text-white px- py-3 rounded">
-          <strong class="font-bold space-x-2">{error}</strong>
+          <strong class="f ont-bold space-x-2">{error}</strong>
         </div>
       )}
       <div className=" bg-primary text-secondary flex-col items-center flex border-2 space-y-8 ">
