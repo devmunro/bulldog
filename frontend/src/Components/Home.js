@@ -20,15 +20,12 @@ export default function Home() {
     <div>
       <div>
         {/* Header */}
-        <header className="bg-secondary text-tertiary py-4 px-6 md:px-8 lg:px-16">
+        <header className="bg-white text-tertiary py-4 px-6 md:px-8 lg:px-16">
           <div className="flex items-center justify-between">
             <Link to="/" className="font-bold text-lg sm:text-xl">
               Active AI
             </Link>
-            <button
-              onClick={openModal}
-              className="btn-primary"
-            >
+            <button onClick={openModal} className="btn-primary">
               Log In
             </button>
           </div>
@@ -53,10 +50,7 @@ export default function Home() {
                 <p className="text-gray-300 text-xl mb-6">
                   Join Active AI today and take control of your fitness journey.
                 </p>
-                <button
-                  onClick={showRegistration}
-                  className="btn-secondary"
-                >
+                <button onClick={showRegistration} className="btn-secondary">
                   Sign Up
                 </button>
               </div>
@@ -149,28 +143,28 @@ export default function Home() {
 
       {/* LOGIN The modal */}
       {showModal && (
-        <div className="fixed w-full h-full top-0 left-0 z-50 flex items-center justify-center">
+        <div className="fixed w-full h-full top-0 left-0 z-50 flex items-center justify-center ">
           <div
-            className="absolute inset-0 bg-black opacity-90"
+            className="absolute inset-0  bg-tertiary opacity-80"
             onClick={openModal}
           />
-          <div className="md:w-1/2 w-full z-10 px-8">
+          <div className="md:w-1/2 w-full z-10 p-4">
             {/* Your LoginForm component here */}
-            <LoginForm />
+            <LoginForm openModal={openModal} />
           </div>
         </div>
       )}
 
-{/* REGistration The modal */}
+      {/* REGistration The modal */}
       {showRegistrationBox && (
         <div className="fixed w-full h-full top-0 left-0 z-50 flex items-center justify-center">
           <div
-            className="absolute inset-0 bg-black opacity-90"
+            className="absolute inset-0 bg-tertiary opacity-80"
             onClick={showRegistration}
           />
-          <div className="md:w-1/2 w-full z-10 px-8">
+          <div className="md:w-1/2 w-full z-10 sm:p-8">
             {/* Your Reguster component here */}
-            <RegisterForm />
+            <RegisterForm showRegistration={showRegistration} />
           </div>
         </div>
       )}

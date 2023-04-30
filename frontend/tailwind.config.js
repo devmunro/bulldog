@@ -6,6 +6,8 @@ module.exports = {
       primary: '#4F46E5',
       secondary: '#BFDBFE',
       tertiary: '#111827',
+      black: '#000',
+      white: '#fff',
     },
     extend: {
       textColor: (theme) => ({
