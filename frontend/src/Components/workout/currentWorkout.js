@@ -56,68 +56,39 @@ export default function CurrentWorkout() {
     }));
   };
 
-
   return (
-    <div className="w-full text-black bg-gradient-to-bl from-blue-700 via-blue-800 to-gray-900">
-      {/* SHOW OR HIDE EXERCISES */}
-      <div className="flex justify-between h-1/2 items-center gap-4 text-gray-400">
-        <div className="mt-8 mx-8 space-y-4">
-          <h2 className="font-bold">Current Workout</h2>
-          <h2 className=" text-3xl font-semibold">
+    <div className="w-full bg-primary rounded-xl shadow-xl p-4">
+      <div className="text-white bg-tertiary m-4 rounded-xl h-36">
+        <div class="flex justify-between items-end h-full">
+          <h2 className="  text-2xl font-semibold items-end p-4">
             {currentWorkout.name.toUpperCase()}
           </h2>
-          <div className="flex">
-            <button
-              className="items-baseline btn-secondary"
-              onClick={handleShowExercises}
-            >
-              {showExerciseForWorkout && (
-                <div className="flex">
-                  <span>HIDE</span>
-                  <ChevronDoubleUpIcon className="h-6 w-6 text-white-500 mx-2" />
-                </div>
-              )}
-              {!showExerciseForWorkout && (
-                <div className="flex">
-                  <span>SHOW</span>
-                  <ChevronDoubleDownIcon className="h-6 w-6 text-white-500 ml-2" />
-                </div>
-              )}
-            </button>
-            {/* EDIT BUTTON */}
-            {showExerciseForWorkout && swapButton && (
-              <button
-                className="btn-primary mx-8 py-2 px-4 rounded-md bg-blue-500 hover:bg-blue-600  text-white"
-                onClick={handleEditExercise}
-              >
-                Edit
-              </button>
-            )}
-            {/* Save BUTTON */}
-            {showExerciseForWorkout && !swapButton && (
-              <button
-                className="btn-primary mx-8 py-2 px-4 rounded-md bg-blue-500 hover:bg-blue-600  text-white"
-                onClick={handleSaveExercise}
-              >
-                Save
-              </button>
-            )}
+          <div className="p-4">
+            <button className="btn-secondary-longer">Start Workout</button>
           </div>
         </div>
-        <div className="opacity-25">
-          <FirebaseStorage imageBase="manworkingout.png" />
-        </div>
       </div>
-      {showExerciseForWorkout && (
-        <ExerciseList
-          exerciseList={currentWorkout.exercises}
-          loading={loading}
-          buttonText="Edit"
-          disabled={disabled}
-          exerciseInputs={exerciseInputs}
-          handleChange={handleChange}
-        />
-      )}
+
+      {/* BUTTONS */}
+      <div className="flex justify-end">
+        {/* EDIT BUTTON */}
+        <button className="btn-tertiary" onClick={handleEditExercise}>
+          Edit
+        </button>
+
+        {/* Save BUTTON */}
+        <button className="btn-tertiary" onClick={handleSaveExercise}>
+          Save
+        </button>
+      </div>
+      <ExerciseList
+        exerciseList={currentWorkout.exercises}
+        loading={loading}
+        buttonText="Edit"
+        disabled={disabled}
+        exerciseInputs={exerciseInputs}
+        handleChange={handleChange}
+      />
     </div>
   );
 }

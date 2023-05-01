@@ -28,6 +28,45 @@
     @apply hover:bg-secondary hover:text-tertiary;
     
   }
+  .btn-primary-longer {
+    @apply  py-2 px-4 text-secondary;
+    gap: 10px;
+    width: 150px;
+    height: 39px; 
+    background-color: theme('colors.primary');
+    border-radius: 30px;
+    text-align: center;
+    @apply hover:bg-tertiary;
+
+    
+    
+  }
+
+  .btn-secondary-longer {
+    @apply  py-2 px-4 text-tertiary;
+    gap: 10px;
+    width: 150px;
+    height: 39px; 
+    background-color: theme('colors.secondary');
+    border-radius: 30px;
+    text-align: center;
+    @apply hover:bg-white;
+
+    
+    
+  }
+
+  .btn-tertiary {
+    @apply  py-2 px-2 text-tertiary;
+    gap: 5px;
+    width: 100px;
+    height: 39px; 
+    border-radius: 30px;
+    text-align: center;
+    @apply hover:bg-secondary hover:text-tertiary;
+    
+  }
+  
 }
 
 .App {
