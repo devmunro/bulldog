@@ -65,7 +65,7 @@ export default function ExerciseList({
   return (
     <>
       {!loading && (
-        <div className=" bg-white p-4 m-4">
+        <div className=" bg-white p-4 m-4 ">
          
           {exerciseList &&
             exerciseList.length > 0 &&
@@ -73,7 +73,7 @@ export default function ExerciseList({
               return (
                 <div
                   key={exercise._id}
-                  className=" w-full bg-secondary text-tertiary md:my-4 my-2 md:py-4 flex items-center justify-center text-center rounded-3xl shadow-xl"
+                  className=" w-full  bg-secondary text-tertiary md:my-4 my-2 md:py-4 flex items-center justify-center text-center rounded-3xl shadow-xl"
                 >
                   {/* EXERCISE NAME */}
                   <div className=" text-md  md:text-lg flex-col font-semibold text-left w-2/3">

@@ -49,7 +49,7 @@ export default function Exercises() {
     console.log(searchExercises);
   };
   return (
-    <div className="flex justify-center flex-col ">
+    <div className="flex justify-center flex-col h-full">
       <div className="bg-white w-full md:flex gap-2 p-4 items-center rounded-xl">
         {/* SEARCH BAR */}
         <div className="w-1/3 flex items-center justify-center">
