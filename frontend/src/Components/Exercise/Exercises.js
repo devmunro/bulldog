@@ -53,9 +53,9 @@ export default function Exercises() {
       <div className="w-full">
             <h2 className=" pb-4 text-sm md:text-lg font-bold ">Exercises</h2>
           </div>
-      <div className="bg-white w-full md:flex gap-2 p-4 items-center rounded-xl">
+      <div className="bg-white w-full lg:flex gap-2 p-4 items-center rounded-xl">
         {/* SEARCH BAR */}
-        <div className="w-1/3 flex items-center justify-center">
+        <div className="lg:w-1/3 flex items-center justify-center">
           <input
             className="px-2 w-full md:h-12 h-8 rounded-2xl md:text-sm text-xs bg-secondary text-tertiary "
             placeholder="Search for an exercise"
