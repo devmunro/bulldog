@@ -65,20 +65,17 @@ export default function ExerciseList({
   return (
     <>
       {!loading && (
-        <div className="md:mx-2">
-          <p className=" text-gray-400 bg-red-900 uppercase text-sm text-center">
-            Current Workout:<strong>{currentWorkout?.name}</strong>
-          </p>
+        <div className=" bg-white p-4 my-4 rounded-xl">
           {exerciseList &&
             exerciseList.length > 0 &&
             exerciseList.map((exercise) => {
               return (
                 <div
                   key={exercise._id}
-                  className=" bg-black text-white md:my-4 my-2 md:py-4 flex items-center justify-center text-center "
+                  className=" w-full bg-secondary text-tertiary  my-2 p-4 flex justify-center items-center text-center rounded-3xl shadow-xl"
                 >
                   {/* EXERCISE NAME */}
-                  <div className=" text-md  md:text-lg flex-col font-semibold text-left w-2/3">
+                  <div className=" text-md flex-col font-semibold text-left w-2/3">
                     <h3>{exercise.name}</h3>
                     {currentPage === "/dashboard/exerciselist" && (
                       <div className="uppercase flex text-gray-500 space-x-4 text-sm md:text-md">
@@ -89,18 +86,18 @@ export default function ExerciseList({
 
                     {/* SET REPS AND WEIGHTS SECTION */}
                     {currentPage === "/dashboard/workout" && (
-                      <div className="flex space-x-4 text-gray-400 text-center text-sm">
-                        <div className="md:p-4 ">
+                      <div className="flex  [&>*]:flex-col [&>*]:flex space-x-4">
+                        <div className=" md:p-4 ">
                           Sets
                           <input
                             placeholder={exercise.sets || 3}
-                            className={` ${disabled ? "input" : "input-edit"}`}
                             value={
                               exerciseInputs[exercise._id]?.sets ??
                               exercise.sets ??
                               3
                             }
                             name="sets"
+                            className="w-8 text-center"
                             onChange={(e) => handleChange(exercise._id, e)}
                             disabled={disabled}
                           ></input>
@@ -110,13 +107,13 @@ export default function ExerciseList({
                           Rep
                           <input
                             placeholder="8"
-                            className={` ${disabled ? "input" : "input-edit"}`}
                             value={
                               exerciseInputs[exercise._id]?.reps ??
                               exercise.reps ??
                               12
                             }
                             name="reps"
+                            className="w-8 text-center"
                             onChange={(e) => handleChange(exercise._id, e)}
                             disabled={disabled}
                           ></input>
@@ -126,16 +123,29 @@ export default function ExerciseList({
                           Weight
                           <input
                             placeholder="10"
-                            className={` ${disabled ? "input" : "input-edit"}`}
                             value={
                               exerciseInputs[exercise._id]?.weight ??
                               exercise.weight ??
                               10
                             }
                             name="weight"
+                            className="w-8 text-center"
                             onChange={(e) => handleChange(exercise._id, e)}
                             disabled={disabled}
                           ></input>
+                        </div>
+
+                        <div className="md:p-4 my-2 self-end mx-4 ">
+                          {!disabled && (
+                            <button
+                              className=" py-2 px-2 rounded-md bg-red-900 hover:bg-red-400  text-white"
+                              onClick={() =>
+                                deleteExerciseFromWorkout(exercise._id)
+                              }
+                            >
+                              <TrashIcon className="w-4 h-4 md:w-8 md:h-8" />
+                            </button>
+                          )}
                         </div>
                       </div>
                     )}
@@ -145,7 +155,7 @@ export default function ExerciseList({
                   {currentPage === "/dashboard/exerciselist" && (
                     <div className="md:p-4 my-2">
                       <button
-                        className=" py-2 px-4 rounded-md bg-blue-500 hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 text-white"
+                        className=" btn-primary"
                         onClick={() =>
                           handleAddToWorkout(
                             exercise._id,
@@ -157,21 +167,6 @@ export default function ExerciseList({
                       >
                         Add
                       </button>
-                    </div>
-                  )}
-
-                  {currentPage === "/dashboard/workout" && (
-                    <div className="md:p-4 my-2 self-end mx-4 ">
-                      {!disabled && (
-                        <button
-                          className=" py-2 px-2 rounded-md bg-red-900 hover:bg-red-400  text-white"
-                          onClick={() =>
-                            deleteExerciseFromWorkout(exercise._id)
-                          }
-                        >
-                          <TrashIcon className="w-4 h-4 md:w-8 md:h-8" />
-                        </button>
-                      )}
                     </div>
                   )}
                 </div>

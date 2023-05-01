@@ -49,42 +49,39 @@ export default function Exercises() {
     console.log(searchExercises);
   };
   return (
-    
-    <div className="flex justify-center flex-col ">
-      <div className=" md:p-4 bg-gradient-to-bl from-blue-800 to-gray-900">
-        <div className="w-full md:flex  px-4 items-center">
-          <div>
-            <ExerciseCatergories
-              setExerciseList={setExerciseList}
-              setLoading={setLoading}
-            />
+    <div className="flex justify-center flex-col h-full">
+      <div className="w-full">
+            <h2 className=" pb-4 text-sm md:text-lg font-bold ">Exercises</h2>
           </div>
-
-          {/* SEARCH BAR */}
-          <div className="md:w-1/2  flex items-center">
-            <input
-              className="px-2 w-full md:w-2/3 md:h-12 h-8 rounded-2xl md:text-sm text-xs bg-[#19192C] text-[#7B7B8F] "
-              placeholder="Search for an exercise"
-              onChange={handleSearchChange}
-              value={searchTerm}
-              onKeyDown={(event) => event.key === "Enter" && handleSearch()}
-            />
-            <button
-              onClick={handleSearch}
-              className=" flex justify-center items-center btn-secondary "
-            >
-              Search
-              <MagnifyingGlassCircleIcon className="h-8 fill-inherit" />
-            </button>
-          </div>
+      <div className="bg-white w-full lg:flex gap-2 p-4 items-center rounded-xl">
+        {/* SEARCH BAR */}
+        <div className="lg:w-1/3 flex items-center justify-center">
+          <input
+            className="px-2 w-full md:h-12 h-8 rounded-2xl md:text-sm text-xs bg-secondary text-tertiary "
+            placeholder="Search for an exercise"
+            onChange={handleSearchChange}
+            value={searchTerm}
+            onKeyDown={(event) => event.key === "Enter" && handleSearch()}
+          />
+          <button onClick={handleSearch} className="">
+            <span className="sr-only">Search</span>
+            <MagnifyingGlassCircleIcon className="h-8 bg-primary text-white flex justify-center rounded-full hover:bg-black m-4" />
+          </button>
         </div>
-        {/* // LIST */}
-        <ExerciseList
-          loading={loading}
-          exerciseList={exerciseList}
-          buttonText="Add"
+
+        {/* Catergories  */}
+
+        <ExerciseCatergories
+          setExerciseList={setExerciseList}
+          setLoading={setLoading}
         />
       </div>
+      {/* // LIST */}
+      <ExerciseList
+        loading={loading}
+        exerciseList={exerciseList}
+        buttonText="Add"
+      />
     </div>
   );
 }

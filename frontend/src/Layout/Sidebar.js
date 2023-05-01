@@ -21,7 +21,7 @@ export default function Sidebar({handleLogout}) {
 
   return (
     <div className="flex-col">
-      <ul className="  sm:block hidden  mt-16 space-y-16 text-sm text-center text-secondary [&>*]:p-4 [&>*]:m-2 [&>*]:rounded-2xl [&>*]:flex  ">
+      <ul className="  lg:block hidden  mt-16 space-y-16 text-sm text-center text-secondary [&>*]:p-4 [&>*]:m-2 [&>*]:rounded-2xl [&>*]:flex  ">
         <li className="hover:bg-secondary hover:text-tertiary">
           <Link to="/dashboard" className="flex">
             <ComputerDesktopIcon className="h-6 w-6 mx-2 " />
@@ -63,7 +63,7 @@ export default function Sidebar({handleLogout}) {
         </li> */}
       </ul>
 
-      <ul className=" block sm:hidden mt-16 space-y-16 text-sm text-center text-secondary [&>*]:p-4 [&>*]:my-2 [&>*]:rounded-2xl [&>*]:flex ">
+      <ul className=" block lg:hidden mt-16 space-y-16 text-sm text-center text-secondary [&>*]:p-4 [&>*]:my-2 [&>*]:rounded-2xl [&>*]:flex ">
         <li className="hover:bg-secondary hover:text-tertiary">
           <Link to="/dashboard">
             <ComputerDesktopIcon className="h-5 w-5  " />

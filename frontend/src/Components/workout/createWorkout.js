@@ -37,10 +37,10 @@ function CreateWorkout({user, findUserWorkouts }) {
 
 
   return (
-    <div>
+    <div className="mt-4 mb-8">
       <button
         onClick={handleCreateWorkoutClick}
-        className="bg-white px-1 py-2 my-2 rounded-md hover:bg-slate-300 "
+        className="btn-primary-longer"
       >
         Create Workout
       </button>
