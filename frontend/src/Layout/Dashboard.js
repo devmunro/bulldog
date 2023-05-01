@@ -4,7 +4,7 @@ import Navbar from "./Navbar"; // import the Navbar component
 import { Routes, Route, useNavigate } from "react-router-dom"; // import necessary components from react-router-dom
 import Exercises from "../Components/Exercise/Exercises"; // import the Exercises component
 import Overview from "../Components/Overview"; // import the Overview component
-import Workout from "../Components/workout/WorkoutManager";// import the Workout component
+import Workout from "../Components/workout/WorkoutManager"; // import the Workout component
 import WorkoutPage from "../Components/workout/workoutPage"; // import the WorkoutPage component
 import { useDispatch, useSelector } from "react-redux"; // import useDispatch and useSelector from react-redux
 import { getUserDetails, logout } from "../features/userSlice"; // import getUserDetails and logout from ../features/userSlice
@@ -16,7 +16,7 @@ export default function Dashboard() {
   const dispatch = useDispatch(); // use dispatch to dispatch actions to the store
   const navigate = useNavigate(); // useNavigate is a hook that returns a navigate function to navigate to a different route
 
-  console.log(user)
+  console.log(user);
   //check if authorised
   useEffect(() => {
     if (token === null) {
@@ -34,26 +34,25 @@ export default function Dashboard() {
   const handleLogout = (e) => {
     e.preventDefault(); // prevent the default behaviour of the form
     dispatch(logout()); // dispatch the logout action to log the user out
-    dispatch(resetWorkout())
+    dispatch(resetWorkout());
   };
 
   return (
-    <div className="flex min-h-screen">
+    <div className="bg-primary ">
       {!user ? (
-        <Loading />
+        <Loading hScreen={"h-screen"}/>
       ) : (
         <>
-          <div className="fixed left-0 top-0 w-10 bg-gray-800">
-            <Sidebar />
-          </div>
-          <div className="flex-grow flex flex-col ml-10 md:ml-14 bg-[#1F2937]">
-            <Navbar handleLogout={handleLogout} />
-            <Routes>
-              <Route path="/" element={<Overview user={user} />} />
-              <Route path="/exerciselist" element={<Exercises />} />
-              <Route path="/workout" element={<Workout user={user} />} />
-              <Route path="/record" element={<WorkoutPage user={user} />} />
-            </Routes>
+          <div className=" flex w-full h-screen">
+            <Sidebar handleLogout={handleLogout} />
+            <div className="bg-secondary my-4 md:m-4 w-full rounded-2xl p-4">
+              <Routes>
+                <Route path="/" element={<Overview user={user} />} />
+                <Route path="/exerciselist" element={<Exercises />} />
+                <Route path="/workout" element={<Workout user={user} />} />
+                <Route path="/record" element={<WorkoutPage user={user} />} />
+              </Routes>
+            </div>
           </div>
         </>
       )}

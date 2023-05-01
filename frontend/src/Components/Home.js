@@ -20,12 +20,12 @@ export default function Home() {
     <div>
       <div>
         {/* Header */}
-        <header className="bg-white text-tertiary py-4 px-6 md:px-8 lg:px-16">
+        <header className="bg-primary text-white py-4 px-6 md:px-8 lg:px-16">
           <div className="flex items-center justify-between">
             <Link to="/" className="font-bold text-lg sm:text-xl">
               Active AI
             </Link>
-            <button onClick={openModal} className="btn-primary">
+            <button onClick={openModal} className="btn-secondary">
               Log In
             </button>
           </div>
@@ -33,26 +33,28 @@ export default function Home() {
       </div>
 
       {/* HERO SECTION */}
-      <section className="bg-primary text-secondary">
+      <section className="bg-primary text-white">
         <div className="w-full h-full bg-black opacity-70 z-0"></div>
         <div className=" w-1/2 h-full opacity-70 z-10"></div>
         <div className="relative z-20 py-4 md:py-8 text-white">
           <div className="container mx-auto px-4 md:px-4 lg:px-8">
             <div className="flex justify-center gap-4 px-1 md:px-2 lg:px-4 flex-col md:flex-row items-center">
-              <div className="w-full md:w-1/2 -center">
+              <div className="w-full md:w-1/2">
                 <FirebaseStorage imageBase="homepage.jpg" />
               </div>
 
               <div className="w-full md:w-1/2 mb-12 md:mb-0">
-                <h1 className="font-bold text-4xl sm:text-5xl mb-4 leading-tight">
+                <h1 className="font-bold text-4xl sm:text-5xl mb-4 text-center">
                   Get fit and stay healthy with Active AI
                 </h1>
-                <p className="text-gray-300 text-xl mb-6">
+                <p className="text-gray-300 text-xl mb-6 text-center">
                   Join Active AI today and take control of your fitness journey.
                 </p>
+                <div className=" flex justify-center">
                 <button onClick={showRegistration} className="btn-secondary">
                   Sign Up
                 </button>
+                </div>
               </div>
             </div>
           </div>
@@ -72,7 +74,7 @@ export default function Home() {
             </p>
           </div>
           <div className="  grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className=" text-secondary bg-primary p-8 rounded-lg shadow-lg flex flex-col items-center">
+            <div className=" text-white bg-primary p-8 rounded-lg shadow-lg flex flex-col items-center">
               <h3 className="font-bold text-2xl mb-4 text-center">
                 Fitness Tracking
               </h3>
@@ -81,7 +83,7 @@ export default function Home() {
                 with our easy to use fitness tracking system.
               </p>
             </div>
-            <div className="text-secondary bg-primary p-8 rounded-lg shadow-lg flex flex-col items-center">
+            <div className="text-white bg-primary p-8 rounded-lg shadow-lg flex flex-col items-center">
               <h3 className="font-bold text-2xl mb-4 text-center">
                 Custom Workouts
               </h3>
@@ -97,7 +99,7 @@ export default function Home() {
       <section className="text-secondary bg-primary py-20 md:py-24">
         <div className="container mx-auto px-4 md:px-8 lg:px-16">
           <div className="mb-12 text-center">
-            <h2 className="font-bold text-3xl sm:text-4xl mb-4">
+            <h2 className="font-bold text-3xl text-white sm:text-4xl mb-4">
               More Exciting Features Coming Soon!
             </h2>
             <p className="text-gray-300 text-xl">
