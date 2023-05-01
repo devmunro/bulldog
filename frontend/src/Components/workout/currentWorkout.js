@@ -57,7 +57,7 @@ export default function CurrentWorkout() {
   };
 
   return (
-    <div className="w-full bg-primary rounded-xl shadow-xl p-4">
+    <div className="w-full bg-primary rounded-xl shadow-xl p-4 m-4">
       <div className="text-white bg-tertiary m-4 rounded-xl h-36">
         <div class="flex justify-between items-end h-full">
           <h2 className="  text-2xl font-semibold items-end p-4">

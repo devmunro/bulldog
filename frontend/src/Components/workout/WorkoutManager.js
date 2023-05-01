@@ -53,16 +53,22 @@ export default function Workout({ user }) {
         return (
           <ul
             key={workout._id}
-            className="flex w-full p-8 justify-between bg-gradient-to-l from-gray-700 via-gray-900 to-black"
+            className="text-white bg-tertiary m-4 rounded-xl h-36"
           >
-            <li className="w-1/2">{workout.name.toUpperCase()}</li>
-            <button
-              className="btn-primary"
-              onClick={handleSetDefault}
-              value={workout._id}
-            >
-              Set as Default
-            </button>
+            <li className="flex justify-between items-end h-full">
+              <h2 className="text-2xl font-semibold items-end p-4">
+                {workout.name.toUpperCase()}
+              </h2>
+              <div className="p-4">
+                <button
+                  className="btn-secondary-longer"
+                  onClick={handleSetDefault}
+                  value={workout._id}
+                >
+                  Set as Default
+                </button>
+              </div>
+            </li>
           </ul>
         );
       }
@@ -73,26 +79,26 @@ export default function Workout({ user }) {
 
   return (
     <>
-      <CreateWorkout
-        user={user}
-        findUserWorkouts={() => dispatch(findWorkout(user._id))}
-      />
-      <div className="flex w-full">
-        {!loading && (
-          <div className="w-1/2">
-            {currentWorkout ? (
-              <CurrentWorkout currentWorkout={currentWorkout} />
-            ) : (
-              <div>No current workout</div>
-            )}
+      {!loading && (
+        <div className="w-full">
+          <CreateWorkout
+            user={user}
+            findUserWorkouts={() => dispatch(findWorkout(user._id))}
+          />
+          <div className="flex w-full gap-4">
+            <div className="w-1/2">
+              {currentWorkout ? (
+                <CurrentWorkout currentWorkout={currentWorkout} />
+              ) : (
+                <div>No current workout</div>
+              )}
+            </div>
+
+            <div className="w-1/2">{userWorkouts.length > 0 && renderOtherWorkouts()}</div>
           </div>
-        )}
-        <div className="text-gray-500 my-8 ">
-          <h2 className="font-bold">Other Workouts</h2>
-          {userWorkouts.length > 0 && renderOtherWorkouts()}
         </div>
-        {loading && <Loading />}
-      </div>
+      )}
+      {loading && <Loading hScreen={"h-screen"} />}
     </>
   );
 }
