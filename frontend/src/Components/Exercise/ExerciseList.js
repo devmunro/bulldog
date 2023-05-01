@@ -65,7 +65,7 @@ export default function ExerciseList({
   return (
     <>
       {!loading && (
-        <div className=" bg-white p-4 m-4 ">
+        <div className=" bg-white p-4 my-4 rounded-xl">
           {exerciseList &&
             exerciseList.length > 0 &&
             exerciseList.map((exercise) => {

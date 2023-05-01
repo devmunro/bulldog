@@ -37,7 +37,7 @@ function CreateWorkout({user, findUserWorkouts }) {
 
 
   return (
-    <div>
+    <div className="mt-4 mb-8">
       <button
         onClick={handleCreateWorkoutClick}
         className="btn-primary-longer"

@@ -53,7 +53,7 @@ export default function Workout({ user }) {
         return (
           <ul
             key={workout._id}
-            className="text-white bg-tertiary m-4 rounded-xl h-36"
+            className="text-white bg-tertiary my-4 rounded-xl h-36"
           >
             <li className="flex justify-between items-end h-full">
               <h2 className="text-2xl font-semibold items-end p-4">
@@ -79,7 +79,7 @@ export default function Workout({ user }) {
 
   return (
     <>
-      {!loading && (
+      
         <div className="w-full">
           <div className="w-full">
             <h2 className=" pb-4 text-sm md:text-lg font-bold ">Planner</h2>
@@ -88,7 +88,8 @@ export default function Workout({ user }) {
             user={user}
             findUserWorkouts={() => dispatch(findWorkout(user._id))}
           />
-          <div className="flex w-full gap-4">
+          {!loading && (
+          <div className="flex w-full gap-8">
             <div className="w-1/2">
               {currentWorkout ? (
                 <CurrentWorkout currentWorkout={currentWorkout} />
@@ -101,8 +102,9 @@ export default function Workout({ user }) {
               {userWorkouts.length > 0 && renderOtherWorkouts()}
             </div>
           </div>
+          )}
         </div>
-      )}
+      
       {loading && <Loading hScreen={"h-screen"} />}
     </>
   );
