@@ -65,17 +65,15 @@ export default function ExerciseList({
   return (
     <>
       {!loading && (
-        <div className="md:mx-2">
-          <p className=" text-gray-400 bg-red-900 uppercase text-sm text-center">
-            Current Workout:<strong>{currentWorkout?.name}</strong>
-          </p>
+        <div className=" bg-white p-4 m-4">
+         
           {exerciseList &&
             exerciseList.length > 0 &&
             exerciseList.map((exercise) => {
               return (
                 <div
                   key={exercise._id}
-                  className=" bg-black text-white md:my-4 my-2 md:py-4 flex items-center justify-center text-center "
+                  className=" w-full bg-secondary text-tertiary md:my-4 my-2 md:py-4 flex items-center justify-center text-center rounded-3xl shadow-xl"
                 >
                   {/* EXERCISE NAME */}
                   <div className=" text-md  md:text-lg flex-col font-semibold text-left w-2/3">
@@ -145,7 +143,7 @@ export default function ExerciseList({
                   {currentPage === "/dashboard/exerciselist" && (
                     <div className="md:p-4 my-2">
                       <button
-                        className=" py-2 px-4 rounded-md bg-blue-500 hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 text-white"
+                        className=" btn-primary"
                         onClick={() =>
                           handleAddToWorkout(
                             exercise._id,
