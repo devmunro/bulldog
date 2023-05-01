@@ -50,6 +50,9 @@ export default function Exercises() {
   };
   return (
     <div className="flex justify-center flex-col h-full">
+      <div className="w-full">
+            <h2 className=" pb-4 text-sm md:text-lg font-bold ">Exercises</h2>
+          </div>
       <div className="bg-white w-full md:flex gap-2 p-4 items-center rounded-xl">
         {/* SEARCH BAR */}
         <div className="w-1/3 flex items-center justify-center">

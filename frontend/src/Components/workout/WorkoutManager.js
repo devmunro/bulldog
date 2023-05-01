@@ -81,6 +81,9 @@ export default function Workout({ user }) {
     <>
       {!loading && (
         <div className="w-full">
+          <div className="w-full">
+            <h2 className=" pb-4 text-sm md:text-lg font-bold ">Planner</h2>
+          </div>
           <CreateWorkout
             user={user}
             findUserWorkouts={() => dispatch(findWorkout(user._id))}
@@ -94,7 +97,9 @@ export default function Workout({ user }) {
               )}
             </div>
 
-            <div className="w-1/2">{userWorkouts.length > 0 && renderOtherWorkouts()}</div>
+            <div className="w-1/2">
+              {userWorkouts.length > 0 && renderOtherWorkouts()}
+            </div>
           </div>
         </div>
       )}
