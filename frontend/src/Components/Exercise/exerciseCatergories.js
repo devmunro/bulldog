@@ -41,11 +41,11 @@ export default function ExerciseCatergories({ setLoading, setExerciseList }) {
             className="p-1 text-center cursor-pointer"
           >
             {chosenCategory === item.name && (
-              <button className="btn-primary-longer ">
+              <button className="btn-primary text-[10px]">
                 <span className="uppercase">{item.name}</span>
               </button>
             )}
-            {chosenCategory !== item.name && ( <button className="btn-secondary-longer ">
+            {chosenCategory !== item.name && ( <button className="btn-secondary text-[10px] ">
                 <span className="uppercase">{item.name}</span>
               </button>)}
           </li>
