@@ -3,12 +3,13 @@ import { user } from "../models/userSchema.js";
 import { Exercise } from "../models/exerciseSchema.js";
 
 export const createWorkout = async (req, res) => {
-  const { userID, name } = req.body;
-
+  const { userID, name, goal } = req.body;
+console.log("type of goal here", goal)
   try {
     const createUserWorkout = await Workout.create({
       userID,
       name,
+      goal,
     });
 
     //adds workout id to user who created it
@@ -22,6 +23,7 @@ export const createWorkout = async (req, res) => {
     res.status(201).json({
       id: createUserWorkout._id,
       name: createUserWorkout.name,
+      goal: createUserWorkout.goal
     });
   } catch (error) {
     res.status(400).json({ error });

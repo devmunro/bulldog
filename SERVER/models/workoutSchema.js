@@ -13,6 +13,13 @@ const workoutSchema = new mongoose.Schema(
       required: true,
       trim: true, // extra option to display better in database
     },
+
+    goal: {
+      type: String,
+      required: true,
+    },
+
+
     exercises: [
       {
         exercise: {

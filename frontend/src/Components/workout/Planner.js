@@ -10,7 +10,7 @@ import CreateWorkout from "./createWorkout";
 import CurrentWorkout from "./currentWorkout";
 import { getUserDetails } from "../../features/userSlice";
 
-export default function Workout({ user }) {
+export default function Workout({ user, workoutCreateBox, setWorkoutCreateBox }) {
   const dispatch = useDispatch();
 
   // State for storing user workouts
@@ -19,7 +19,7 @@ export default function Workout({ user }) {
   //  Get loading and currentWorkout states from Redux
   const { loading, currentWorkout } = useSelector((state) => state.fitness);
 
-  const [workoutCreateBox, setWorkoutCreateBox] = useState(false);
+ 
 
   //### EFFECT for fetching user workouts and setting them to userWorkouts state
   useEffect(() => {
@@ -80,10 +80,8 @@ export default function Workout({ user }) {
   // Render the workout component
 
   return (
-    <div className="w-full max-w-full defaultFont">
-      {workoutCreateBox && (
-        <div className="w-full h-screen bg-black opacity-80 z-5 absolute"></div>
-      )}
+    <div className="w-full defaultFont relative">
+     
       <div className=" defaultFont">
         <div className="w-full">
           <h2 className=" pb-4 sub-heading ">Planner</h2>
@@ -100,7 +98,7 @@ export default function Workout({ user }) {
               {currentWorkout ? (
                 <CurrentWorkout currentWorkout={currentWorkout} />
               ) : (
-                <div>No current workout</div>
+                <div className="heading">No current workout</div>
               )}
             </div>
 
