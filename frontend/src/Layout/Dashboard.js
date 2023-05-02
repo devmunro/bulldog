@@ -4,7 +4,7 @@ import Navbar from "./Navbar"; // import the Navbar component
 import { Routes, Route, useNavigate } from "react-router-dom"; // import necessary components from react-router-dom
 import Exercises from "../Components/Exercise/Exercises"; // import the Exercises component
 import Overview from "../Components/Overview"; // import the Overview component
-import Workout from "../Components/workout/WorkoutManager"; // import the Workout component
+import Workout from "../Components/workout/Planner"; // import the Workout component
 import WorkoutPage from "../Components/workout/workoutPage"; // import the WorkoutPage component
 import { useDispatch, useSelector } from "react-redux"; // import useDispatch and useSelector from react-redux
 import { getUserDetails, logout } from "../features/userSlice"; // import getUserDetails and logout from ../features/userSlice

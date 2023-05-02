@@ -65,7 +65,7 @@ export default function ExerciseList({
   return (
     <>
       {!loading && (
-        <div className=" bg-white p-4 my-4 rounded-xl">
+        <div className=" bg-primary lg:p-4 p-2 lg:my-4 lg:rounded-xl defaultFont">
           {exerciseList &&
             exerciseList.length > 0 &&
             exerciseList.map((exercise) => {

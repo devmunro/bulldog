@@ -2,9 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Import Raleway & Roboto from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@600&display=swap');
+
+
 @layer components {
+
+ /* Custom utility classes for text */
+ /* Custom utility classes for text */
+ .heading {
+  @apply font-roboto font-semibold text-2xl md:text-3xl lg:text-5xl;
+}
+
+.sub-heading {
+  @apply font-raleway font-semibold text-base md:text-lg lg:text-2xl	;
+}
+
+.defaultFont {
+  @apply font-raleway text-xs md:text-base;
+}
+
+.link {
+  @apply font-raleway font-semibold text-xs md:text-base;
+}
+
   .btn-primary {
-    @apply  py-2 px-4 text-secondary;
+    @apply  py-2 px-4 text-secondary font-raleway font-semibold text-xs md:text-base;
     gap: 10px;
     width: 90px;
     height: 39px; 
@@ -18,7 +42,7 @@
   }
 
   .btn-secondary {
-    @apply  py-2 px-4 text-white;
+    @apply  py-2 px-4 text-white font-raleway font-semibold text-xs md:text-base;
     gap: 10px;
     width: 100px;
     height: 39px; 
@@ -29,12 +53,13 @@
     
   }
   .btn-primary-longer {
-    @apply  py-2 px-4 text-secondary;
+    @apply  py-2 px-4 text-secondary font-raleway font-semibold text-xs md:text-base;
     gap: 10px;
     width: 150px;
     height: 39px; 
     background-color: theme('colors.primary');
     border-radius: 30px;
+    border: 1px solid black;
     text-align: center;
     @apply hover:bg-tertiary;
 
@@ -43,12 +68,13 @@
   }
 
   .btn-secondary-longer {
-    @apply  py-2 px-4 text-tertiary;
+    @apply  py-2 px-4 text-tertiary font-raleway font-semibold text-xs md:text-base;
     gap: 10px;
     width: 150px;
     height: 39px; 
     background-color: theme('colors.secondary');
     border-radius: 30px;
+    border: 1px solid black;
     text-align: center;
     @apply hover:bg-white;
 
@@ -57,7 +83,7 @@
   }
 
   .btn-tertiary {
-    @apply  py-2 px-2 text-tertiary;
+    @apply  py-2 px-2 text-tertiary font-raleway font-semibold text-xs md:text-base;
     gap: 5px;
     width: 100px;
     height: 39px; 

@@ -10,6 +10,13 @@ module.exports = {
       white: '#fff',
     },
     extend: {
+
+      fontFamily: {
+        'raleway': ['Raleway', 'sans-serif'],
+        'roboto': ['Roboto', 'sans-serif'],
+      },
+      
+
       textColor: (theme) => ({
         'primary': theme('colors.primary'),
         'secondary': theme('colors.secondary'),

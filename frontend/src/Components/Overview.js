@@ -171,9 +171,9 @@ export default function Overview({ user }) {
     <>
       {!chartData && <Loading />}
       {chartData && (
-        <div className="w-full ">
+        <div className="w-full defaultFont">
           <div className="md:w-full">
-            <h2 className=" pb-4 text-sm md:text-lg font-bold ">Overview</h2>
+            <h2 className=" pb-4 sub-heading ">Overview</h2>
           </div>
           <div className="lg:flex w-full md:gap-8  md:p-4">
             <div className=" bg-primary text-white rounded-xl flex flex-col items-center lg:p-8 p-4 m-2 lg:space-y-16 space-y-4">
@@ -204,7 +204,7 @@ export default function Overview({ user }) {
               </div>
             </div>
 
-            <div className="md: md:grid  grid-cols-2 md:[&>*]:h-80 [&>*]:h-80 md:gap-2 [&>*]:my-2 ">
+            <div className="md:w-full md:grid  grid-cols-2 md:[&>*]:h-80 [&>*]:h-80 md:gap-2 [&>*]:my-2 ">
               <div className="w-full bg-white rounded-xl ">
                 {Object.keys(chartData).length > 0 ? (
                   <Bar

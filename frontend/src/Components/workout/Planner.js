@@ -19,6 +19,8 @@ export default function Workout({ user }) {
   //  Get loading and currentWorkout states from Redux
   const { loading, currentWorkout } = useSelector((state) => state.fitness);
 
+  const [workoutCreateBox, setWorkoutCreateBox] = useState(false);
+
   //### EFFECT for fetching user workouts and setting them to userWorkouts state
   useEffect(() => {
     if (user.workouts <= 0) return;
@@ -53,15 +55,15 @@ export default function Workout({ user }) {
         return (
           <ul
             key={workout._id}
-            className="text-white bg-tertiary my-4 rounded-xl h-36"
+            className="text-white bg-tertiary my-4 rounded-xl h-36 defaultFont"
           >
-            <li className="flex justify-between items-end h-full">
-              <h2 className="text-2xl font-semibold items-end p-4">
+            <li className="flex flex-col md:flex-row md:justify-between justify-end h-full space-y-4">
+              <h2 className="sub-heading items-end md:p-4 px-2">
                 {workout.name.toUpperCase()}
               </h2>
-              <div className="p-4">
+              <div className="md:p-2 px-2">
                 <button
-                  className="btn-secondary-longer"
+                  className="btn-tertiary text-white"
                   onClick={handleSetDefault}
                   value={workout._id}
                 >
@@ -78,19 +80,23 @@ export default function Workout({ user }) {
   // Render the workout component
 
   return (
-    <>
-      
+    <div className="w-full max-w-full defaultFont">
+      {workoutCreateBox && (
+        <div className="w-full h-screen bg-black opacity-80 z-5 absolute"></div>
+      )}
+      <div className=" defaultFont">
         <div className="w-full">
-          <div className="w-full">
-            <h2 className=" pb-4 text-sm md:text-lg font-bold ">Planner</h2>
-          </div>
-          <CreateWorkout
-            user={user}
-            findUserWorkouts={() => dispatch(findWorkout(user._id))}
-          />
-          {!loading && (
-          <div className="flex w-full gap-8">
-            <div className="w-1/2">
+          <h2 className=" pb-4 sub-heading ">Planner</h2>
+        </div>
+        <CreateWorkout
+          user={user}
+          findUserWorkouts={() => dispatch(findWorkout(user._id))}
+          setWorkoutCreateBox={setWorkoutCreateBox}
+          workoutCreateBox={workoutCreateBox}
+        />
+        {!loading && (
+          <div className="lg:flex w-full gap-8">
+            <div className="lg:w-1/2 ">
               {currentWorkout ? (
                 <CurrentWorkout currentWorkout={currentWorkout} />
               ) : (
@@ -98,14 +104,14 @@ export default function Workout({ user }) {
               )}
             </div>
 
-            <div className="w-1/2">
+            <div className="lg:w-1/2">
               {userWorkouts.length > 0 && renderOtherWorkouts()}
             </div>
           </div>
-          )}
-        </div>
-      
+        )}
+      </div>
+
       {loading && <Loading hScreen={"h-screen"} />}
-    </>
+    </div>
   );
 }
