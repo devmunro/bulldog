@@ -59,6 +59,7 @@
     height: 39px; 
     background-color: theme('colors.primary');
     border-radius: 30px;
+    border: 1px solid black;
     text-align: center;
     @apply hover:bg-tertiary;
 
@@ -73,6 +74,7 @@
     height: 39px; 
     background-color: theme('colors.secondary');
     border-radius: 30px;
+    border: 1px solid black;
     text-align: center;
     @apply hover:bg-white;
 

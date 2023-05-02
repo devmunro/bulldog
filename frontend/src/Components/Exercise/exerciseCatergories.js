@@ -40,9 +40,14 @@ export default function ExerciseCatergories({ setLoading, setExerciseList }) {
             onClick={() => handleCategory(item.name)}
             className="p-1 text-center cursor-pointer"
           >
-            <button className="btn-primary-longer ">
-              <span className="uppercase">{item.name}</span>
-            </button>
+            {chosenCategory === item.name && (
+              <button className="btn-primary-longer ">
+                <span className="uppercase">{item.name}</span>
+              </button>
+            )}
+            {chosenCategory !== item.name && ( <button className="btn-secondary-longer ">
+                <span className="uppercase">{item.name}</span>
+              </button>)}
           </li>
         );
       })}
