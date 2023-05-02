@@ -59,8 +59,8 @@ export default function CurrentWorkout() {
   return (
     <div className="w-full bg-primary rounded-xl shadow-xl lg:p-4 lg:my-4 defaultFont">
       <div className="text-white bg-tertiary lg:m-4 rounded-xl h-36">
-        <div class="flex flex-col md:flex-row md:justify-between justify-end h-full space-y-4">
-          <h2 className=" sub-heading items-end md:p-4 px-2">
+        <div class="flex flex-col md:flex-row md:justify-between justify-end md:items-end h-full space-y-4">
+          <h2 className=" sub-heading items-end md:p-4 px-6">
             {currentWorkout.name.toUpperCase()}
           </h2>
           <div className="md:p-4 px-2 pb-2">

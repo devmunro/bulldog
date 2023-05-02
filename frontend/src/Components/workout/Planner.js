@@ -57,13 +57,13 @@ export default function Workout({ user }) {
             key={workout._id}
             className="text-white bg-tertiary my-4 rounded-xl h-36 defaultFont"
           >
-            <li className="flex flex-col md:flex-row md:justify-between justify-end h-full space-y-4">
-              <h2 className="sub-heading items-end md:p-4 px-2">
+            <li className="flex flex-col md:flex-row md:justify-between justify-end md:items-end  h-full space-y-4">
+              <h2 className="sub-heading items-end md:p-4 px-6">
                 {workout.name.toUpperCase()}
               </h2>
-              <div className="md:p-2 px-2">
+              <div className="md:p-4 px-2 pb-2">
                 <button
-                  className="btn-tertiary text-white"
+                  className="btn-secondary-longer"
                   onClick={handleSetDefault}
                   value={workout._id}
                 >
