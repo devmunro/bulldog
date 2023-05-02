@@ -49,7 +49,7 @@ export default function Exercises() {
     console.log(searchExercises);
   };
   return (
-    <div className="flex justify-center flex-col h-full">
+    <div className="flex justify-center flex-col h-full defaultFont">
       <div className="w-full">
             <h2 className=" pb-4 text-sm md:text-lg font-bold ">Exercises</h2>
           </div>

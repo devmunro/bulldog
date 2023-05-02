@@ -32,7 +32,7 @@ export default function ExerciseCatergories({ setLoading, setExerciseList }) {
   };
 
   return (
-    <ul className="lg:w-2/3 flex flex-row flex-wrap items-center text-white text-sm md:text-md">
+    <ul className="lg:w-2/3 flex flex-row flex-wrap justify-center items-center text-white text-sm md:text-md">
       {categories.map((item) => {
         return (
           <li
@@ -40,8 +40,8 @@ export default function ExerciseCatergories({ setLoading, setExerciseList }) {
             onClick={() => handleCategory(item.name)}
             className="p-1 text-center cursor-pointer"
           >
-            <button className="btn-primary ">
-              <span className="uppercase text-xs">{item.name}</span>
+            <button className="btn-primary-longer ">
+              <span className="uppercase">{item.name}</span>
             </button>
           </li>
         );
