@@ -19,6 +19,8 @@ export default function Workout({ user }) {
   //  Get loading and currentWorkout states from Redux
   const { loading, currentWorkout } = useSelector((state) => state.fitness);
 
+  const [workoutCreateBox, setWorkoutCreateBox] = useState(false);
+
   //### EFFECT for fetching user workouts and setting them to userWorkouts state
   useEffect(() => {
     if (user.workouts <= 0) return;
@@ -27,6 +29,9 @@ export default function Workout({ user }) {
       setUserWorkouts(response.payload);
     });
   }, [dispatch, user]);
+
+  
+  
 
   //### EFFECT for fetching the current workout (default workout) and storing it in Redux state
   useEffect(() => {
@@ -78,8 +83,8 @@ export default function Workout({ user }) {
   // Render the workout component
 
   return (
-    <>
-      
+    <div className="relative">
+      {workoutCreateBox && (<div className="w-full h-screen bg-black opacity-80 z-5 absolute"></div>)}
         <div className="w-full defaultFont">
           <div className="w-full">
             <h2 className=" pb-4 sub-heading ">Planner</h2>
@@ -87,6 +92,8 @@ export default function Workout({ user }) {
           <CreateWorkout
             user={user}
             findUserWorkouts={() => dispatch(findWorkout(user._id))}
+            setWorkoutCreateBox={setWorkoutCreateBox}
+            workoutCreateBox={workoutCreateBox}
           />
           {!loading && (
           <div className="lg:flex w-full gap-8">
@@ -106,6 +113,6 @@ export default function Workout({ user }) {
         </div>
       
       {loading && <Loading hScreen={"h-screen"} />}
-    </>
+    </div>
   );
 }
