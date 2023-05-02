@@ -2,16 +2,19 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { createWorkout } from "../../features/exerciseSlice";
 import { getUserDetails } from "../../features/userSlice";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import { XMarkIcon } from "@heroicons/react/24/solid";
 
-
-function CreateWorkout({ user, findUserWorkouts, setWorkoutCreateBox, workoutCreateBox }) {
-  
+function CreateWorkout({
+  user,
+  findUserWorkouts,
+  setWorkoutCreateBox,
+  workoutCreateBox,
+}) {
   const [name, setName] = useState("");
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
-
 
   //### WORKOUT CREATION ###
   //adds section in order to create a workout
@@ -37,9 +40,8 @@ function CreateWorkout({ user, findUserWorkouts, setWorkoutCreateBox, workoutCre
     await dispatch(createWorkout(workoutForm));
     await dispatch(getUserDetails()); // Fetch the updated user details after setting the default workout
 
-    setWorkoutCreateBox(false)
-    navigate('/dashboard/exerciselist');
-
+    setWorkoutCreateBox(false);
+    navigate("/dashboard/exerciselist");
   };
 
   return (
@@ -48,8 +50,16 @@ function CreateWorkout({ user, findUserWorkouts, setWorkoutCreateBox, workoutCre
         Create Workout
       </button>
       {workoutCreateBox && (
-        <div className="fixed inset-0 flex items-center justify-center z-10">
-          <div className="bg-primary text-secondary p-6 rounded-md shadow-lg">
+        <div className="fixed inset-0 flex items-center justify-center z-10 ">
+          <div className="bg-primary text-secondary p-6 rounded-md shadow-lg relative">
+            <div className="absolute top-0 right-0 p-2">
+              <XMarkIcon
+                width="24"
+                height="24"
+                onClick={handleCreateWorkoutClick}
+                className="text-white cursor-pointer"
+              />
+            </div>
             <h2 className="sub-heading text-center m-4 text-white">
               Create a Workout
             </h2>
@@ -93,7 +103,9 @@ function CreateWorkout({ user, findUserWorkouts, setWorkoutCreateBox, workoutCre
                   Fat Loss
                 </label>
               </div>
-              <button onClick={handleSubmit} className="btn-secondary w-full">Add Some Exercises</button>
+              <button onClick={handleSubmit} className="btn-secondary w-full">
+                Add Some Exercises
+              </button>
             </form>
           </div>
         </div>
