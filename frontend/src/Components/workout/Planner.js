@@ -80,9 +80,9 @@ export default function Workout({ user }) {
   return (
     <>
       
-        <div className="w-full">
+        <div className="w-full defaultFont">
           <div className="w-full">
-            <h2 className=" pb-4 text-sm md:text-lg font-bold ">Planner</h2>
+            <h2 className=" pb-4 sub-heading ">Planner</h2>
           </div>
           <CreateWorkout
             user={user}

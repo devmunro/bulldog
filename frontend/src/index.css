@@ -2,7 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Import Raleway & Roboto from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@600&display=swap');
+
+
 @layer components {
+
+ /* Custom utility classes for text */
+ /* Custom utility classes for text */
+ .header {
+  @apply font-roboto font-semibold text-2xl md:text-3xl lg:text-5xl;
+}
+
+.sub-heading {
+  @apply font-raleway font-semibold text-base md:text-lg lg:text-xl	;
+}
+
+.defaultFont {
+  @apply font-raleway text-xs md:text-base;
+}
+
+.link {
+  @apply font-raleway font-semibold text-xs md:text-base;
+}
+
   .btn-primary {
     @apply  py-2 px-4 text-secondary;
     gap: 10px;
