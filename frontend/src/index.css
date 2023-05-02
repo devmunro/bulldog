@@ -42,8 +42,8 @@
   }
 
   .btn-secondary {
-    @apply  py-2 px-4 text-white font-raleway font-semibold text-xs md:text-base;
-    gap: 10px;
+    @apply  md:py-2 md:px-4 text-white font-raleway font-semibold text-xs md:text-base;
+    gap: 5px;
     width: 100px;
     height: 39px; 
     background-color: theme('colors.tertiary');

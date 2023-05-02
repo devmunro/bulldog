@@ -75,10 +75,10 @@ export default function ExerciseList({
                   className=" w-full bg-secondary text-tertiary  my-2 p-4 flex justify-center items-center text-center rounded-3xl shadow-xl"
                 >
                   {/* EXERCISE NAME */}
-                  <div className=" text-md flex-col font-semibold text-left w-2/3">
-                    <h3>{exercise.name}</h3>
+                  <div className="flex-col text-left w-2/3">
+                    <h3 className="link">{exercise.name}</h3>
                     {currentPage === "/dashboard/exerciselist" && (
-                      <div className="uppercase flex text-gray-500 space-x-4 text-sm md:text-md">
+                      <div className="uppercase flex space-x-4 ">
                         <p className="p-2 rounded-lg">{exercise.body_type}</p>{" "}
                         <p className="p-2 rounded-lg">{exercise.equipment}</p>
                       </div>

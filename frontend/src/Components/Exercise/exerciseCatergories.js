@@ -32,7 +32,7 @@ export default function ExerciseCatergories({ setLoading, setExerciseList }) {
   };
 
   return (
-    <ul className="lg:w-2/3 flex flex-row flex-wrap justify-center items-center text-white text-sm md:text-md">
+    <ul className="lg:w-2/3 hidden md:flex flex-row flex-wrap justify-center items-center text-white text-sm md:text-md">
       {categories.map((item) => {
         return (
           <li
