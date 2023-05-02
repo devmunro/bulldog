@@ -89,8 +89,8 @@ export default function Workout({ user }) {
             findUserWorkouts={() => dispatch(findWorkout(user._id))}
           />
           {!loading && (
-          <div className="flex w-full gap-8">
-            <div className="w-1/2">
+          <div className="lg:flex w-full gap-8">
+            <div className="lg:w-1/2">
               {currentWorkout ? (
                 <CurrentWorkout currentWorkout={currentWorkout} />
               ) : (
@@ -98,7 +98,7 @@ export default function Workout({ user }) {
               )}
             </div>
 
-            <div className="w-1/2">
+            <div className="lg:w-1/2">
               {userWorkouts.length > 0 && renderOtherWorkouts()}
             </div>
           </div>

@@ -57,8 +57,8 @@ export default function CurrentWorkout() {
   };
 
   return (
-    <div className="w-full bg-primary rounded-xl shadow-xl p-4 my-4">
-      <div className="text-white bg-tertiary m-4 rounded-xl h-36">
+    <div className="w-full bg-primary rounded-xl shadow-xl lg:p-4 lg:my-4">
+      <div className="text-white bg-tertiary lg:m-4 rounded-xl h-36">
         <div class="flex justify-between items-end h-full">
           <h2 className="  text-2xl font-semibold items-end p-4">
             {currentWorkout.name.toUpperCase()}
@@ -70,7 +70,7 @@ export default function CurrentWorkout() {
       </div>
 
       {/* BUTTONS */}
-      <div className="flex justify-end">
+      <div className="flex justify-end p-2">
         {/* EDIT BUTTON */}
         <button className="btn-tertiary" onClick={handleEditExercise}>
           Edit
