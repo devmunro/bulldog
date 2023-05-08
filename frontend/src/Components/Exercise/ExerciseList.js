@@ -65,27 +65,56 @@ export default function ExerciseList({
   return (
     <>
       {!loading && (
-        <div className=" bg-primary lg:p-4 p-2 lg:my-4 lg:rounded-xl defaultFont h-full">
+        <div className=" bg-primary lg:p-4 p-2 lg:my-4 lg:rounded-xl defaultFont h-full grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-2">
           {exerciseList &&
             exerciseList.length > 0 &&
             exerciseList.map((exercise) => {
               return (
                 <div
                   key={exercise._id}
-                  className=" w-full bg-secondary text-tertiary  my-2 p-4 flex justify-center items-center text-center rounded-3xl shadow-xl"
+                  className=" w-full bg-secondary text-tertiary flex justify-center items-center text-center rounded-3xl shadow-xl"
                 >
                   {/* EXERCISE NAME */}
-                  <div className="flex-col text-left w-2/3">
-                    <h3 className="link">{exercise.name}</h3>
+                  <div className="space-y-4">
+                    <div className="relative">
+                      <img
+                        className="rounded-t-xl"
+                        src={
+                          exercise.img
+                            ? exercise.img
+                            : "https://www.firstbenefits.org/wp-content/uploads/2017/10/placeholder.png"
+                        }
+                        alt={exercise.name}
+                      />
+                      <h3 className="absolute bottom-0 left-0 bg-secondary bg-opacity-50 p-2 rounded-t-xl">
+                        {exercise.name}
+                      </h3>
+                    </div>
                     {currentPage === "/dashboard/exerciselist" && (
-                      <div className="uppercase flex space-x-4 ">
-                        <p className="p-2 rounded-lg">{exercise.body_type}</p>{" "}
-                        <p className="p-2 rounded-lg">{exercise.equipment}</p>
+                      <div className="flex justify-center space-x-4 py-4 text-white paragraph ">
+                        <p className="p-2 rounded-lg bg-tertiary">{exercise.body_type}</p>{" "}
+                        <p className="p-2 rounded-lg bg-tertiary">{exercise.equipment}</p>
+                        {/* ADD TO WORKOUT BUTTON */}
+                        {currentPage === "/dashboard/exerciselist" && (
+                          <button
+                            className=" btn-primary"
+                            onClick={() =>
+                              handleAddToWorkout(
+                                exercise._id,
+                                exercise.name,
+                                exercise.body_type,
+                                exercise.equipment
+                              )
+                            }
+                          >
+                            Add
+                          </button>
+                        )}
                       </div>
                     )}
 
                     {/* SET REPS AND WEIGHTS SECTION */}
-                    {currentPage === "/dashboard/workout" && (
+                    {/* {currentPage === "/dashboard/workout" && (
                       <div className="flex  [&>*]:flex-col [&>*]:flex space-x-4">
                         <div className=" md:p-4 ">
                           Sets
@@ -148,27 +177,8 @@ export default function ExerciseList({
                           )}
                         </div>
                       </div>
-                    )}
+                    )} */}
                   </div>
-
-                  {/* ADD TO WORKOUT BUTTON */}
-                  {currentPage === "/dashboard/exerciselist" && (
-                    <div className="md:p-4 my-2">
-                      <button
-                        className=" btn-primary"
-                        onClick={() =>
-                          handleAddToWorkout(
-                            exercise._id,
-                            exercise.name,
-                            exercise.body_type,
-                            exercise.equipment
-                          )
-                        }
-                      >
-                        Add
-                      </button>
-                    </div>
-                  )}
                 </div>
               );
             })}
