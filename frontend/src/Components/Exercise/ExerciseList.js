@@ -16,7 +16,6 @@ export default function ExerciseList({
   const { alert } = useSelector((state) => state.fitness);
   const { currentWorkout } = useSelector((state) => state.fitness);
   const [showAlert, setShowAlert] = useState(false);
-  console.log("currentworkout here", currentWorkout);
   const [currentPage, setCurrentPage] = useState("");
 
   // set the current page in the useEffect hook
@@ -26,16 +25,18 @@ export default function ExerciseList({
 
   const dispatch = useDispatch();
   //handle add to workout
-  const handleAddToWorkout = async (id, name, bodyType, equipment) => {
+  const handleAddToWorkout = async (id, name, bodyType, equipment, img) => {
     const newExerciseDetails = {
       exerciseID: id,
       exerciseBodyType: bodyType,
       exerciseEquipment: equipment,
+      exerciseImage: img,
       exerciseSets: 3,
       exerciseReps: 8,
       exerciseWeight: 10,
       selectedWorkout: currentWorkout._id,
     };
+    console.log("exercise details:",newExerciseDetails)
 
     const response = await dispatch(addExercise(newExerciseDetails));
     console.log(response);
@@ -173,7 +174,8 @@ export default function ExerciseList({
                                 exercise._id,
                                 exercise.name,
                                 exercise.body_type,
-                                exercise.equipment
+                                exercise.equipment,
+                                exercise.img
                               )
                             }
                           >

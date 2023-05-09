@@ -69,6 +69,7 @@ export const findWorkout = createAsyncThunk(
 export const addExercise = createAsyncThunk(
   "fitness/addExercise",
   async (exercise) => {
+    console.log("here",exercise)
     try {
       const response = await axios.put(
         `${API_URL}workout/addexercise`,
