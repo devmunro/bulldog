@@ -93,8 +93,8 @@ export default function Workout({ user, workoutCreateBox, setWorkoutCreateBox })
           workoutCreateBox={workoutCreateBox}
         />
         {!loading && (
-          <div className="lg:flex w-full gap-8">
-            <div className="lg:w-1/2 ">
+          <div className=" w-full gap-8">
+            <div className=" ">
               {currentWorkout ? (
                 <CurrentWorkout currentWorkout={currentWorkout} />
               ) : (
@@ -102,7 +102,7 @@ export default function Workout({ user, workoutCreateBox, setWorkoutCreateBox })
               )}
             </div>
 
-            <div className="lg:w-1/2">
+            <div className="">
               {userWorkouts.length > 0 && renderOtherWorkouts()}
             </div>
           </div>
