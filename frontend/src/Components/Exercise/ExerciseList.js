@@ -81,8 +81,8 @@ export default function ExerciseList({
                         className="rounded-t-xl"
                         src={
                           exercise.img
-                            ? exercise.img
-                            : "https://www.firstbenefits.org/wp-content/uploads/2017/10/placeholder.png"
+                          ? exercise.img
+                          : "https://www.firstbenefits.org/wp-content/uploads/2017/10/placeholder.png"
                         }
                         alt={exercise.name}
                       />
@@ -90,33 +90,10 @@ export default function ExerciseList({
                         {exercise.name}
                       </h3>
                     </div>
-                    {currentPage === "/dashboard/exerciselist" && (
-                      <div className="flex justify-center space-x-4 py-4 text-white paragraph ">
-                        <p className="p-2 rounded-lg bg-tertiary">{exercise.body_type}</p>{" "}
-                        <p className="p-2 rounded-lg bg-tertiary">{exercise.equipment}</p>
-                        {/* ADD TO WORKOUT BUTTON */}
-                        {currentPage === "/dashboard/exerciselist" && (
-                          <button
-                            className=" btn-primary"
-                            onClick={() =>
-                              handleAddToWorkout(
-                                exercise._id,
-                                exercise.name,
-                                exercise.body_type,
-                                exercise.equipment
-                              )
-                            }
-                          >
-                            Add
-                          </button>
-                        )}
-                      </div>
-                    )}
-
                     {/* SET REPS AND WEIGHTS SECTION */}
-                    {/* {currentPage === "/dashboard/workout" && (
-                      <div className="flex  [&>*]:flex-col [&>*]:flex space-x-4">
-                        <div className=" md:p-4 ">
+                    {currentPage === "/dashboard/workout" && (
+                      <div className="flex justify-center w-full space-x-4">
+                        <div className=" p-4 ">
                           Sets
                           <input
                             placeholder={exercise.sets || 3}
@@ -132,7 +109,7 @@ export default function ExerciseList({
                           ></input>
                         </div>
 
-                        <div className="md:p-4">
+                        <div className="p-4">
                           Rep
                           <input
                             placeholder="8"
@@ -148,7 +125,7 @@ export default function ExerciseList({
                           ></input>
                         </div>
 
-                        <div className="md:p-4">
+                        <div className="p-4">
                           Weight
                           <input
                             placeholder="10"
@@ -177,7 +154,34 @@ export default function ExerciseList({
                           )}
                         </div>
                       </div>
-                    )} */}
+                    )}
+
+                    {currentPage === "/dashboard/exerciselist" && (
+                      <div className="flex justify-center space-x-4 py-4 text-white paragraph ">
+                        <p className="p-2 rounded-lg bg-tertiary">
+                          {exercise.body_type}
+                        </p>{" "}
+                        <p className="p-2 rounded-lg bg-tertiary">
+                          {exercise.equipment}
+                        </p>
+                        {/* ADD TO WORKOUT BUTTON */}
+                        {currentPage === "/dashboard/exerciselist" && (
+                          <button
+                            className=" btn-primary"
+                            onClick={() =>
+                              handleAddToWorkout(
+                                exercise._id,
+                                exercise.name,
+                                exercise.body_type,
+                                exercise.equipment
+                              )
+                            }
+                          >
+                            Add
+                          </button>
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
               );
