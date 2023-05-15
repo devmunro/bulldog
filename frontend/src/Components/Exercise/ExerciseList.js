@@ -94,8 +94,9 @@ export default function ExerciseList({
                     </div>
                     {/* SET REPS AND WEIGHTS SECTION */}
                     {currentPage === "/dashboard/workout" && (
-                      <div className="flex justify-center w-full space-x-4">
-                        <div className=" p-4 ">
+                      <div className="flex justify-center p-2 w-full text-white font-semibold">
+                      <div className="flex w-full justify-center items-center space-x-4 bg-primary rounded-xl ">
+                        <div className="lg:p-4 p-2">
                           Sets
                           <input
                             placeholder={exercise.sets || 3}
@@ -105,13 +106,13 @@ export default function ExerciseList({
                               3
                             }
                             name="sets"
-                            className="w-8 text-center"
+                            className="w-8 p-2 m-2 text-center text-tertiary rounded-full"
                             onChange={(e) => handleChange(exercise._id, e)}
                             disabled={disabled}
                           ></input>
                         </div>
 
-                        <div className="p-4">
+                        <div className="lg:p-4 p-2">
                           Rep
                           <input
                             placeholder="8"
@@ -121,13 +122,13 @@ export default function ExerciseList({
                               12
                             }
                             name="reps"
-                            className="w-8 text-center"
+                            className="w-8 p-2 m-2 text-center text-tertiary rounded-full"
                             onChange={(e) => handleChange(exercise._id, e)}
                             disabled={disabled}
                           ></input>
                         </div>
 
-                        <div className="p-4">
+                        <div className="lg:p-4 p-2">
                           Weight
                           <input
                             placeholder="10"
@@ -137,13 +138,13 @@ export default function ExerciseList({
                               10
                             }
                             name="weight"
-                            className="w-8 text-center"
+                            className="w-8 p-2 m-2 text-center text-tertiary rounded-full"
                             onChange={(e) => handleChange(exercise._id, e)}
                             disabled={disabled}
                           ></input>
                         </div>
 
-                        <div className="md:p-4 my-2 self-end mx-4 ">
+                        <div className="lg:p-4 my-2 self-center mx-4  ">
                           {!disabled && (
                             <button
                               className=" py-2 px-2 rounded-md bg-red-900 hover:bg-red-400  text-white"
@@ -155,6 +156,7 @@ export default function ExerciseList({
                             </button>
                           )}
                         </div>
+                      </div>
                       </div>
                     )}
 
