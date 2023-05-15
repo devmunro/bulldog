@@ -35,7 +35,7 @@ export default function Sidebar({handleLogout}) {
             Exercises
           </Link>
         </li>
-        <li className="hover:bg-secondary hover:text-tertiary">
+        <li className="hover:bg-secondary hover:text-tertiary selected:bg-secondary">
           <Link to="/dashboard/workout" className="flex">
             <DocumentTextIcon className="h-6 w-6 mx-2 " />
             Planner

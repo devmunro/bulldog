@@ -12,6 +12,8 @@ function CreateWorkout({
   workoutCreateBox,
 }) {
   const [name, setName] = useState("");
+  const [goal, setGoal] = useState("");
+
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
@@ -28,6 +30,10 @@ function CreateWorkout({
     setName(e.target.value);
   };
 
+  const handleRadioChange = (e) => {
+    setGoal(e.target.value);
+  };
+
   //handle submit
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,7 +41,11 @@ function CreateWorkout({
     const workoutForm = {
       userID: user._id,
       name: name,
+      goal: goal,
     };
+
+    console.log("workoutForm before dispatch:", workoutForm); 
+
 
     await dispatch(createWorkout(workoutForm));
     await dispatch(getUserDetails()); // Fetch the updated user details after setting the default workout
@@ -84,7 +94,7 @@ function CreateWorkout({
                     name="goal"
                     id="muscle-building"
                     value="muscle_building"
-                    onChange={handleInputChange}
+                    onChange={handleRadioChange}
                     required
                     className="mr-1"
                   />
@@ -96,7 +106,7 @@ function CreateWorkout({
                     name="goal"
                     id="fat-loss"
                     value="fat_loss"
-                    onChange={handleInputChange}
+                    onChange={handleRadioChange}
                     required
                     className="mr-1"
                   />

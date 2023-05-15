@@ -10,7 +10,7 @@ import CreateWorkout from "./createWorkout";
 import CurrentWorkout from "./currentWorkout";
 import { getUserDetails } from "../../features/userSlice";
 
-export default function Workout({ user }) {
+export default function Workout({ user, workoutCreateBox, setWorkoutCreateBox }) {
   const dispatch = useDispatch();
 
   // State for storing user workouts
@@ -19,7 +19,7 @@ export default function Workout({ user }) {
   //  Get loading and currentWorkout states from Redux
   const { loading, currentWorkout } = useSelector((state) => state.fitness);
 
-  const [workoutCreateBox, setWorkoutCreateBox] = useState(false);
+ 
 
   //### EFFECT for fetching user workouts and setting them to userWorkouts state
   useEffect(() => {
@@ -57,13 +57,13 @@ export default function Workout({ user }) {
             key={workout._id}
             className="text-white bg-tertiary my-4 rounded-xl h-36 defaultFont"
           >
-            <li className="flex flex-col md:flex-row md:justify-between justify-end h-full space-y-4">
-              <h2 className="sub-heading items-end md:p-4 px-2">
+            <li className="flex flex-col md:flex-row md:justify-between justify-end md:items-end  h-full space-y-4">
+              <h2 className="sub-heading items-end md:p-4 px-6">
                 {workout.name.toUpperCase()}
               </h2>
-              <div className="md:p-2 px-2">
+              <div className="md:p-4 px-2 pb-2">
                 <button
-                  className="btn-tertiary text-white"
+                  className="btn-secondary-longer"
                   onClick={handleSetDefault}
                   value={workout._id}
                 >
@@ -80,10 +80,8 @@ export default function Workout({ user }) {
   // Render the workout component
 
   return (
-    <div className="w-full max-w-full defaultFont">
-      {workoutCreateBox && (
-        <div className="w-full h-screen bg-black opacity-80 z-5 absolute"></div>
-      )}
+    <div className="w-full defaultFont relative">
+     
       <div className=" defaultFont">
         <div className="w-full">
           <h2 className=" pb-4 sub-heading ">Planner</h2>
@@ -95,16 +93,16 @@ export default function Workout({ user }) {
           workoutCreateBox={workoutCreateBox}
         />
         {!loading && (
-          <div className="lg:flex w-full gap-8">
-            <div className="lg:w-1/2 ">
+          <div className=" w-full gap-8">
+            <div className=" ">
               {currentWorkout ? (
                 <CurrentWorkout currentWorkout={currentWorkout} />
               ) : (
-                <div>No current workout</div>
+                <div className="heading">No current workout</div>
               )}
             </div>
 
-            <div className="lg:w-1/2">
+            <div className="">
               {userWorkouts.length > 0 && renderOtherWorkouts()}
             </div>
           </div>
