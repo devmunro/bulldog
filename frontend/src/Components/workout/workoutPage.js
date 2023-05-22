@@ -10,11 +10,14 @@ function WorkoutPage() {
   const currentExercise = currentWorkout?.exercises;
   const exerciseID = currentExercise?.[currentExerciseIndex]?.exercise;
   const exerciseName = currentExercise?.[currentExerciseIndex]?.name;
+  const exerciseImage = currentExercise?.[currentExerciseIndex]?.img;
   const exerciseType = currentExercise?.[currentExerciseIndex]?.body_type;
   const exerciseEquipment = currentExercise?.[currentExerciseIndex]?.equipment;
   const exerciseSets = currentExercise?.[currentExerciseIndex]?.sets;
   const exerciseReps = currentExercise?.[currentExerciseIndex]?.reps;
   const exerciseWeight = currentExercise?.[currentExerciseIndex]?.weight;
+
+  console.log(currentWorkout)
 
   const [showTimer, setShowTimer] = useState(false);
   const [secondsLeft, setSecondsLeft] = useState(5);
@@ -285,6 +288,9 @@ function WorkoutPage() {
                 <h2 className="md:text-2xl text-l font-bold md:mb-4 text-center">
                   {exerciseName}
                 </h2>
+            <div className="flex justify-center">
+                <img src={exerciseImage} alt={exerciseName} className="md:w-1/3"/>
+                </div>
                 {setAmount}
                 {showTimer && (
                   <div className="fixed w-full h-full top-0 left-0 z-50 flex items-center justify-center">
