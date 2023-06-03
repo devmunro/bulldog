@@ -17,7 +17,7 @@ function WorkoutPage() {
   const exerciseReps = currentExercise?.[currentExerciseIndex]?.reps;
   const exerciseWeight = currentExercise?.[currentExerciseIndex]?.weight;
 
-  console.log(currentWorkout)
+  console.log(currentWorkout);
 
   const [showTimer, setShowTimer] = useState(false);
   const [secondsLeft, setSecondsLeft] = useState(5);
@@ -108,12 +108,12 @@ function WorkoutPage() {
     setAmount.push(
       <div
         key={i}
-        className={`flex md:flex-row md:space-x-4 items-center justify-center ${
+        className={`flex md:flex-row space-x-4 items-center justify-center ${
           completed ? "opacity-50" : ""
         }`}
       >
-        <h3 className="mb-2 md:mb-0 text-center md:m-4 font-bold">
-          Set {i + 1}
+        <h3 className="text-center m-4 font-bold">
+          {i + 1}
         </h3>
         <input
           placeholder={exerciseReps}
@@ -122,13 +122,13 @@ function WorkoutPage() {
           value={repsValue || ""}
           onChange={handleInputChange(i)}
           disabled={completed || currentSet !== i}
-          className={`py-2 md:px-4 md:m-4 rounded-lg w-20 md:w-full text-center bg-white border-2 border-black my-2 
+          className={`py-2 md:px-4 md:m-4 rounded-lg w-12 md:w-full text-center  
+          ${completed ? "bg-black text-white " : ""}
           ${
             currentSet !== i
-              ? "bg-gray-400 text-white border-gray-400 cursor-not-allowed"
-              : ""
+              ? " text-white border-black cursor-not-allowed"
+              : "text-black border-black border-2"
           }
-          ${completed ? "bg-blue-900 text-white border-blue-900 border-2" : ""}
           
           `}
         />
@@ -140,26 +140,26 @@ function WorkoutPage() {
           pattern="^\d+(\.\d+)?$"
           onChange={handleInputChange(i)}
           disabled={completed || currentSet !== i}
-          className={`py-2 md:px-4 md:m-4 rounded-lg w-20 md:w-full text-center bg-white border-2 border-black my-2 
-          ${completed ? "bg-blue-900 text-white border-blue-900 border-2" : ""}
+          className={`py-2 md:px-4 md:m-4 rounded-lg w-12 md:w-full text-center  
+          ${completed ? "bg-black text-white " : ""}
           ${
             currentSet !== i
-              ? "bg-gray-400 text-white border-gray-400 cursor-not-allowed"
-              : ""
+              ? " text-white border-black cursor-not-allowed"
+              : "text-black border-black border-2"
           }
           
           `}
         />
         <button
-          className={`py-2 px-4 h-10 bg-blue-500 font-semibold rounded-lg shadow-md  focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 mt-2 m-4 text-xl ${
+          className={`py-2 px-4 h-10 font-semibold rounded-lg shadow-md  mt-4 m-4 text-xl ${
             completed
-              ? "bg-blue-900 border-blue-900 border-2"
-              : "text-white hover:bg-blue-700"
+              ? "text-white w-12 cursor-not-allowed"
+              : ""
           }
           ${
             currentSet !== i
-              ? "bg-gray-400 text-gray-400 hover:bg-gray-400 border-gray-400 cursor-not-allowed"
-              : ""
+              ? "cursor-not-allowed text-tertiary bg-tertiary w-12"
+              : "btn-primary text-white w-12"
           } `}
           onClick={handleDone(i)}
           disabled={completed || currentSet !== i}
@@ -262,12 +262,11 @@ function WorkoutPage() {
 
   //TOTAL WEIGHT LIFTED:
 
-  console.log(exerciseSets);
   return (
-    <section className="flex flex-col w-full justify-center ">
+    <section className="flex flex-col justify-center ">
       {currentWorkout ? (
         <div>
-          <h2 className="uppercase text-center m-4 p-4 bg-white -">
+          <h2 className="uppercase text-center sub-heading bg-white">
             {currentWorkout.name}
           </h2>
 
@@ -283,13 +282,17 @@ function WorkoutPage() {
           )}
           {/* WORKOUT SECTION */}
           {currentWorkout.exercises.length > 0 && !completedWorkout && (
-            <div>
-              <form className="bg-white rounded-lg shadow-lg p-8 lg:w-2/3 w-full lg:mx-auto">
+            <div className="w-full">
+              <form className="bg-white rounded-lg shadow-lg p-4">
                 <h2 className="md:text-2xl text-l font-bold md:mb-4 text-center">
                   {exerciseName}
                 </h2>
-            <div className="flex justify-center">
-                <img src={exerciseImage} alt={exerciseName} className="md:w-1/3"/>
+                <div className="flex justify-center">
+                  <img
+                    src={exerciseImage}
+                    alt={exerciseName}
+                    className="md:w-1/3"
+                  />
                 </div>
                 {setAmount}
                 {showTimer && (
@@ -335,12 +338,21 @@ function WorkoutPage() {
                     setSecondsLeft(45);
                     handlePrevExercise();
                   }}
-                  className={`${
+                  className={`  ${
                     showTimer && secondsLeft > 0 ? "hidden" : "block"
-                  } btn-primary lg:w-1/6 w-full lg:mx-auto`}
+                  } btn-primary`}
                 >
                   Prev
                 </button>
+
+                {currentSet === exerciseSets && (
+                <button
+                  onClick={handleCompleteWorkout}
+                  className="btn-secondary"
+                >
+                  Complete
+                </button>
+              )}
                 <button
                   type="button"
                   onClick={() => {
@@ -348,21 +360,14 @@ function WorkoutPage() {
                     setSecondsLeft(45);
                     handleNextExercise();
                   }}
-                  className={`${
+                  className={` ${
                     showTimer && secondsLeft > 0 ? "hidden" : "block"
-                  } btn-primary lg:w-1/6 w-full lg:mx-auto`}
+                  } btn-primary`}
                 >
                   Next
                 </button>
               </div>
-              {currentSet === exerciseSets && (
-                <button
-                  onClick={handleCompleteWorkout}
-                  className="lg:w-2/3 w-full flex justify-center lg:mx-auto bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mt-4"
-                >
-                  Complete
-                </button>
-              )}
+             
             </div>
           )}
 
