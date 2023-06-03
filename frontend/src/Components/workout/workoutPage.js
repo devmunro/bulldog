@@ -112,7 +112,7 @@ function WorkoutPage() {
           completed ? "opacity-50" : ""
         }`}
       >
-        <h3 className="text-center m-4 font-bold">
+        <h3 className="text-center m-4 font-bold text-white">
           {i + 1}
         </h3>
         <input
@@ -122,11 +122,11 @@ function WorkoutPage() {
           value={repsValue || ""}
           onChange={handleInputChange(i)}
           disabled={completed || currentSet !== i}
-          className={`py-2 md:px-4 md:m-4 rounded-lg w-12 md:w-full text-center  
+          className={`py-2 md:px-4 md:m-4 rounded-lg w-12 md:w-1/2 text-center  
           ${completed ? "bg-black text-white " : ""}
           ${
             currentSet !== i
-              ? " text-white border-black cursor-not-allowed"
+              ? " text-white border-black cursor-not-allowed bg-black"
               : "text-black border-black border-2"
           }
           
@@ -140,18 +140,18 @@ function WorkoutPage() {
           pattern="^\d+(\.\d+)?$"
           onChange={handleInputChange(i)}
           disabled={completed || currentSet !== i}
-          className={`py-2 md:px-4 md:m-4 rounded-lg w-12 md:w-full text-center  
+          className={`py-2 md:px-4 md:m-4 rounded-lg w-12 md:w-1/2 text-center  
           ${completed ? "bg-black text-white " : ""}
           ${
             currentSet !== i
-              ? " text-white border-black cursor-not-allowed"
+              ? " text-white border-black cursor-not-allowed bg-black"
               : "text-black border-black border-2"
           }
           
           `}
         />
         <button
-          className={`py-2 px-4 h-10 font-semibold rounded-lg shadow-md  mt-4 m-4 text-xl ${
+          className={` h-10 w-12 font-semibold rounded-lg shadow-md m-4 text-xl ${
             completed
               ? "text-white w-12 cursor-not-allowed"
               : ""
@@ -159,14 +159,14 @@ function WorkoutPage() {
           ${
             currentSet !== i
               ? "cursor-not-allowed text-tertiary bg-tertiary w-12"
-              : "btn-primary text-white w-12"
+              : "btn-primary text-white w-12 border-white border-2 hover:bg-black text-3xl leading-3"
           } `}
           onClick={handleDone(i)}
           disabled={completed || currentSet !== i}
         >
           +
         </button>
-        <hr className="bg-black md:m-4"></hr>
+       
       </div>
     );
   }
@@ -282,9 +282,9 @@ function WorkoutPage() {
           )}
           {/* WORKOUT SECTION */}
           {currentWorkout.exercises.length > 0 && !completedWorkout && (
-            <div className="w-full">
-              <form className="bg-white rounded-lg shadow-lg p-4">
-                <h2 className="md:text-2xl text-l font-bold md:mb-4 text-center">
+            <div className="w-full mt-4">
+              <form className="bg-primary rounded-lg shadow-lg p-4">
+                <h2 className="md:text-2xl text-l font-bold md:mb-4 text-center text-white">
                   {exerciseName}
                 </h2>
                 <div className="flex justify-center">
@@ -299,7 +299,7 @@ function WorkoutPage() {
                   <div className="fixed w-full h-full top-0 left-0 z-50 flex items-center justify-center">
                     <div className="absolute inset-0 bg-black opacity-80" />
 
-                    <div className="flex justify-center md:w-1/2 w-full h-1/2 items-center z-10 px-8 text-4xl  bg-black font-bold">
+                    <div className="flex justify-center md:w-1/2 w-full h-1/2 items-center z-10 px-8 text-4xl  bg-white font-bold">
                       <div className="flex justify-center">
                         {showTimer && secondsLeft !== 0 && (
                           <div className="text-center my-4  w-full h-full">
@@ -318,7 +318,7 @@ function WorkoutPage() {
                               onClick={() => {
                                 setShowTimer(false);
                               }}
-                              className="btn-primary"
+                              className="btn-primary-longer"
                             >
                               NEXT SET
                             </button>
@@ -330,7 +330,7 @@ function WorkoutPage() {
                 )}
               </form>
 
-              <div className="flex justify-evenly">
+              <div className="flex justify-evenly my-2">
                 <button
                   type="button"
                   onClick={() => {
