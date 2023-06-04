@@ -4,8 +4,9 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Loading from "../Loading";
+import { XMarkIcon } from "@heroicons/react/24/solid";
 
-const RegisterForm = () => {
+const RegisterForm = ({showRegistration}) => {
   const [formData, setFormData] = useState({
     name: "",
     dob: "",
@@ -13,6 +14,7 @@ const RegisterForm = () => {
     password: "",
     passwordConfirmation: "",
   });
+  const [passwordFail, setPasswordFail] = useState(false);
 
   const { loading, error, success } = useSelector((state) => state.auth);
 
@@ -29,21 +31,26 @@ const RegisterForm = () => {
   //handle submit
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setPasswordFail(false);
+    if (formData.passwordConfirmation !== formData.password) {
+      setPasswordFail(true);
+      return;
+    }
 
     const { passwordConfirmation, ...userData } = formData;
 
     const registerDataResult = await dispatch(registerUser(userData));
-    console.log(registerDataResult.response);
+  };
 
+  useEffect(() => {
     if (success) {
-      navigate("/");
-      console.log("User created");
+      navigate("/dashboard");
     }
 
     if (error) {
       console.log(error);
     }
-  };
+  }, [dispatch, loading, success, error, navigate]);
 
   // clear state on unmount
   useEffect(() => {
@@ -52,35 +59,33 @@ const RegisterForm = () => {
     };
   }, [dispatch]);
 
-  const handleClick = () => {
-    navigate("/");
-  };
-
   return (
-    <div>
-      {error && (
+    <div className="relative">
+     
+      {/* CLOSE BOX */}
+      <div className="absolute top-0 right-0 p-2">
+        <XMarkIcon width="24" height="24" onClick={showRegistration} className="text-white cursor-pointer" />
+      </div>
+      {error || passwordFail ? (
         <div
-          className="flex items-center justify-center w-full bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded "
+          className="flex items-center justify-center bg-tertiary text-white px- py-3 rounded"
           role="alert"
         >
-          <strong className="font-bold space-x-2">{error}</strong>
+          <strong className="font-bold space-x-2">
+            {error || "Passwords do not match"}
+          </strong>
         </div>
-      )}
-      <div className="w-full md:p-4 lg:px-8 bg-black border-2 border-white ">
-        <div className="w-full flex flex-col items-center">
-          <h2 className="text-3xl lg:text-4xl font-bold text-white mb-2">
+      ) : null}
+      <div class="flex justify-center  bg-primary p-12 text-center text-secondary">
+        <div class="flex flex-col items-center w-full">
+          <h2 class="text-4xl font-bold text-white p-4 ">
             Sign Up Here
           </h2>
-          <p className="text-gray-300 text-lg mb-">
-            Create your account in just a few clicks.
-          </p>
+          <p class="text-lg mb-">Create your account in just a few clicks.</p>
 
-          <form className="w-full mx-auto p-4 bg-gray-800 rounded-md border-2 border-gray-300 ">
-            <div className="grid grid-cols-1 gap-4 ">
+          <form class="w-full p-6 space-y-4 md:space-y-6 text-tertiary rounded-lg ">
+            <div class="grid grid-cols-1 gap-4">
               <div>
-                <label htmlFor="name" className="block text-white mb-2">
-                  Name
-                </label>
                 <input
                   type="text"
                   name="name"
@@ -89,14 +94,11 @@ const RegisterForm = () => {
                   value={formData.name}
                   onChange={handleInputChange}
                   required
-                  className="w-full py-2 px-3 bg-gray-800 border border-gray-300 rounded-md shadow-sm text-gray-300 focus:outline-none focus:border-purple-600 focus:ring focus:ring-purple-600 focus:ring-opacity-50"
+                  className="sm:text-sm rounded-lg w-full p-2.5"
                 />
               </div>
 
               <div>
-                <label htmlFor="dob" className="block text-white mb-2">
-                  Date of Birth
-                </label>
                 <input
                   type="date"
                   name="dob"
@@ -105,14 +107,11 @@ const RegisterForm = () => {
                   value={formData.dob}
                   onChange={handleInputChange}
                   required
-                  className="w-full py-2 px-3 bg-gray-800 border border-gray-300 rounded-md shadow-sm text-gray-300 focus:outline-none focus:border-purple-600 focus:ring focus:ring-purple-600 focus:ring-opacity-50"
+                  className=" sm:text-sm rounded-lg w-full p-2.5 "
                 />
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-white mb-2">
-                  Email
-                </label>
                 <input
                   type="email"
                   name="email"
@@ -121,14 +120,10 @@ const RegisterForm = () => {
                   value={formData.email}
                   onChange={handleInputChange}
                   required
-                  className="w-full py-2 px-3 bg-gray-800 border border-gray-300 rounded-md shadow-sm text-gray-300 focus:outline-none focus:border-purple-600 focus:ring focus:ring-purple-600 focus:ring-opacity-50"
-                />
+                  className=" sm:text-sm rounded-lg w-full p-2.5 "                />
               </div>
 
               <div>
-                <label htmlFor="password" className="block text-white mb-2">
-                  Password
-                </label>
                 <input
                   type="password"
                   name="password"
@@ -137,17 +132,10 @@ const RegisterForm = () => {
                   value={formData.password}
                   onChange={handleInputChange}
                   required
-                  className="w-full py-2 px-3 bg-gray-800 border border-gray-300 rounded-md shadow-sm text-gray-300 focus:outline-none focus:border-purple-600 focus:ring focus:ring-purple-600 focus:ring-opacity-50"
-                />
+                  className=" sm:text-sm rounded-lg w-full p-2.5 "                />
               </div>
 
               <div>
-                <label
-                  htmlFor="passwordConfirmation"
-                  className="block text-white mb-2"
-                >
-                  Password Confirmation
-                </label>
                 <input
                   type="password"
                   name="passwordConfirmation"
@@ -156,31 +144,37 @@ const RegisterForm = () => {
                   value={formData.passwordConfirmation}
                   onChange={handleInputChange}
                   required
-                  className="w-full py-2 px-3 bg-gray-800 border border-gray-300 rounded-md shadow-sm text-gray-300 focus:outline-none focus:border-purple-600 focus:ring focus:ring-purple-600 focus:ring-opacity-50"
-                />
+                  className=" sm:text-sm rounded-lg w-full p-2.5 "                />
               </div>
             </div>
 
-            <div className="mt-6 w-full">
-              {!loading ? (
-                <button onClick={handleSubmit} className="btn-primary w-full" type="submit">
-                  Register
+            <div className="pt-8">
+              {!loading && (
+                <button
+                  onClick={handleSubmit}
+                  className="btn-secondary w-full"
+                >
+                  Submit
                 </button>
-              ) : (
+              )}
+
+              {loading && (
                 <button
                   disabled
-                  className=" w-full items-center bg-blue-800 text-white font-bold"
-                  type="submit"
+                  className="btn-secondary hover:bg-tertiary w-full"
                 >
-                  <Loading text="REGISTERING" />
+                  <Loading />
                 </button>
               )}
             </div>
           </form>
-          {/* <p className="w-full text-center pt-2 pb-4 text-white">
+          {/* <p className="text-sm font-light text-gray-500 dark:text-gray-400 w-full text-center pt-2 pb-4">
             Already have an account?
             <span>
-              <button onClick={handleClick} className="text-blue-400 px-2 italic">
+              <button
+                onClick={handleClick}
+                className="text-primary-600 dark:text-primary-500 hover:underline px-2 italic"
+              >
                 Click Here
               </button>
             </span>

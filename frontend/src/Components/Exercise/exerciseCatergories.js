@@ -32,22 +32,25 @@ export default function ExerciseCatergories({ setLoading, setExerciseList }) {
   };
 
   return (
-    <div className="w-full">
-      <ul className="w-full flex flex-row flex-wrap md:mx-4 md:px-4 items-center text-white text-sm md:text-md">
-        {categories.map((item) => {
-          return (
-            <li
-              key={item.name}
-              onClick={() => handleCategory(item.name)}
-              className="p-1 text-center cursor-pointer"
-            >
-              <button className="p-2 bg-black rounded-lg ">
-                <span className="uppercase text-xs">{item.name}</span>
+    <ul className="lg:w-2/3 hidden md:flex flex-row flex-wrap justify-center items-center text-white text-sm md:text-md">
+      {categories.map((item) => {
+        return (
+          <li
+            key={item.name}
+            onClick={() => handleCategory(item.name)}
+            className="p-1 text-center cursor-pointer"
+          >
+            {chosenCategory === item.name && (
+              <button className="btn-primary text-[10px]">
+                <span className="uppercase">{item.name}</span>
               </button>
-            </li>
-          );
-        })}
-      </ul>
-    </div>
+            )}
+            {chosenCategory !== item.name && ( <button className="btn-secondary text-[10px] ">
+                <span className="uppercase">{item.name}</span>
+              </button>)}
+          </li>
+        );
+      })}
+    </ul>
   );
 }

@@ -6,7 +6,7 @@ const API_URL = process.env.REACT_APP_API_BASE_URL;
 
 // fetch Exercises3
 export const fetchExercise = createAsyncThunk(
-  "fitness/fetchCards",
+  "fitness/fetchExercise",
 
   async (category) => {
     try {
@@ -39,21 +39,8 @@ export const createWorkout = createAsyncThunk(
         `${API_URL}workout/createworkout`,
         workoutCreateData
       );
-
-      if (response) {
-        const currentUser = JSON.parse(localStorage.getItem("user"));
-
-        // Update the user workout
-        const updatedUser = {
-          ...currentUser,
-          workouts: currentUser.workouts.concat(response.data),
-        };
-        localStorage.setItem("user", JSON.stringify(updatedUser));
-
-        console.log("new workout", response.data);
-      }
-      localStorage.setItem("defaultWorkout", JSON.stringify(response.data.id));
-      return { workout: response.data.id, data: response.data };
+      localStorage.setItem("currentWorkout", JSON.stringify(response.data));
+      return response.data;
     } catch (error) {
       console.log(error);
     }
@@ -82,6 +69,7 @@ export const findWorkout = createAsyncThunk(
 export const addExercise = createAsyncThunk(
   "fitness/addExercise",
   async (exercise) => {
+    console.log("here",exercise)
     try {
       const response = await axios.put(
         `${API_URL}workout/addexercise`,
@@ -120,13 +108,7 @@ export const setDefaultWorkout = createAsyncThunk(
         `${API_URL}workout/setdefaultworkout`,
         userWorkoutID
       );
-      console.log(response);
-
-      localStorage.setItem(
-        "defaultWorkout",
-        JSON.stringify(response.data.workoutID)
-      );
-
+  
       return { defaultWorkout: response.data.workoutID };
     } catch (error) {
       console.log(error);
@@ -208,8 +190,7 @@ export const editExercise = createAsyncThunk(
 export const exerciseSlice = createSlice({
   name: "fitness",
   initialState: {
-    defaultWorkout: JSON.parse(localStorage.getItem("defaultWorkout")),
-    currentWorkout: JSON.parse(localStorage.getItem("currentWorkout")),
+    currentWorkout: null,
     loading: false,
     alert: null,
     completeExercises: [],
@@ -219,10 +200,13 @@ export const exerciseSlice = createSlice({
     resetAlert: (state) => {
       state.alert = null;
     },
+    resetWorkout: (state) => {
+      state.currentWorkout = null;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(createWorkout.fulfilled, (state, action) => {
-      state.defaultWorkout = action.payload.workout;
+      state.currentWorkout = action.payload.workout;
     });
     builder.addCase(findWorkout.pending, (state, action) => {
       state.loading = true;
@@ -238,10 +222,7 @@ export const exerciseSlice = createSlice({
       state.loading = false;
       state.currentWorkout = action.payload;
     });
-    builder.addCase(setDefaultWorkout.fulfilled, (state, action) => {
-      state.defaultWorkout = action.payload.defaultWorkout;
-    });
-    builder.addCase(addExercise.fulfilled, (state, action) => {
+     builder.addCase(addExercise.fulfilled, (state, action) => {
       state.alert = action.payload.message;
     });
     builder.addCase(deleteExercise.fulfilled, (state, action) => {
@@ -254,6 +235,6 @@ export const exerciseSlice = createSlice({
   },
 });
 
-export const { resetAlert } = exerciseSlice.actions;
+export const { resetAlert, resetWorkout } = exerciseSlice.actions;
 
 export default exerciseSlice.reducer;

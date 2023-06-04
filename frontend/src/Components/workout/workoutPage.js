@@ -10,9 +10,14 @@ function WorkoutPage() {
   const currentExercise = currentWorkout?.exercises;
   const exerciseID = currentExercise?.[currentExerciseIndex]?.exercise;
   const exerciseName = currentExercise?.[currentExerciseIndex]?.name;
+  const exerciseImage = currentExercise?.[currentExerciseIndex]?.img;
+  const exerciseType = currentExercise?.[currentExerciseIndex]?.body_type;
+  const exerciseEquipment = currentExercise?.[currentExerciseIndex]?.equipment;
   const exerciseSets = currentExercise?.[currentExerciseIndex]?.sets;
   const exerciseReps = currentExercise?.[currentExerciseIndex]?.reps;
   const exerciseWeight = currentExercise?.[currentExerciseIndex]?.weight;
+
+  console.log(currentWorkout);
 
   const [showTimer, setShowTimer] = useState(false);
   const [secondsLeft, setSecondsLeft] = useState(5);
@@ -20,34 +25,36 @@ function WorkoutPage() {
   const [completedWorkout, setCompletedWorkout] = useState(false);
   //exerciseWorkoutdata
 
-  const [exerciseData, setExerciseData] = useState([
-    {
-      id: "",
-      name: "",
-      sets: [{ reps: "", weight: "", completed: false }],
-    },
-  ]);
+  const [exerciseData, setExerciseData] = useState([]);
+  const [completeWorkoutData, setCompleteWorkoutData] = useState([]);
 
   const dispatch = useDispatch();
 
-  //handle inputs
-
+  // Handle input changes
   const handleInputChange = (id) => (e) => {
     e.preventDefault();
     const { name, value } = e.target;
 
+    // Update exercise data
     setExerciseData((prevState) => {
+      // Create an updated exercise object
       const updatedExercise = {
         id: exerciseID,
         name: exerciseName,
+        type: exerciseType,
+        equipment: exerciseEquipment,
         sets: prevState[currentExerciseIndex]?.sets || [
           { reps: exerciseReps, weight: exerciseWeight, completed: false },
         ],
       };
+
+      // Update the current set with new data
       updatedExercise.sets[id] = {
         ...updatedExercise.sets[id],
         [name]: value,
       };
+
+      // Replace the current exercise in the state with the updated exercise
       const newState = [...prevState];
       newState[currentExerciseIndex] = updatedExercise;
       return newState;
@@ -55,20 +62,26 @@ function WorkoutPage() {
   };
   console.log(exerciseData);
 
+  // Handle completion of a set
   const handleDone = (rowIndex) => (e) => {
     e.preventDefault();
 
+    // Retrieve reps and weight values for the current set
     const repsValue = exerciseData[currentExerciseIndex]?.sets[rowIndex]?.reps;
     const weightValue =
       exerciseData[currentExerciseIndex]?.sets[rowIndex]?.weight;
 
+    // Validate that both reps and weight values are provided
     if (!repsValue || !weightValue) {
-      alert("complete all fields");
+      alert("Complete all fields");
       return;
     }
 
+    // Mark the set as completed
     const updatedSets = [...exerciseData[currentExerciseIndex].sets];
     updatedSets[rowIndex].completed = true;
+
+    // Update exercise data with the new completed set
     setExerciseData((prevState) => {
       const updatedExercise = {
         ...prevState[currentExerciseIndex],
@@ -79,6 +92,7 @@ function WorkoutPage() {
       return newState;
     });
 
+    // Start the timer and increment the current set
     setSecondsLeft(5);
     setShowTimer(true);
     setCurrentSet(currentSet + 1);
@@ -94,12 +108,12 @@ function WorkoutPage() {
     setAmount.push(
       <div
         key={i}
-        className={`flex md:flex-row md:space-x-4 items-center justify-center ${
+        className={`flex md:flex-row space-x-4 items-center justify-center ${
           completed ? "opacity-50" : ""
         }`}
       >
-        <h3 className="mb-2 md:mb-0 text-center md:m-4 font-bold">
-          Set {i + 1}
+        <h3 className="text-center m-4 font-bold text-white">
+          {i + 1}
         </h3>
         <input
           placeholder={exerciseReps}
@@ -108,13 +122,13 @@ function WorkoutPage() {
           value={repsValue || ""}
           onChange={handleInputChange(i)}
           disabled={completed || currentSet !== i}
-          className={`py-2 md:px-4 md:m-4 rounded-lg w-20 md:w-full text-center bg-white border-2 border-black my-2 
+          className={`py-2 md:px-4 md:m-4 rounded-lg w-12 md:w-1/2 text-center  
+          ${completed ? "bg-black text-white " : ""}
           ${
             currentSet !== i
-              ? "bg-gray-400 text-white border-gray-400 cursor-not-allowed"
-              : ""
+              ? " text-white border-black cursor-not-allowed bg-black"
+              : "text-black border-black border-2"
           }
-          ${completed ? "bg-blue-900 text-white border-blue-900 border-2" : ""}
           
           `}
         />
@@ -126,33 +140,33 @@ function WorkoutPage() {
           pattern="^\d+(\.\d+)?$"
           onChange={handleInputChange(i)}
           disabled={completed || currentSet !== i}
-          className={`py-2 md:px-4 md:m-4 rounded-lg w-20 md:w-full text-center bg-white border-2 border-black my-2 
-          ${completed ? "bg-blue-900 text-white border-blue-900 border-2" : ""}
+          className={`py-2 md:px-4 md:m-4 rounded-lg w-12 md:w-1/2 text-center  
+          ${completed ? "bg-black text-white " : ""}
           ${
             currentSet !== i
-              ? "bg-gray-400 text-white border-gray-400 cursor-not-allowed"
-              : ""
+              ? " text-white border-black cursor-not-allowed bg-black"
+              : "text-black border-black border-2"
           }
           
           `}
         />
         <button
-          className={`py-2 px-4 h-10 bg-blue-500 font-semibold rounded-lg shadow-md  focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 mt-2 m-4 text-xl ${
+          className={` h-10 w-12 font-semibold rounded-lg shadow-md m-4 text-xl ${
             completed
-              ? "bg-blue-900 border-blue-900 border-2"
-              : "text-white hover:bg-blue-700"
+              ? "text-white w-12 cursor-not-allowed"
+              : ""
           }
           ${
             currentSet !== i
-              ? "bg-gray-400 text-gray-400 hover:bg-gray-400 border-gray-400 cursor-not-allowed"
-              : ""
+              ? "cursor-not-allowed text-tertiary bg-tertiary w-12"
+              : "btn-primary text-white w-12 border-white border-2 hover:bg-black text-3xl leading-3"
           } `}
           onClick={handleDone(i)}
           disabled={completed || currentSet !== i}
         >
           +
         </button>
-        <hr className="bg-black md:m-4"></hr>
+       
       </div>
     );
   }
@@ -201,26 +215,37 @@ function WorkoutPage() {
   };
 
   //complee workout
-
   const handleCompleteWorkout = async (e) => {
     e.preventDefault();
 
-    // if () {
-    //   alert("Please complete all exercise sets before completing the workout.");
-    //   return;
-    // }
+    const validExercises = exerciseData
+      .filter((exercise) => exercise !== null && exercise !== undefined) // Filter out null and undefined exercises
+      .filter((exercise) => {
+        // Check if all sets are marked as completed
+        const allSetsCompleted = exercise.sets.every((set) => set.completed);
+        console.log(allSetsCompleted);
+        return allSetsCompleted;
+      });
+
+    console.log(validExercises);
+
+    // If there are no valid exercises, alert the user and return
+    if (validExercises.length === 0) {
+      alert("Please complete all exercise sets before completing the workout.");
+      return;
+    }
+    setCompleteWorkoutData(validExercises);
 
     const workoutResults = {
       userID: user._id,
       workoutID: currentWorkout._id,
       workoutName: currentWorkout.name,
-      exercises: exerciseData,
+      exercises: validExercises,
     };
 
     const res = await dispatch(completeWorkout(workoutResults));
- 
-    setCompletedWorkout(true)
 
+    setCompletedWorkout(true);
   };
 
   useEffect(() => {
@@ -237,129 +262,145 @@ function WorkoutPage() {
 
   //TOTAL WEIGHT LIFTED:
 
-  console.log(exerciseSets);
   return (
-    <section className="flex flex-col w-full justify-center ">
-      <h2 className="uppercase text-center m-4 p-4 bg-white -">
-        {currentWorkout.name}
-      </h2>
-
-      {/* NO WORKOUT SECTION */}
-      {!currentWorkout && <p>Loading...</p>}
-      {currentWorkout.exercises.length === 0 && (
-        <div className="bg-white p-4 flex flex-col m-4">
-          <div className="justify-center ">
-            <p>No Exercises found, please add exercises to start</p>
-            <Link to="/dashboard/exerciselist"> Click Here to Start</Link>
-          </div>
-        </div>
-      )}
-      {/* WORKOUT SECTION */}
-      {currentWorkout.exercises.length > 0 && !completedWorkout && (
+    <section className="flex flex-col justify-center ">
+      {currentWorkout ? (
         <div>
-          <form className="bg-white rounded-lg shadow-lg p-8 lg:w-2/3 w-full lg:mx-auto">
-            <h2 className="md:text-2xl text-l font-bold md:mb-4 text-center">
-              {exerciseName}
-            </h2>
-            {setAmount}
-            {showTimer && (
-              <div className="fixed w-full h-full top-0 left-0 z-50 flex items-center justify-center">
-                <div className="absolute inset-0 bg-black opacity-80" />
+          <h2 className="uppercase text-center sub-heading bg-white">
+            {currentWorkout.name}
+          </h2>
 
-                <div className="flex justify-center md:w-1/2 w-full h-1/2 items-center z-10 px-8 text-4xl  bg-black font-bold">
-                  <div className="flex justify-center">
-                    {showTimer && secondsLeft !== 0 && (
-                      <div className="text-center my-4  w-full h-full">
-                        <h3 className="font-bold text-red-500">
-                          <p>REST</p>
-                          <br />
-                          {secondsLeft}
-                          <span>secs</span>
-                        </h3>
-                      </div>
-                    )}
-                    {showTimer && secondsLeft === 0 && (
-                      <div className="text-center my-4">
-                        <h3 className="  text-red-500">Time's up!</h3>
-                        <button
-                          onClick={() => {
-                            setShowTimer(false);
-                          }}
-                          className="btn-primary"
-                        >
-                          NEXT SET
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                </div>
+          {/* NO WORKOUT SECTION */}
+          {!currentWorkout && <p>Loading...</p>}
+          {currentWorkout.exercises.length === 0 && (
+            <div className="bg-white p-4 flex flex-col m-4">
+              <div className="justify-center ">
+                <p>No Exercises found, please add exercises to start</p>
+                <Link to="/dashboard/exerciselist"> Click Here to Start</Link>
               </div>
-            )}
-          </form>
+            </div>
+          )}
+          {/* WORKOUT SECTION */}
+          {currentWorkout.exercises.length > 0 && !completedWorkout && (
+            <div className="w-full mt-4">
+              <form className="bg-primary rounded-lg shadow-lg p-4">
+                <h2 className="md:text-2xl text-l font-bold md:mb-4 text-center text-white">
+                  {exerciseName}
+                </h2>
+                <div className="flex justify-center">
+                  <img
+                    src={exerciseImage}
+                    alt={exerciseName}
+                    className="md:w-1/3"
+                  />
+                </div>
+                {setAmount}
+                {showTimer && (
+                  <div className="fixed w-full h-full top-0 left-0 z-50 flex items-center justify-center">
+                    <div className="absolute inset-0 bg-black opacity-80" />
 
-          <div className="flex justify-evenly">
-            <button
-              type="button"
-              onClick={() => {
-                setShowTimer(false);
-                setSecondsLeft(45);
-                handlePrevExercise();
-              }}
-              className={`${
-                showTimer && secondsLeft > 0 ? "hidden" : "block"
-              } btn-primary lg:w-1/6 w-full lg:mx-auto`}
-            >
-              Prev
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                setShowTimer(false);
-                setSecondsLeft(45);
-                handleNextExercise();
-              }}
-              className={`${
-                showTimer && secondsLeft > 0 ? "hidden" : "block"
-              } btn-primary lg:w-1/6 w-full lg:mx-auto`}
-            >
-              Next
-            </button>
-          </div>
-          {currentSet === exerciseSets && (
-            <button
-              onClick={handleCompleteWorkout}
-              className="lg:w-2/3 w-full flex justify-center lg:mx-auto bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mt-4"
-            >
-              Complete
-            </button>
+                    <div className="flex justify-center md:w-1/2 w-full h-1/2 items-center z-10 px-8 text-4xl  bg-white font-bold">
+                      <div className="flex justify-center">
+                        {showTimer && secondsLeft !== 0 && (
+                          <div className="text-center my-4  w-full h-full">
+                            <h3 className="font-bold text-red-500">
+                              <p>REST</p>
+                              <br />
+                              {secondsLeft}
+                              <span>secs</span>
+                            </h3>
+                          </div>
+                        )}
+                        {showTimer && secondsLeft === 0 && (
+                          <div className="text-center my-4">
+                            <h3 className="  text-red-500">Time's up!</h3>
+                            <button
+                              onClick={() => {
+                                setShowTimer(false);
+                              }}
+                              className="btn-primary-longer"
+                            >
+                              NEXT SET
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </form>
+
+              <div className="flex justify-evenly my-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowTimer(false);
+                    setSecondsLeft(45);
+                    handlePrevExercise();
+                  }}
+                  className={`  ${
+                    showTimer && secondsLeft > 0 ? "hidden" : "block"
+                  } btn-primary`}
+                >
+                  Prev
+                </button>
+
+                {currentSet === exerciseSets && (
+                <button
+                  onClick={handleCompleteWorkout}
+                  className="btn-secondary"
+                >
+                  Complete
+                </button>
+              )}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowTimer(false);
+                    setSecondsLeft(45);
+                    handleNextExercise();
+                  }}
+                  className={` ${
+                    showTimer && secondsLeft > 0 ? "hidden" : "block"
+                  } btn-primary`}
+                >
+                  Next
+                </button>
+              </div>
+             
+            </div>
+          )}
+
+          {completedWorkout && (
+            <div className="bg-white rounded-lg shadow-lg p-8 lg:w-2/3 w-full lg:mx-auto">
+              <h2 className="font-bold">WORKOUT COMPLETED</h2>
+              <h2>Well Done {user.name}</h2>
+              <p className="font-semibold">
+                Total of Exercises Completed = {completeWorkoutData.length}
+              </p>
+              {completeWorkoutData.map((exercise) => {
+                let totalWeight = 0;
+                let totalReps = 0;
+                exercise.sets.forEach((set) => {
+                  if (set.completed) {
+                    totalWeight += set.weight * set.reps;
+                    totalReps += parseInt(set.reps);
+                  }
+                });
+                return (
+                  <div key={exercise._id}>
+                    <p className="font-semibold">
+                      {exercise.name}: {totalWeight} kg, {totalReps}reps
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
           )}
         </div>
-      )}
-
-      {completedWorkout && (
-        <div className="bg-white rounded-lg shadow-lg p-8 lg:w-2/3 w-full lg:mx-auto">
-          <h2 className="font-bold">WORKOUT COMPLETED</h2>
-          <h2>Well Done {user.name}</h2>
-          <p className="font-semibold">
-            Total of Exercises Completed = {exerciseData.length}
-          </p>
-          {exerciseData.map((exercise) => {
-            let totalWeight = 0;
-            let totalReps = 0;
-            exercise.sets.forEach((set) => {
-              if (set.completed) {
-                totalWeight += set.weight * set.reps;
-                totalReps += parseInt(set.reps);
-              }
-            });
-            return (
-              <div key={exercise._id}>
-                <p className="font-semibold">
-                  {exercise.name}: {totalWeight} kg, {totalReps}reps
-                </p>
-              </div>
-            );
-          })}
+      ) : (
+        <div>
+          <p>No current workout</p>
         </div>
       )}
     </section>

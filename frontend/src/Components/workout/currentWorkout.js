@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ExerciseList from "../Exercise/ExerciseList";
 import {
@@ -6,34 +6,30 @@ import {
   ChevronDoubleUpIcon,
 } from "@heroicons/react/24/solid";
 import FirebaseStorage from "../../images/firebaseStorage";
-import Loading from "../Loading";
 import { editExercise } from "../../features/exerciseSlice";
+import { Link } from "react-router-dom";
 
 export default function CurrentWorkout() {
   const [showExerciseForWorkout, setShowExerciseForWorkout] = useState(false);
-  const { defaultWorkout, loading, currentWorkout } = useSelector(
-    (state) => state.fitness
-  );
+  const { loading, currentWorkout } = useSelector((state) => state.fitness);
   const [disabled, setDisabled] = useState(true);
   const [exerciseInputs, setExerciseInputs] = useState({});
   const [swapButton, setSwapButton] = useState(true);
   const dispatch = useDispatch();
 
-  //handle edit exercise for current workout
+  //## Handle editing an exercise for the current workout
   const handleEditExercise = async (id) => {
     setDisabled(false);
     setSwapButton(false);
   };
 
-  //handleShowExercises - display exercises for current workout
-
+  //## Toggle exercises display for the current workout
   const handleShowExercises = (e) => {
     e.preventDefault();
-
     setShowExerciseForWorkout(!showExerciseForWorkout);
   };
 
-  //handle Save exercise for current workout
+  //## Save edited exercise for the current workout
   const handleSaveExercise = async () => {
     const currentID = currentWorkout._id;
     const editedDetails = {
@@ -49,7 +45,7 @@ export default function CurrentWorkout() {
     setSwapButton(true);
   };
 
-  //handlechange for inputs
+  //## Handle changes for exercise input fields
   const handleChange = async (id, e) => {
     const { name, value } = e.target;
     setExerciseInputs((prevState) => ({
@@ -62,66 +58,38 @@ export default function CurrentWorkout() {
   };
 
   return (
-    <div className="w-full text-black bg-gradient-to-bl from-blue-700 via-blue-800 to-gray-900">
-      {/* SHOW OR HIDE EXERCISES */}
-      <div className="flex justify-between h-1/2 items-center gap-4 text-gray-400">
-        <div className="mt-8 mx-8 space-y-4">
-          <h2 className="font-bold">Current Workout</h2>
-          <h2 className=" text-3xl font-semibold">
+    <div className="w-full bg-primary rounded-xl shadow-xl lg:p-4 lg:my-4 defaultFont">
+      <div className="text-white bg-tertiary lg:m-4 rounded-xl h-36">
+        <div class="flex flex-col md:flex-row md:justify-between justify-end md:items-end h-full space-y-4">
+          <h2 className=" sub-heading items-end md:p-4 px-6">
             {currentWorkout.name.toUpperCase()}
           </h2>
-          <div className="flex">
-            <button
-              className="items-baseline btn-secondary"
-              onClick={handleShowExercises}
-            >
-              {showExerciseForWorkout && (
-                <div className="flex">
-                  <span>HIDE</span>
-                  <ChevronDoubleUpIcon className="h-6 w-6 text-white-500 mx-2" />
-                </div>
-              )}
-              {!showExerciseForWorkout && (
-                <div className="flex">
-                  <span>SHOW</span>
-                  <ChevronDoubleDownIcon className="h-6 w-6 text-white-500 ml-2" />
-                </div>
-              )}
-            </button>
-            {/* EDIT BUTTON */}
-            {showExerciseForWorkout && swapButton && (
-              <button
-                className="btn-primary mx-8 py-2 px-4 rounded-md bg-blue-500 hover:bg-blue-600  text-white"
-                onClick={handleEditExercise}
-              >
-                Edit
-              </button>
-            )}
-            {/* Save BUTTON */}
-            {showExerciseForWorkout && !swapButton && (
-              <button
-                className="btn-primary mx-8 py-2 px-4 rounded-md bg-blue-500 hover:bg-blue-600  text-white"
-                onClick={handleSaveExercise}
-              >
-                Save
-              </button>
-            )}
+          <div className="md:p-4 px-6 pb-4">
+            <Link to="/dashboard/record" className="btn-secondary-longer">Start Workout</Link>
           </div>
         </div>
-        <div className="opacity-25">
-          <FirebaseStorage imageBase="manworkingout.png" />
-        </div>
       </div>
-      {showExerciseForWorkout && (
-        <ExerciseList
-          exerciseList={currentWorkout.exercises}
-          loading={loading}
-          buttonText="Edit"
-          disabled={disabled}
-          exerciseInputs={exerciseInputs}
-          handleChange={handleChange}
-        />
-      )}
+
+      {/* BUTTONS */}
+      <div className="flex justify-end p-2">
+        {/* EDIT BUTTON */}
+        <button className="btn-tertiary" onClick={handleEditExercise}>
+          Edit
+        </button>
+
+        {/* Save BUTTON */}
+        <button className="btn-tertiary" onClick={handleSaveExercise}>
+          Save
+        </button>
+      </div>
+      <ExerciseList
+        exerciseList={currentWorkout.exercises}
+        loading={loading}
+        buttonText="Edit"
+        disabled={disabled}
+        exerciseInputs={exerciseInputs}
+        handleChange={handleChange}
+      />
     </div>
   );
 }

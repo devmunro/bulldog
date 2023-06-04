@@ -16,7 +16,6 @@ export default function ExerciseList({
   const { alert } = useSelector((state) => state.fitness);
   const { currentWorkout } = useSelector((state) => state.fitness);
   const [showAlert, setShowAlert] = useState(false);
-
   const [currentPage, setCurrentPage] = useState("");
 
   // set the current page in the useEffect hook
@@ -26,20 +25,23 @@ export default function ExerciseList({
 
   const dispatch = useDispatch();
   //handle add to workout
-  const handleAddToWorkout = async (id, name, bodyType, equipment) => {
+  const handleAddToWorkout = async (id, name, bodyType, equipment, img) => {
     const newExerciseDetails = {
       exerciseID: id,
       exerciseBodyType: bodyType,
       exerciseEquipment: equipment,
+      exerciseImage: img,
       exerciseSets: 3,
       exerciseReps: 8,
       exerciseWeight: 10,
       selectedWorkout: currentWorkout._id,
     };
+    console.log("exercise details:",newExerciseDetails)
 
     const response = await dispatch(addExercise(newExerciseDetails));
     console.log(response);
   };
+
 
   useEffect(() => {
     if (alert) {
@@ -63,126 +65,142 @@ export default function ExerciseList({
   };
 
   return (
-    <div className="md:mx-2">
-      <p className=" text-gray-400 bg-red-900 uppercase text-sm text-center">
-        Current Workout:<strong>{currentWorkout.name}</strong>
-      </p>
-      {!loading &&
-        exerciseList &&
-        exerciseList.length > 0 &&
-        exerciseList.map((exercise) => {
-          return (
-            <div
-              key={exercise._id}
-              className=" bg-black text-white md:my-4 my-2 md:py-4 flex items-center justify-center text-center "
-            >
-              {/* EXERCISE NAME */}
-              <div className=" text-md  md:text-lg flex-col font-semibold text-left w-2/3">
-                <h3>{exercise.name}</h3>
-                {currentPage === "/dashboard/exerciselist" && (
-                  <div className="uppercase flex text-gray-500 space-x-4 text-sm md:text-md">
-                    <p className="p-2 rounded-lg">{exercise.body_type}</p>{" "}
-                    <p className="p-2 rounded-lg">{exercise.equipment}</p>
+    <>
+      {!loading && (
+        <div className=" bg-primary lg:p-4 p-2 lg:my-4 lg:rounded-xl defaultFont h-full grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-2">
+          {exerciseList &&
+            exerciseList.length > 0 &&
+            exerciseList.map((exercise) => {
+              return (
+                <div
+                  key={exercise._id}
+                  className=" w-full bg-secondary text-tertiary flex justify-center items-center text-center rounded-3xl shadow-xl"
+                >
+                  {/* EXERCISE NAME */}
+                  <div className="space-y-4">
+                    <div className="relative">
+                      <img
+                        className="rounded-t-xl"
+                        src={
+                          exercise.img
+                          ? exercise.img
+                          : "https://www.firstbenefits.org/wp-content/uploads/2017/10/placeholder.png"
+                        }
+                        alt={exercise.name}
+                      />
+                      <h3 className="absolute bottom-0 left-0 bg-secondary bg-opacity-50 p-2 rounded-t-xl">
+                        {exercise.name}
+                      </h3>
+                    </div>
+                    {/* SET REPS AND WEIGHTS SECTION */}
+                    {currentPage === "/dashboard/workout" && (
+                      <div className="flex justify-center p-2 w-full text-white font-semibold">
+                      <div className="flex w-full justify-center items-center space-x-4 bg-primary rounded-xl ">
+                        <div className="lg:p-4 p-2">
+                          Sets
+                          <input
+                            placeholder={exercise.sets || 3}
+                            value={
+                              exerciseInputs[exercise._id]?.sets ??
+                              exercise.sets ??
+                              3
+                            }
+                            name="sets"
+                            className="w-8 p-2 m-2 text-center text-tertiary rounded-full"
+                            onChange={(e) => handleChange(exercise._id, e)}
+                            disabled={disabled}
+                          ></input>
+                        </div>
+
+                        <div className="lg:p-4 p-2">
+                          Rep
+                          <input
+                            placeholder="8"
+                            value={
+                              exerciseInputs[exercise._id]?.reps ??
+                              exercise.reps ??
+                              12
+                            }
+                            name="reps"
+                            className="w-8 p-2 m-2 text-center text-tertiary rounded-full"
+                            onChange={(e) => handleChange(exercise._id, e)}
+                            disabled={disabled}
+                          ></input>
+                        </div>
+
+                        <div className="lg:p-4 p-2">
+                          Weight
+                          <input
+                            placeholder="10"
+                            value={
+                              exerciseInputs[exercise._id]?.weight ??
+                              exercise.weight ??
+                              10
+                            }
+                            name="weight"
+                            className="w-8 p-2 m-2 text-center text-tertiary rounded-full"
+                            onChange={(e) => handleChange(exercise._id, e)}
+                            disabled={disabled}
+                          ></input>
+                        </div>
+
+                        <div className="lg:p-4 my-2 self-center mx-4  ">
+                          {!disabled && (
+                            <button
+                              className=" py-2 px-2 rounded-md bg-red-900 hover:bg-red-400  text-white"
+                              onClick={() =>
+                                deleteExerciseFromWorkout(exercise._id)
+                              }
+                            >
+                              <TrashIcon className="w-4 h-4 md:w-8 md:h-8" />
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                      </div>
+                    )}
+
+                    {currentPage === "/dashboard/exerciselist" && (
+                      <div className="flex justify-center space-x-4 py-4 text-white paragraph ">
+                        <p className="p-2 rounded-lg bg-tertiary">
+                          {exercise.body_type}
+                        </p>{" "}
+                        <p className="p-2 rounded-lg bg-tertiary">
+                          {exercise.equipment}
+                        </p>
+                        {/* ADD TO WORKOUT BUTTON */}
+                        {currentPage === "/dashboard/exerciselist" && (
+                          <button
+                            className=" btn-primary"
+                            onClick={() =>
+                              handleAddToWorkout(
+                                exercise._id,
+                                exercise.name,
+                                exercise.body_type,
+                                exercise.equipment,
+                                exercise.img
+                              )
+                            }
+                          >
+                            Add
+                          </button>
+                        )}
+                      </div>
+                    )}
                   </div>
-                )}
-
-                {/* SET REPS AND WEIGHTS SECTION */}
-                {currentPage === "/dashboard/workout" && (
-                  <div className="flex space-x-4 text-gray-400 text-center text-sm">
-                    <div className="md:p-4 ">
-                      Sets
-                      <input
-                        placeholder={exercise.sets || 3}
-                        className={` ${disabled ? "input" : "input-edit"}`}
-                        value={
-                          exerciseInputs[exercise._id]?.sets ??
-                          exercise.sets ??
-                          3
-                        }
-                        name="sets"
-                        onChange={(e) => handleChange(exercise._id, e)}
-                        disabled={disabled}
-                      ></input>
-                    </div>
-
-                    <div className="md:p-4">
-                      Rep
-                      <input
-                        placeholder="8"
-                        className={` ${disabled ? "input" : "input-edit"}`}
-                        value={
-                          exerciseInputs[exercise._id]?.reps ??
-                          exercise.reps ??
-                          12
-                        }
-                        name="reps"
-                        onChange={(e) => handleChange(exercise._id, e)}
-                        disabled={disabled}
-                      ></input>
-                    </div>
-
-                    <div className="md:p-4">
-                      Weight
-                      <input
-                        placeholder="10"
-                        className={` ${disabled ? "input" : "input-edit"}`}
-                        value={
-                          exerciseInputs[exercise._id]?.weight ??
-                          exercise.weight ??
-                          10
-                        }
-                        name="weight"
-                        onChange={(e) => handleChange(exercise._id, e)}
-                        disabled={disabled}
-                      ></input>
-                    </div>
-                  </div>
-                )}
+                </div>
+              );
+            })}
+          <div className="fixed top-10  right-10 left-10 z-50 text-center">
+            {showAlert && alert && (
+              <div className="p-4 bg-blue-500 text-white rounded-md transition duration-500 ease-in-out">
+                {alert}
               </div>
-
-              {/* ADD TO WORKOUT BUTTON */}
-              {currentPage === "/dashboard/exerciselist" && (
-                <div className="md:p-4 my-2">
-                  <button
-                    className=" py-2 px-4 rounded-md bg-blue-500 hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 text-white"
-                    onClick={() =>
-                      handleAddToWorkout(
-                        exercise._id,
-                        exercise.name,
-                        exercise.body_type,
-                        exercise.equipment
-                      )
-                    }
-                  >
-                    Add
-                  </button>
-                </div>
-              )}
-
-              {currentPage === "/dashboard/workout" && (
-                <div className="md:p-4 my-2 self-end mx-4 ">
-                  {!disabled && (
-                    <button
-                      className=" py-2 px-2 rounded-md bg-red-900 hover:bg-red-400  text-white"
-                      onClick={() => deleteExerciseFromWorkout(exercise._id)}
-                    >
-                      <TrashIcon className="w-4 h-4 md:w-8 md:h-8" />
-                    </button>
-                  )}
-                </div>
-              )}
-            </div>
-          );
-        })}
-      <div className="fixed top-10  right-10 left-10 z-50 text-center">
-        {showAlert && alert && (
-          <div className="p-4 bg-blue-500 text-white rounded-md transition duration-500 ease-in-out">
-            {alert}
+            )}
           </div>
-        )}
-      </div>
-
-      {loading && <Loading />}
-    </div>
+        </div>
+      )}
+      {loading && <Loading hScreen={"h-screen"} textColor={"text-tertiary"} />}
+    </>
   );
 }
