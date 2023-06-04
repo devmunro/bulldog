@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
+  Image,
 } from 'react-native';
 import {completeWorkout} from './features/exerciseSlice';
 
@@ -21,6 +22,7 @@ export default function Workout() {
   const exerciseSets = currentExercise?.[currentExerciseIndex]?.sets;
   const exerciseReps = currentExercise?.[currentExerciseIndex]?.reps;
   const exerciseWeight = currentExercise?.[currentExerciseIndex]?.weight;
+  const exerciseImage = currentExercise?.[currentExerciseIndex]?.img;
 
   const [showTimer, setShowTimer] = useState(false);
   const [secondsLeft, setSecondsLeft] = useState(5);
@@ -40,13 +42,13 @@ export default function Workout() {
 
   //handle inputs
 
-  const handleInputChange = (id, name) => (text) => {
-    setExerciseData((prevState) => {
+  const handleInputChange = (id, name) => text => {
+    setExerciseData(prevState => {
       const updatedExercise = {
         id: exerciseID,
         name: exerciseName,
         sets: prevState[currentExerciseIndex]?.sets || [
-          { reps: exerciseReps, weight: exerciseWeight, completed: false },
+          {reps: exerciseReps, weight: exerciseWeight, completed: false},
         ],
       };
       updatedExercise.sets[id] = {
@@ -58,7 +60,7 @@ export default function Workout() {
       return newState;
     });
   };
-  
+
   console.log(exerciseData);
 
   const handleDone = rowIndex => e => {
@@ -101,41 +103,47 @@ export default function Workout() {
       <View key={i} style={styles.container}>
         <Text style={styles.exerciseName}>Set {i + 1}</Text>
         <View style={styles.inputContainer}>
-        <TextInput
-          placeholder={`${exerciseReps}`}
-          keyboardType="number-pad"
-          name="reps"
-          value={repsValue || ""}
-          onChangeText={(text) => handleInputChange(i, "reps")(text)}
-          editable={!completed && currentSet === i}
-          style={[
-            styles.input,
-            !completed && currentSet === i ? styles.inputEditable : styles.inputNonEditable,
-          ]}
-        />
-        <TextInput
-          placeholder={`${exerciseWeight}kg`}
-          keyboardType="decimal-pad"
-          name="weight"
-          value={weightValue || ""}
-          onChangeText={(text) => handleInputChange(i, "weight")(text)}
-          editable={!completed && currentSet === i}
-          style={[
-            styles.input,
-            !completed && currentSet === i ? styles.inputEditable : styles.inputNonEditable,
-          ]}
-        />
-        <TouchableOpacity
-          onPress={handleDone(i)}
-          disabled={completed || currentSet !== i}
-          style={completed || currentSet !== i ? styles.buttonDisabled : styles.button}
-        >
-          <Text style={styles.buttonText}>+</Text>
-        </TouchableOpacity>
+          <TextInput
+            placeholder={`${exerciseReps}`}
+            keyboardType="number-pad"
+            name="reps"
+            value={repsValue || ''}
+            onChangeText={text => handleInputChange(i, 'reps')(text)}
+            editable={!completed && currentSet === i}
+            style={[
+              styles.input,
+              !completed && currentSet === i
+                ? styles.inputEditable
+                : styles.inputNonEditable,
+            ]}
+          />
+          <TextInput
+            placeholder={`${exerciseWeight}kg`}
+            keyboardType="decimal-pad"
+            name="weight"
+            value={weightValue || ''}
+            onChangeText={text => handleInputChange(i, 'weight')(text)}
+            editable={!completed && currentSet === i}
+            style={[
+              styles.input,
+              !completed && currentSet === i
+                ? styles.inputEditable
+                : styles.inputNonEditable,
+            ]}
+          />
+          <TouchableOpacity
+            onPress={handleDone(i)}
+            disabled={completed || currentSet !== i}
+            style={
+              completed || currentSet !== i
+                ? styles.buttonDisabled
+                : styles.button
+            }>
+            <Text style={styles.buttonText}>+</Text>
+          </TouchableOpacity>
         </View>
-      </View>
+      </View>,
     );
-    
   }
 
   // be able to change to next exercise
@@ -236,7 +244,13 @@ export default function Workout() {
       {currentWorkout.exercises.length > 0 && !completedWorkout && (
         <View>
           <View style={styles.workoutForm}>
-            <Text style={styles.exerciseName}>{exerciseName}</Text>
+            <View style={styles.exerciseImageContainer}>
+              <Image
+                style={{width: 200, height: 100}}
+                source={{uri: exerciseImage}}
+              />
+              <Text style={styles.exerciseName}>{exerciseName}</Text>
+            </View>
             {setAmount}
             {showTimer && (
               <View style={styles.timerOverlay}>
@@ -278,6 +292,13 @@ export default function Workout() {
               ]}>
               <Text style={styles.buttonText}>Prev</Text>
             </TouchableOpacity>
+            {currentSet === exerciseSets && (
+            <TouchableOpacity
+              onPress={handleCompleteWorkout}
+              style={styles.completeButton}>
+              <Text style={styles.completeButtonText}>Complete</Text>
+            </TouchableOpacity>
+          )}
             <TouchableOpacity
               onPress={() => {
                 setShowTimer(false);
@@ -291,13 +312,7 @@ export default function Workout() {
               <Text style={styles.buttonText}>Next</Text>
             </TouchableOpacity>
           </View>
-          {currentSet === exerciseSets && (
-            <TouchableOpacity
-              onPress={handleCompleteWorkout}
-              style={styles.completeButton}>
-              <Text style={styles.completeButtonText}>Complete</Text>
-            </TouchableOpacity>
-          )}
+          
         </View>
       )}
 
@@ -334,20 +349,20 @@ export default function Workout() {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    padding: 8,
+    padding: 4,
     backgroundColor: 'white',
   },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 8,
+    marginBottom: 4,
   },
   header: {
     textTransform: 'uppercase',
     textAlign: 'center',
-    margin: 16,
-    padding: 16,
+    margin: 4,
+    padding: 8,
     backgroundColor: 'black',
     color: 'white',
     fontWeight: 'bold',
@@ -362,8 +377,16 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
     color: 'blue',
   },
+  exerciseImageContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    color: "white",
+  },
+
   workoutForm: {
-    backgroundColor: 'white',
+    backgroundColor: 'blue',
     borderRadius: 8,
     padding: 16,
     marginVertical: 16,
@@ -377,6 +400,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 8,
     textAlign: 'left',
+    color: "white",
   },
   // ...button styles
   buttonContainer: {
@@ -401,6 +425,17 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     marginHorizontal: 8,
   },
+
+  completeButton: {
+    backgroundColor: 'gray',
+    borderRadius: 4,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    marginHorizontal: 8,
+    
+  },
+
+
   // ...other styles
   input: {
     flex: 1,
@@ -467,6 +502,4 @@ const styles = StyleSheet.create({
   nextSetText: {
     color: 'white',
   },
-  
 });
-
