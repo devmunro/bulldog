@@ -68,24 +68,30 @@ export const getUserDetails = createAsyncThunk("auth/getDetails", async () => {
 
 // LOGOUT
 export const logout = createAsyncThunk("auth/logout", async () => {
-  // Clear the localStorage items for user and token
-
-  console.log("Clearing localStorage data...");
-
-  AsyncStorage.removeItem("user");
-  AsyncStorage.removeItem("token");
-  AsyncStorage.removeItem("defaultWorkout");
-
-  // delete the user token from the server
-  const userToken = AsyncStorage.getItem("token");
-  const headers = { Authorization: `Bearer ${userToken}` };
-
   try {
-    await axios.delete(`${API_URL}logout`, { headers });
+    console.log("Clearing localStorage data...");
+
+    // Retrieve the user token first before clearing all AsyncStorage data
+    const userToken = await AsyncStorage.getItem("token");
+
+    // Then remove all items
+    await AsyncStorage.removeItem("user");
+    await AsyncStorage.removeItem("token");
+    await AsyncStorage.removeItem("defaultWorkout");
+
+    // Delete the user token from the server
+    const headers = { Authorization: `Bearer ${userToken}` };
+
+    const response = await axios.delete(`${API_URL}logout`, { headers });
+
+    if (response.status !== 200) {
+      throw new Error(`Failed to logout, server responded with status code ${response.status}`);
+    }
+
     console.log("User has been logged out");
-    return;
   } catch (error) {
-    console.log(error);
+    console.error('Failed to logout:', error);
+    throw error;
   }
 });
 
