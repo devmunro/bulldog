@@ -7,6 +7,7 @@ import {
 } from "@heroicons/react/24/solid";
 import FirebaseStorage from "../../images/firebaseStorage";
 import { editExercise } from "../../features/exerciseSlice";
+import { Link } from "react-router-dom";
 
 export default function CurrentWorkout() {
   const [showExerciseForWorkout, setShowExerciseForWorkout] = useState(false);
@@ -63,8 +64,8 @@ export default function CurrentWorkout() {
           <h2 className=" sub-heading items-end md:p-4 px-6">
             {currentWorkout.name.toUpperCase()}
           </h2>
-          <div className="md:p-4 px-2 pb-2">
-            <button className="btn-secondary-longer">Start Workout</button>
+          <div className="md:p-4 px-6 pb-4">
+            <Link to="/dashboard/record" className="btn-secondary-longer">Start Workout</Link>
           </div>
         </div>
       </div>
