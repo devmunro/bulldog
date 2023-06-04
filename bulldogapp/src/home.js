@@ -65,7 +65,7 @@ export default function Dashboard() {
                 uri: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/20625/avatar-bg.png',
               }}
             />
-            <Text style={styles.userName}>Welcome {user.name}</Text>
+            <Text style={styles.userName}>Welcome {user?.name}</Text>
     
             <View style={styles.listContainer}>
               <View style={styles.item}>

@@ -1,7 +1,7 @@
 import React from 'react';
 import {useDispatch} from 'react-redux';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {logout} from '../features/userSlice';
+import {logout, clearState } from '../features/userSlice';
 import Dashboard from '../home';
 import Workout from '../Workout';
 import {Button} from 'react-native';
@@ -15,6 +15,7 @@ function DashboardNavigate() {
   const dispatch = useDispatch();
   const logoutUser = async () => {
     const response = await dispatch(logout());
+    dispatch(clearState());
     console.log(response);
     if (response) {
       navigation.navigate('Login'); 

@@ -32,7 +32,7 @@ export const loginUser = createAsyncThunk("auth/logUser", async (userdata) => {
       await AsyncStorage.setItem("token", response.data.token);
 
       // Serialize the token to a string before returning it
-      return response.data;
+      return response.data.token;
     }
   } catch (error) {
     throw new Error(error.response.data.error);
@@ -131,7 +131,7 @@ export const userSlice = createSlice({
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
-        state.token = AsyncStorage.getItem("token");
+        state.token = action.payload
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
@@ -150,9 +150,7 @@ export const userSlice = createSlice({
       })
       .addCase(logout.fulfilled, (state) => {
         state.user = null;
-        state.token = null;
-        AsyncStorage.removeItem("user"); // remove user data from local storage
-        AsyncStorage.removeItem("token"); // remove user token from local storage
+        state.token = null
       });
   },
 });

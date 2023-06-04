@@ -29,9 +29,9 @@ export default function LoginForm() {
   // handle submit
   const handleLogin = async () => {
     console.log("submitting")
-    console.log(loginData)
+    console.log("logindata",loginData)
    const loggingIn = await  dispatch(loginUser(loginData));
-    console.log(loggingIn)
+    console.log("logging in", loggingIn)
  
   };
 
@@ -49,10 +49,10 @@ export default function LoginForm() {
   
   }, [success])
   
-console.log(success)
+console.log("success", success)
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
+      <Text style={styles.title}>Sign in Here</Text>
       <View style={styles.form}>
         <TextInput
           style={styles.input}
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#000',
+    backgroundColor: '#4F46E5',
     color: '#fff',
   },
   title: {
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   },
   form: {
     width: '80%',
-    color: '#fff',
+    color: '#000',
   
   },
   input: {
@@ -103,7 +103,8 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     marginBottom: 10,
-    color: '#fff',
+    backgroundColor: '#fff',
+    color: "#000"
   },
   button: {
     backgroundColor: '#007AFF',
