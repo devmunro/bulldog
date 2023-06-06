@@ -1,13 +1,16 @@
 import React from 'react';
 import {useDispatch} from 'react-redux';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {logout, clearState } from '../features/userSlice';
+import {logout, clearState} from '../features/userSlice';
 import Dashboard from '../home';
 import Workout from '../Workout';
 import {Button} from 'react-native';
 import {useNavigation} from '@react-navigation/native'; // Import useNavigation
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
-const Stack = createBottomTabNavigator();
+import {TrophyIcon, HomeIcon} from 'react-native-heroicons/solid';
+
+const tab = createMaterialTopTabNavigator();
 
 function DashboardNavigate() {
   const navigation = useNavigation(); // Use useNavigation to access the navigation prop
@@ -18,22 +21,34 @@ function DashboardNavigate() {
     dispatch(clearState());
     console.log(response);
     if (response) {
-      navigation.navigate('Login'); 
+      navigation.navigate('Login');
     }
   };
 
   return (
-    <Stack.Navigator initialRouteName="Dashboard">
-      <Stack.Screen
+    <tab.Navigator initialRouteName="Dashboard">
+      <tab.Screen
         name="Dashboard"
         component={Dashboard}
-        options={{
-          headerTitle: null,
-          headerRight: () => <Button title="Logout" onPress={logoutUser} />,
-        }}
+      
       />
-      <Stack.Screen name="Workout" component={Workout} />
-    </Stack.Navigator>
+      {/* <tab.Screen
+        name="Workout"
+        component={logoutUser}
+        options={{
+          tabBarIcon: ({color, size}) => (
+            <TrophyIcon color={color} size={size} />
+          ),
+        }}></tab.Screen> */}
+
+<tab.Screen
+        name="Workout"
+        component={Workout}
+    
+        >
+
+        </tab.Screen>
+    </tab.Navigator>
   );
 }
 

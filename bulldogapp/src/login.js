@@ -5,6 +5,7 @@ import { Keyboard, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, Vi
 import { useNavigation } from '@react-navigation/native';
 
 
+
 export default function LoginForm() {
   const [loginData, setLoginData] = useState({
     email: "",
@@ -54,6 +55,8 @@ console.log("success", success)
     <View style={styles.container}>
       <Text style={styles.title}>Sign in Here</Text>
       <View style={styles.form}>
+
+
         <TextInput
           style={styles.input}
           placeholder="Email"
