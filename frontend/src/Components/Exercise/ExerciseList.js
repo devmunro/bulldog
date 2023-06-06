@@ -67,7 +67,7 @@ export default function ExerciseList({
   return (
     <>
       {!loading && (
-        <div className=" bg-primary lg:p-4 p-2 lg:my-4 lg:rounded-xl defaultFont h-full grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-2">
+        <div className=" bg-primary lg:p-4 p-2 lg:my-4 lg:rounded-xl defaultFont h-full grid xl:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-2">
           {exerciseList &&
             exerciseList.length > 0 &&
             exerciseList.map((exercise) => {
