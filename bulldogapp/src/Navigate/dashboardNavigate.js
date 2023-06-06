@@ -6,9 +6,11 @@ import Dashboard from '../home';
 import Workout from '../Workout';
 import {Button} from 'react-native';
 import {useNavigation} from '@react-navigation/native'; // Import useNavigation
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+
 import {TrophyIcon, HomeIcon} from 'react-native-heroicons/solid';
 
-const tab = createBottomTabNavigator();
+const tab = createMaterialTopTabNavigator();
 
 function DashboardNavigate() {
   const navigation = useNavigation(); // Use useNavigation to access the navigation prop
@@ -28,19 +30,24 @@ function DashboardNavigate() {
       <tab.Screen
         name="Dashboard"
         component={Dashboard}
-        options={{
-          headerTitle: null,
-          headerRight: () => <Button title="Logout" onPress={logoutUser} />,
-          tabBarIcon: ({ color, size }) => (
-            <HomeIcon color={color} size={size} />
-          ),
-        }}
+      
       />
-      <tab.Screen name="Workout" component={Workout}   options={{
-      tabBarIcon: ({ color, size }) => (
-        <TrophyIcon color={color} size={size} />
-      ),
-    }}></tab.Screen>
+      {/* <tab.Screen
+        name="Workout"
+        component={logoutUser}
+        options={{
+          tabBarIcon: ({color, size}) => (
+            <TrophyIcon color={color} size={size} />
+          ),
+        }}></tab.Screen> */}
+
+<tab.Screen
+        name="Workout"
+        component={Workout}
+    
+        >
+
+        </tab.Screen>
     </tab.Navigator>
   );
 }

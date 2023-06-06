@@ -232,7 +232,7 @@ export default function Workout() {
 
       {/* NO WORKOUT SECTION */}
       {!currentWorkout && <Text>Loading...</Text>}
-      {currentWorkout.exercises.length === 0 && (
+      {currentWorkout?.exercises?.length === 0 && (
         <View style={styles.noExercises}>
           <Text>No Exercises found, please add exercises to start</Text>
           {/* Replace the following line with a react-navigation link */}
