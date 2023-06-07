@@ -55,7 +55,7 @@ export default function Workout({ user, workoutCreateBox, setWorkoutCreateBox })
         return (
           <ul
             key={workout._id}
-            className="text-white bg-tertiary my-4 rounded-xl h-36 defaultFont"
+            className="text-white bg-tertiary my-4 rounded-xl defaultFont"
           >
             <li className="flex flex-col md:flex-row md:justify-between justify-end md:items-end  h-full space-y-4">
               <h2 className="sub-heading items-end md:p-4 px-6">

@@ -55,8 +55,8 @@ function CreateWorkout({
   };
 
   return (
-    <div className="mt-4 mb-8">
-      <button onClick={handleCreateWorkoutClick} className="btn-primary-longer">
+    <div className="mt-4 mb-2">
+      <button onClick={handleCreateWorkoutClick} className="btn-primary-longer w-48">
         Create Workout
       </button>
       {workoutCreateBox && (

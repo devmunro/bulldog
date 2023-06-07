@@ -184,16 +184,25 @@ export default function Overview({ user }) {
               />
               <p>Welcome {user.name}</p>
 
-              <ul className="flex flex-wrap md:gap-4 gap-2  text-tertiary [&>*]:bg-white [&>*]:rounded-xl [&>*]:shadow-2xl text-center md:[&>*]:w-[75px]">
-                <li className="md:p-4 p-2 ">
+              <ul className="flex  md:gap-4 gap-2  text-tertiary [&>*]:bg-white [&>*]:rounded-xl [&>*]:shadow-2xl text-center md:[&>*]:w-[75px]">
+                <li className="group relative md:p-4 p-2 hover:scale-125">
+                  <span class="absolute md:bottom-20 md:right-5 bottom-10 right-2 scale-0 transition-all rounded bg-black mb-2 p-2 text-xs text-white group-hover:scale-100">
+                    Edit
+                  </span>
                   <p className="font-semibold">27</p>
                   <p className="text-primary">Age</p>
                 </li>
-                <li className="md:p-4 p-2">
+                <li className="group relative  md:p-4 p-2 hover:scale-125">
+                  <span class="absolute md:bottom-20 md:right-5 bottom-10 right-2 scale-0 transition-all rounded bg-black mb-2 p-2 text-xs text-white group-hover:scale-100">
+                    Edit
+                  </span>
                   <p className="font-semibold">77</p>
                   <p className="text-primary">Weight</p>
                 </li>
-                <li className="md:p-4 p-2">
+                <li className="group relative  md:p-4 p-2 hover:scale-125">
+                  <span class="absolute md:bottom-20 md:right-5 bottom-10 right-2 scale-0 transition-all rounded bg-black mb-2 p-2 text-xs text-white group-hover:scale-100">
+                    Edit
+                  </span>
                   <p className="font-semibold">123</p>
                   <p className="text-primary">Height</p>
                 </li>
@@ -282,7 +291,7 @@ export default function Overview({ user }) {
                   />
                 ) : null}
               </div>
- 
+
               <div className="w-full bg-white rounded-xl ">
                 {Object.keys(exerciseData).length > 0 ? (
                   <Doughnut
