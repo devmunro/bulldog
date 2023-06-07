@@ -39,7 +39,7 @@ export default function Dashboard() {
   return (
     <div className="bg-primary min-h-screen">
       {workoutCreateBox && (
-        <div className="w-full h-screen bg-black opacity-90 z-5 absolute"></div>
+        <div className="w-full h-screen bg-black opacity-90 z-10 absolute"></div>
       )}
       {!user ? (
         <Loading hScreen={"h-screen"} />
