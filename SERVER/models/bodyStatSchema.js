@@ -22,4 +22,4 @@ const bodyStatSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export const Exercise = mongoose.model("BodyStat", bodyStatSchema);
+export const BodyStat = mongoose.model("BodyStat", bodyStatSchema);
