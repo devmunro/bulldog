@@ -8,6 +8,7 @@ import { UserRouter } from "./routes/userRoutes.js";
 import { exerciseRoutes } from "./routes/exerciseRoutes.js";
 import { WorkoutRouter } from "./routes/workoutRoutes.js";
 import { WorkoutStatsRouter } from "./routes/workoutStatsRoutes.js";
+import { bodyStatRoutes } from "./routes/bodyStatRoutes.js";
 
 const { host, user, password, port } = config;
 
@@ -44,6 +45,7 @@ app.use("/api", UserRouter());
 app.use("/api/exercises", exerciseRoutes());
 app.use("/api/workout", WorkoutRouter());
 app.use("/api/workoutStats", WorkoutStatsRouter());
+app.use("/api/bodyStats", bodyStatRoutes());
 
 app.listen(port, () => {
   if (process.env.NODE_ENV !== "test") {
