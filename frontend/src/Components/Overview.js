@@ -7,14 +7,31 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "./calendarStyles.css";
 import Loading from "./Loading";
+import { getBodyWeight } from "../features/bodySlice";
 
 export default function Overview({ user }) {
   const dispatch = useDispatch();
 
   const { currentWorkout } = useSelector((state) => state.fitness);
+  // const { bodyWeight } = useSelector((state) => state.body);
+
+
 
   const [chartData, setChartData] = useState({});
   const [exerciseData, setExerciseData] = useState({});
+
+
+//getbodyweight
+
+
+  console.log("here is the body weight userID", user._id)
+
+  useEffect(() => {
+    dispatch(getBodyWeight(user._id));
+  }, [dispatch, user._id]);
+
+// if(bodyWeight)
+// {console.log(bodyWeight)}
 
   useEffect(() => {
     const getData = async () => {
