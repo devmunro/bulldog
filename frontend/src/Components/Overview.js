@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserWorkoutStats } from "../features/exerciseSlice";
-import { Bar, Doughnut } from "react-chartjs-2";
+import { Bar, Doughnut, Line } from "react-chartjs-2";
 import Chart from "chart.js/auto";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
@@ -13,25 +13,51 @@ export default function Overview({ user }) {
   const dispatch = useDispatch();
 
   const { currentWorkout } = useSelector((state) => state.fitness);
-  // const { bodyWeight } = useSelector((state) => state.body);
+  const { bodyWeight } = useSelector((state) => state.body);
 
-
+  console.log(bodyWeight);
 
   const [chartData, setChartData] = useState({});
+  const [weightChartData, setWeightChartData] = useState({});
   const [exerciseData, setExerciseData] = useState({});
 
-
-//getbodyweight
-
-
-  console.log("here is the body weight userID", user._id)
+  //getbodyweight
 
   useEffect(() => {
-    dispatch(getBodyWeight(user._id));
-  }, [dispatch, user._id]);
+    const getBodyWeightData = async () => {
+      const res = await dispatch(getBodyWeight(user._id));
 
-// if(bodyWeight)
-// {console.log(bodyWeight)}
+      const data = res.payload;
+      console.log("here", data);
+      const endDate = new Date();
+      const startDate = new Date();
+      startDate.setDate(endDate.getDate() - 6);
+      const dateLabels = [...Array(7)].map((_, i) => {
+        const date = new Date(startDate);
+        date.setDate(startDate.getDate() + i);
+        return date.toLocaleDateString();
+      });
+
+      const weightData = data.map((item) => item.weight);
+      console.log(weightData, weightChartData);
+      setWeightChartData({
+        labels: dateLabels,
+        datasets: [
+          {
+            label: "Weight (kg)",
+            data: weightData,
+            fill: false,
+            backgroundColor: "#BFDBFE",
+            borderColor: "#BFDBFE",
+            tension: 0.3,
+            pointBackgroundColor: "black"
+          },
+        ],
+      });
+    };
+
+    getBodyWeightData();
+  }, [dispatch, user._id]);
 
   useEffect(() => {
     const getData = async () => {
@@ -61,8 +87,6 @@ export default function Overview({ user }) {
             ).toLocaleDateString();
             return workoutDate === label.fullDate;
           });
-
-          console.log(workouts);
 
           if (workouts.length > 0) {
             return workouts.reduce((acc, workout) => {
@@ -343,46 +367,53 @@ export default function Overview({ user }) {
                   />
                 ) : null}
               </div>
+
               <div className="w-full bg-white rounded-xl ">
-                {Object.keys(chartData).length > 0 ? (
-                  <Bar
-                    data={chartData}
+                {Object.keys(weightChartData).length > 0 && (
+                  <Line
+                    data={weightChartData}
                     options={{
+                     
                       plugins: {
+                        color: "black",
                         title: {
                           display: true,
-                          text: "Total Lifted",
-
+                          text: "Body Weight",
                           font: {
                             size: 24,
                             weight: "bold",
                             family: "'Roboto', sans-serif",
+                          
                           },
+                          color: "black",
                         },
                         legend: {
                           display: true,
+                          color: "black",
                         },
                       },
                       scales: {
+                        color: "black",
                         x: {
+                         
                           ticks: {
-                            color: "white",
+                            color: "black",
                             font: {
                               family: "'Roboto', sans-serif",
+                             
                             },
-                            autoSkip: false,
-                            maxRotation: 0,
-                            minRotation: 0,
                           },
+                          
                         },
                         y: {
                           position: "left",
                           title: {
                             display: true,
-                            text: "Total Weight (KG)",
-
+                            text: "Weight (KG)",
+                            color: "black",
                             font: {
                               family: "'Roboto', sans-serif",
+                            
                             },
                           },
                           grid: {
@@ -390,25 +421,11 @@ export default function Overview({ user }) {
                             color: "rgba(255, 255, 255, 0.1)",
                           },
                           ticks: {
+                            color: "black",
                             font: {
                               family: "'Roboto', sans-serif",
-                            },
-                          },
-                        },
-                        y1: {
-                          position: "right",
-                          title: {
-                            display: true,
-                            text: "Total Reps",
-
-                            font: {
-                              family: "'Roboto', sans-serif",
-                            },
-                          },
-
-                          ticks: {
-                            font: {
-                              family: "'Roboto', sans-serif",
+                            
+                              
                             },
                           },
                         },
@@ -416,9 +433,10 @@ export default function Overview({ user }) {
                       maintainAspectRatio: false,
                       responsive: true,
                       aspectRatio: 1,
+                      
                     }}
                   />
-                ) : null}
+                )}
               </div>
 
               <div className="w-full bg-white rounded-xl ">
