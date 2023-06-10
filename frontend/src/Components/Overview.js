@@ -13,7 +13,9 @@ export default function Overview({ user }) {
   const dispatch = useDispatch();
 
   const { currentWorkout } = useSelector((state) => state.fitness);
-  // const { bodyWeight } = useSelector((state) => state.body);
+  const { bodyWeight } = useSelector((state) => state.body);
+
+  console.log(bodyWeight)
 
 
 
