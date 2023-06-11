@@ -2,7 +2,7 @@ import {configureStore} from '@reduxjs/toolkit'
 import userReducer from '../features/userSlice'
 import exerciseReducer from '../features/exerciseSlice'
 import bodyReducer from '../features/bodySlice'
-import modalReducer from './modalSlice';
+import modalReducer from '../features/modalSlice';
 
 
 export const store = configureStore({
