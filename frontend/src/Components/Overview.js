@@ -50,7 +50,7 @@ export default function Overview({ user }) {
             backgroundColor: "#BFDBFE",
             borderColor: "#BFDBFE",
             tension: 0.3,
-            pointBackgroundColor: "black"
+            pointBackgroundColor: "black",
           },
         ],
       });
@@ -217,7 +217,7 @@ export default function Overview({ user }) {
             <h2 className=" pb-4 sub-heading ">Overview</h2>
           </div>
           <div className="lg:flex w-full md:gap-8  md:p-4">
-            <div className=" bg-primary text-white rounded-xl flex flex-col items-center lg:p-8 p-4 m-2 lg:space-y-16 space-y-4">
+            <div className=" bg-primary text-white rounded-xl flex flex-col items-center lg:p-8 p-4 m-2 lg:space-y-12 space-y-4">
               <img
                 alt="avatar"
                 src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/20625/avatar-bg.png"
@@ -225,31 +225,26 @@ export default function Overview({ user }) {
               />
               <p>Welcome {user.name}</p>
 
-              <ul className="flex  md:gap-4 gap-2  text-tertiary [&>*]:bg-white [&>*]:rounded-xl [&>*]:shadow-2xl text-center md:[&>*]:w-[75px]">
-                <li className="group relative md:p-4 p-2 hover:scale-125">
-                  <span class="absolute md:bottom-20 md:right-5 bottom-10 right-2 scale-0 transition-all rounded bg-black mb-2 p-2 text-xs text-white group-hover:scale-100">
-                    Edit
-                  </span>
-                  <p className="font-semibold">27</p>
-                  <p className="text-primary">Age</p>
-                </li>
-                <li className="group relative  md:p-4 p-2 hover:scale-125">
-                  <span class="absolute md:bottom-20 md:right-5 bottom-10 right-2 scale-0 transition-all rounded bg-black mb-2 p-2 text-xs text-white group-hover:scale-100">
-                    Edit
-                  </span>
-                  <p className="font-semibold">77</p>
-                  <p className="text-primary">Weight</p>
-                </li>
-                <li className="group relative  md:p-4 p-2 hover:scale-125">
-                  <span class="absolute md:bottom-20 md:right-5 bottom-10 right-2 scale-0 transition-all rounded bg-black mb-2 p-2 text-xs text-white group-hover:scale-100">
-                    Edit
-                  </span>
-                  <p className="font-semibold">123</p>
-                  <p className="text-primary">Height</p>
-                </li>
-              </ul>
-
-              <div className="md:p-12 p-4 hidden lg:block bg-white text-tertiary my-16 rounded-xl font-semibold">
+              <div>
+                <ul className="flex  md:gap-4 gap-2  text-tertiary [&>*]:bg-white [&>*]:rounded-xl [&>*]:shadow-2xl text-center md:[&>*]:w-[75px]">
+                  <li className="group relative md:p-4 p-2 hover:scale-125">
+                    <p className="font-semibold">27</p>
+                    <p className="text-primary">Age</p>
+                  </li>
+                  <li className="group relative  md:p-4 p-2 hover:scale-125">
+                    <p className="font-semibold">77</p>
+                    <p className="text-primary">Weight</p>
+                  </li>
+                  <li className="group relative  md:p-4 p-2 hover:scale-125">
+                    <p className="font-semibold">123</p>
+                    <p className="text-primary">Height</p>
+                  </li>
+                </ul>
+                <div className="flex justify-center m-4">
+                  <button className="btn-tertiary">Update</button>
+                </div>
+              </div>
+              <div className="md:p-12 p-4 hidden lg:block bg-white text-tertiary rounded-xl font-semibold">
                 CHATGPT FEATURE COMING SOON!
               </div>
             </div>
@@ -373,7 +368,6 @@ export default function Overview({ user }) {
                   <Line
                     data={weightChartData}
                     options={{
-                     
                       plugins: {
                         color: "black",
                         title: {
@@ -383,7 +377,6 @@ export default function Overview({ user }) {
                             size: 24,
                             weight: "bold",
                             family: "'Roboto', sans-serif",
-                          
                           },
                           color: "black",
                         },
@@ -395,15 +388,12 @@ export default function Overview({ user }) {
                       scales: {
                         color: "black",
                         x: {
-                         
                           ticks: {
                             color: "black",
                             font: {
                               family: "'Roboto', sans-serif",
-                             
                             },
                           },
-                          
                         },
                         y: {
                           position: "left",
@@ -413,7 +403,6 @@ export default function Overview({ user }) {
                             color: "black",
                             font: {
                               family: "'Roboto', sans-serif",
-                            
                             },
                           },
                           grid: {
@@ -424,8 +413,6 @@ export default function Overview({ user }) {
                             color: "black",
                             font: {
                               family: "'Roboto', sans-serif",
-                            
-                              
                             },
                           },
                         },
@@ -433,7 +420,6 @@ export default function Overview({ user }) {
                       maintainAspectRatio: false,
                       responsive: true,
                       aspectRatio: 1,
-                      
                     }}
                   />
                 )}
