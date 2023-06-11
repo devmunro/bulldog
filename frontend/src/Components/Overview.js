@@ -187,7 +187,7 @@ export default function Overview({ user }) {
             {
               data: Object.values(exerciseCount),
 
-              backgroundColor: ["#BFDBFE", "#4F46E5", "#000000", "#fff"],
+              backgroundColor: ["#BFDBFE", "#4F46E5", "#ff0000", "#000"],
             },
           ],
         });
@@ -366,11 +366,12 @@ export default function Overview({ user }) {
                         },
                         legend: {
                           display: true,
-                          position: "right",
+                          position: "top",
                           labels: {
                             color: "black",
                             font: {
                               family: "'Roboto', sans-serif",
+                              size: "8"
                             },
                           },
                         },
