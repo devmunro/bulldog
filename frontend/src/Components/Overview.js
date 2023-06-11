@@ -7,21 +7,22 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "./calendarStyles.css";
 import Loading from "./Loading";
-import { getBodyWeight } from "../features/bodySlice";
+import { getBodyWeight, recordAdded } from "../features/bodySlice";
 import { showModal } from "../features/modalSlice";
 import ModalRoot from "./Modals/ModalBase";
 
 export default function Overview({ user }) {
   const dispatch = useDispatch();
 
-  const { currentWorkout } = useSelector((state) => state.fitness);
   const { bodyWeight } = useSelector((state) => state.body);
+  const refresh = useSelector((state) => state.body.refresh); // get the refresh state
 
-  console.log(bodyWeight);
 
   const [chartData, setChartData] = useState({});
   const [weightChartData, setWeightChartData] = useState({});
   const [exerciseData, setExerciseData] = useState({});
+
+  
 
   useEffect(() => {
     const getBodyWeightData = async () => {
@@ -66,9 +67,10 @@ export default function Overview({ user }) {
         ],
       });
     };
-
+   
     getBodyWeightData();
-  }, [dispatch, user._id]);
+    
+  }, [dispatch, user._id,refresh]);
 
   useEffect(() => {
     const getData = async () => {

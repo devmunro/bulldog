@@ -46,10 +46,13 @@ export const bodyStatSlice = createSlice({
     bodyWeight: null,
     status: "idle",
     error: null,
+    refresh: false,
   },
   reducers: {
-    //...
+    toggleRefresh: (state) => {
+      state.refresh = !state.refresh; // toggles the refresh state
   },
+},
   extraReducers: (builder) => {
     builder
       .addCase(getBodyWeight.pending, (state) => {
@@ -59,6 +62,7 @@ export const bodyStatSlice = createSlice({
         state.status = "succeeded";
         // Add any fetched data to the state
         state.bodyWeight = action.payload;
+   
       })
       .addCase(getBodyWeight.rejected, (state, action) => {
         state.status = "failed";
@@ -66,5 +70,8 @@ export const bodyStatSlice = createSlice({
       });
   },
 });
+
+
+export const { toggleRefresh } = bodyStatSlice.actions; // export the action
 
 export default bodyStatSlice.reducer;
