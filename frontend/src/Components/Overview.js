@@ -23,25 +23,33 @@ export default function Overview({ user }) {
   const [weightChartData, setWeightChartData] = useState({});
   const [exerciseData, setExerciseData] = useState({});
 
-  //getbodyweight
-
   useEffect(() => {
     const getBodyWeightData = async () => {
       const res = await dispatch(getBodyWeight(user._id));
-
-      const data = res.payload;
-      console.log("here", data);
-      const endDate = new Date();
-      const startDate = new Date();
-      startDate.setDate(endDate.getDate() - 6);
-      const dateLabels = [...Array(7)].map((_, i) => {
-        const date = new Date(startDate);
-        date.setDate(startDate.getDate() + i);
-        return date.toLocaleDateString();
+      let data = [...res.payload];
+  
+      // Sort the data by date in ascending order
+      data.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+  
+      // Create a complete date range for the last 5 days
+      const dateRange = Array.from({ length: 10 }, (_, i) => {
+        const d = new Date();
+        d.setDate(d.getDate() - i);
+        return `${d.getMonth()+1}/${d.getDate()}`;
+      }).reverse();
+  
+      // Prepare labels and weight data
+      const dateLabels = dateRange;
+      const weightData = dateLabels.map(label => {
+        const item = data.find(d => {
+          const date = new Date(d.createdAt);
+          return `${date.getMonth()+1}/${date.getDate()}` === label;
+        });
+        return item ? item.weight : null;
       });
+  
 
-      const weightData = data.map((item) => item.weight);
-      console.log(weightData, weightChartData);
+      // Set the chart data
       setWeightChartData({
         labels: dateLabels,
         datasets: [
@@ -53,6 +61,7 @@ export default function Overview({ user }) {
             borderColor: "#BFDBFE",
             tension: 0.3,
             pointBackgroundColor: "black",
+            spanGaps: true
           },
         ],
       });
@@ -209,7 +218,6 @@ export default function Overview({ user }) {
     };
     getData();
   }, [user, dispatch]);
-
 
   //BODYUPDATEMODAL
   const handleBodyUpdate = () => {
@@ -471,10 +479,9 @@ export default function Overview({ user }) {
               </div>
             </div>
           </div>
-          
         </div>
       )}
-      <ModalRoot/>
+      <ModalRoot />
     </>
   );
 }
