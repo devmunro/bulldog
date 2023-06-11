@@ -108,13 +108,11 @@ function WorkoutPage() {
     setAmount.push(
       <div
         key={i}
-        className={`flex md:flex-row space-x-4 items-center justify-center ${
+        className={`flex md:flex-row space-x-4 items-center justify-center bg-secondary px-4${
           completed ? "opacity-50" : ""
         }`}
       >
-        <h3 className="text-center m-4 font-bold text-white">
-          {i + 1}
-        </h3>
+        <h3 className="text-center m-4 font-bold text-black">{i + 1}</h3>
         <input
           placeholder={exerciseReps}
           type="number"
@@ -152,9 +150,7 @@ function WorkoutPage() {
         />
         <button
           className={` h-10 w-12 font-semibold rounded-lg shadow-md m-4 text-xl ${
-            completed
-              ? "text-white w-12 cursor-not-allowed"
-              : ""
+            completed ? "text-white w-12 cursor-not-allowed" : ""
           }
           ${
             currentSet !== i
@@ -166,7 +162,6 @@ function WorkoutPage() {
         >
           +
         </button>
-       
       </div>
     );
   }
@@ -266,9 +261,9 @@ function WorkoutPage() {
     <section className="flex flex-col justify-center ">
       {currentWorkout ? (
         <div>
-          <h2 className="uppercase text-center sub-heading bg-white">
+          {/* <h2 className="uppercase text-center sub-heading bg-white">
             {currentWorkout.name}
-          </h2>
+          </h2> */}
 
           {/* NO WORKOUT SECTION */}
           {!currentWorkout && <p>Loading...</p>}
@@ -282,8 +277,8 @@ function WorkoutPage() {
           )}
           {/* WORKOUT SECTION */}
           {currentWorkout.exercises.length > 0 && !completedWorkout && (
-            <div className="w-full mt-4">
-              <form className="bg-primary rounded-lg shadow-lg p-4">
+            <div className="w-full mt-4 lg:flex-col lg:flex lg:items-center ">
+              <form className="bg-primary rounded-lg shadow-lg p-4	">
                 <h2 className="md:text-2xl text-l font-bold md:mb-4 text-center text-white">
                   {exerciseName}
                 </h2>
@@ -291,7 +286,7 @@ function WorkoutPage() {
                   <img
                     src={exerciseImage}
                     alt={exerciseName}
-                    className="md:w-1/3"
+                    className="md:w-1/4"
                   />
                 </div>
                 {setAmount}
@@ -346,13 +341,13 @@ function WorkoutPage() {
                 </button>
 
                 {currentSet === exerciseSets && (
-                <button
-                  onClick={handleCompleteWorkout}
-                  className="btn-secondary"
-                >
-                  Complete
-                </button>
-              )}
+                  <button
+                    onClick={handleCompleteWorkout}
+                    className="btn-secondary"
+                  >
+                    Complete
+                  </button>
+                )}
                 <button
                   type="button"
                   onClick={() => {
@@ -362,12 +357,11 @@ function WorkoutPage() {
                   }}
                   className={` ${
                     showTimer && secondsLeft > 0 ? "hidden" : "block"
-                  } btn-primary`}
+                  } btn-primary transition ease-in-out delay-150`}
                 >
                   Next
                 </button>
               </div>
-             
             </div>
           )}
 
