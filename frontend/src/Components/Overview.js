@@ -8,6 +8,8 @@ import "react-calendar/dist/Calendar.css";
 import "./calendarStyles.css";
 import Loading from "./Loading";
 import { getBodyWeight } from "../features/bodySlice";
+import { showModal } from "../features/modalSlice";
+import ModalRoot from "./Modals/ModalBase";
 
 export default function Overview({ user }) {
   const dispatch = useDispatch();
@@ -208,6 +210,12 @@ export default function Overview({ user }) {
     getData();
   }, [user, dispatch]);
 
+
+  //BODYUPDATEMODAL
+  const handleBodyUpdate = () => {
+    dispatch(showModal({ modalType: "bodyUpdate", modalProps: {} }));
+  };
+
   return (
     <>
       {!chartData && <Loading />}
@@ -241,7 +249,9 @@ export default function Overview({ user }) {
                   </li>
                 </ul>
                 <div className="flex justify-center m-4">
-                  <button className="btn-tertiary">Update</button>
+                  <button onClick={handleBodyUpdate} className="btn-tertiary">
+                    Update
+                  </button>
                 </div>
               </div>
               <div className="md:p-12 p-4 hidden lg:block bg-white text-tertiary rounded-xl font-semibold">
@@ -461,8 +471,10 @@ export default function Overview({ user }) {
               </div>
             </div>
           </div>
+          
         </div>
       )}
+      <ModalRoot/>
     </>
   );
 }
