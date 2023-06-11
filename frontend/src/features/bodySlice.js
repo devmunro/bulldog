@@ -23,6 +23,23 @@ export const getBodyWeight = createAsyncThunk(
   }
 );
 
+export const addBodyWeightRecord = createAsyncThunk (
+
+
+  "body/addbodyweight",
+
+  async (data) => {
+       try {
+      const response = await axios.post(`${API_URL}bodyStats/addbodyweight`, data);
+
+      console.log("bodyweight redux RESPONSE", response.data)
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+)
+
 export const bodyStatSlice = createSlice({
   name: "body",
   initialState: {

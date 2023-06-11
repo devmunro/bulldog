@@ -1,11 +1,20 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addBodyWeightRecord } from "../../features/bodySlice";
 
 function BodyUpdate({ onClose }) {
   const [weight, setWeight] = useState("");
+    const userID = useSelector((state) => state.auth.user._id);
+
+    console.log("here is thebody euser", userID)
+
+
+  const dispatch = useDispatch()
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    dispatch(addBodyWeightRecord({ userID: userID, weight: weight }));   
     // close the modal
     onClose();
   };
