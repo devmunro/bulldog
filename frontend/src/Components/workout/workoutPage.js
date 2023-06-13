@@ -261,9 +261,9 @@ function WorkoutPage() {
     <section className="flex flex-col justify-center ">
       {currentWorkout ? (
         <div>
-          {/* <h2 className="uppercase text-center sub-heading bg-white">
+          <h2 className="uppercase text-center sub-heading bg-white">
             {currentWorkout.name}
-          </h2> */}
+          </h2>
 
           {/* NO WORKOUT SECTION */}
           {!currentWorkout && <p>Loading...</p>}
