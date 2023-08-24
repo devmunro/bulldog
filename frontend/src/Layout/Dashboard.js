@@ -32,8 +32,11 @@ export default function Dashboard() {
 
   const handleLogout = (e) => {
     e.preventDefault(); // prevent the default behaviour of the form
+    console.log("Logout button clicked!");
     dispatch(logout()); // dispatch the logout action to log the user out
     dispatch(resetWorkout());
+    console.log("SUCCESSFUL LOGOUT");
+
   };
 
   return (

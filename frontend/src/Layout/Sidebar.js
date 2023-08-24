@@ -48,7 +48,7 @@ export default function Sidebar({handleLogout}) {
           </Link>
         </li>
         <li className="hover:bg-secondary hover:text-tertiary">
-          <Link to="/dashboard/record" className="flex" onClick={handleLogout}>
+          <Link  className="flex" onClick={handleLogout}>
             <BackspaceIcon className="h-6 w-6 mx-2 " />
             Logout
           </Link>
@@ -86,7 +86,7 @@ export default function Sidebar({handleLogout}) {
           </Link>
         </li>
         <li className="hover:bg-secondary hover:text-tertiary">
-          <Link to="/dashboard/record" className="flex" onClick={handleLogout}>
+          <Link className="flex" onClick={handleLogout}>
             <BackspaceIcon className="h-5 w-5 " />
           </Link>
         </li>
