@@ -67,14 +67,14 @@ export default function ExerciseList({
   return (
     <>
       {!loading && (
-        <div className=" bg-primary lg:p-4 p-2 lg:my-4 lg:rounded-xl defaultFont h-full grid xl:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-2">
+        <div className="  lg:p-4 p-2 lg:my-4 lg:rounded-xl defaultFont h-full grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-2">
           {exerciseList &&
             exerciseList.length > 0 &&
             exerciseList.map((exercise) => {
               return (
                 <div
                   key={exercise._id}
-                  className=" w-full bg-secondary text-tertiary flex justify-center items-center text-center rounded-3xl shadow-xl"
+                  className=" w-full bg-primary text-tertiary flex justify-center items-center text-center rounded-3xl shadow-xl"
                 >
                   {/* EXERCISE NAME */}
                   <div className="">
@@ -89,14 +89,14 @@ export default function ExerciseList({
                         alt={exercise.name}
                       />
                       <div className="absolute bottom-0 left-0 flex w-full text-white"> 
-                      <h3 className=" bg-secondary text-black p-2 rounded-t-xl flex items-center">
+                      <h3 className=" bg-secondary text-black p-2 flex items-center">
                         {exercise.name}
                       </h3>
 
                       {/* SET REPS AND WEIGHTS SECTION */}
                     {currentPage === "/dashboard/workout" && (
-                      <div className="flex w-full justify-center items-center space-x-4 bg-primary rounded-t-xl ">
-                        <div className="lg:p-4">
+                      <div className="flex w-full justify-center items-center   bg-primary  ">
+                        <div className=" p-4">
                           Sets
                           <input
                             placeholder={exercise.sets || 3}
@@ -112,7 +112,7 @@ export default function ExerciseList({
                           ></input>
                         </div>
 
-                        <div className="lg:p-4">
+                        <div className="p-4">
                           Rep
                           <input
                             placeholder="8"
@@ -128,7 +128,7 @@ export default function ExerciseList({
                           ></input>
                         </div>
 
-                        <div className="lg:p-4">
+                        <div className="p-4">
                           Weight
                           <input
                             placeholder="10"
@@ -164,17 +164,17 @@ export default function ExerciseList({
                     
 
                     {currentPage === "/dashboard/exerciselist" && (
-                      <div className="flex justify-center space-x-4 py-4 text-white paragraph ">
-                        <p className="p-2 rounded-lg bg-tertiary">
+                      <div className="flex justify-center space-x-4 py-4 text-black paragraph ">
+                        <p className="p-2 rounded-lg bg-secondary">
                           {exercise.body_type}
                         </p>{" "}
-                        <p className="p-2 rounded-lg bg-tertiary">
+                        <p className="p-2 rounded-lg  bg-secondary">
                           {exercise.equipment}
                         </p>
                         {/* ADD TO WORKOUT BUTTON */}
                         {currentPage === "/dashboard/exerciselist" && (
                           <button
-                            className=" btn-primary"
+                            className=" btn-secondary"
                             onClick={() =>
                               handleAddToWorkout(
                                 exercise._id,
