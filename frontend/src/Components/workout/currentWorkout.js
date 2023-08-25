@@ -58,30 +58,32 @@ export default function CurrentWorkout() {
   };
 
   return (
-    <div className="w-full bg-primary rounded-xl shadow-xl lg:p-4 lg:my-4 defaultFont">
-      <div className="text-white bg-tertiary lg:m-4 rounded-xl ">
+    <div className="w-full rounded-xl shadow-xl lg:p-4 lg:my-4 defaultFont">
+      <div className="text-white bg-black bg-opacity-50 lg:m-4 rounded-xl ">
         <div class="flex flex-col md:flex-row md:justify-between justify-end md:items-end h-full space-y-4">
-          <h2 className=" sub-heading items-end md:p-4 px-6">
+          <h2 className=" sub-heading items-end md:p-4 px-6 py-2">
             {currentWorkout.name.toUpperCase()}
           </h2>
-          <div className="md:p-4 px-6 pb-4">
-            <Link to="/dashboard/record" className="btn-secondary-longer">Start Workout</Link>
-          </div>
-        </div>
-      </div>
-
-      {/* BUTTONS */}
-      <div className="flex justify-end p-2">
+          <div className="md:p-4 px-6 pb-4 flex">
+            <Link to="/dashboard/record" className="btn-primary-longer">Start Workout</Link>
+         {/* BUTTONS */}
+ 
         {/* EDIT BUTTON */}
-        <button className="btn-tertiary" onClick={handleEditExercise}>
+        <button className="btn-secondary" onClick={handleEditExercise}>
           Edit
         </button>
 
         {/* Save BUTTON */}
-        <button className="btn-tertiary" onClick={handleSaveExercise}>
+        <button className="btn-secondary" onClick={handleSaveExercise}>
           Save
         </button>
+   
+         
+          </div>
+        </div>
       </div>
+
+
       <ExerciseList
         exerciseList={currentWorkout.exercises}
         loading={loading}

@@ -67,17 +67,17 @@ export default function ExerciseList({
   return (
     <>
       {!loading && (
-        <div className=" bg-primary lg:p-4 p-2 lg:my-4 lg:rounded-xl defaultFont h-full grid xl:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-2">
+        <div className="  lg:p-4 p-2 lg:my-4 lg:rounded-xl defaultFont h-full grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-2">
           {exerciseList &&
             exerciseList.length > 0 &&
             exerciseList.map((exercise) => {
               return (
                 <div
                   key={exercise._id}
-                  className=" w-full bg-secondary text-tertiary flex justify-center items-center text-center rounded-3xl shadow-xl"
+                  className=" w-full bg-primary text-tertiary flex justify-center items-center text-center rounded-3xl shadow-xl"
                 >
                   {/* EXERCISE NAME */}
-                  <div className="space-y-4">
+                  <div className="">
                     <div className="relative">
                       <img
                         className="rounded-t-xl"
@@ -88,15 +88,15 @@ export default function ExerciseList({
                         }
                         alt={exercise.name}
                       />
-                      <h3 className="absolute bottom-0 left-0 bg-secondary bg-opacity-50 p-2 rounded-t-xl">
+                      <div className="absolute bottom-0 left-0 flex w-full text-white"> 
+                      <h3 className=" bg-secondary text-black p-2 flex items-center">
                         {exercise.name}
                       </h3>
-                    </div>
-                    {/* SET REPS AND WEIGHTS SECTION */}
+
+                      {/* SET REPS AND WEIGHTS SECTION */}
                     {currentPage === "/dashboard/workout" && (
-                      <div className="flex justify-center p-2 w-full text-white font-semibold">
-                      <div className="flex w-full justify-center items-center space-x-4 bg-primary rounded-xl ">
-                        <div className="lg:p-4 p-2">
+                      <div className="flex w-full justify-center items-center   bg-primary  ">
+                        <div className=" p-4">
                           Sets
                           <input
                             placeholder={exercise.sets || 3}
@@ -106,13 +106,13 @@ export default function ExerciseList({
                               3
                             }
                             name="sets"
-                            className="w-8 p-2 m-2 text-center text-tertiary rounded-full"
+                            className="w-8 p-1 m-2 text-center text-tertiary rounded-full"
                             onChange={(e) => handleChange(exercise._id, e)}
                             disabled={disabled}
                           ></input>
                         </div>
 
-                        <div className="lg:p-4 p-2">
+                        <div className="p-4">
                           Rep
                           <input
                             placeholder="8"
@@ -122,13 +122,13 @@ export default function ExerciseList({
                               12
                             }
                             name="reps"
-                            className="w-8 p-2 m-2 text-center text-tertiary rounded-full"
+                            className="w-8 p-1 m-2 text-center text-tertiary rounded-full"
                             onChange={(e) => handleChange(exercise._id, e)}
                             disabled={disabled}
                           ></input>
                         </div>
 
-                        <div className="lg:p-4 p-2">
+                        <div className="p-4">
                           Weight
                           <input
                             placeholder="10"
@@ -138,7 +138,7 @@ export default function ExerciseList({
                               10
                             }
                             name="weight"
-                            className="w-8 p-2 m-2 text-center text-tertiary rounded-full"
+                            className="w-8 p-1 m-2 text-center text-tertiary rounded-full"
                             onChange={(e) => handleChange(exercise._id, e)}
                             disabled={disabled}
                           ></input>
@@ -157,21 +157,24 @@ export default function ExerciseList({
                           )}
                         </div>
                       </div>
-                      </div>
+                     
                     )}
+                    </div>
+                    </div>
+                    
 
                     {currentPage === "/dashboard/exerciselist" && (
-                      <div className="flex justify-center space-x-4 py-4 text-white paragraph ">
-                        <p className="p-2 rounded-lg bg-tertiary">
+                      <div className="flex justify-center space-x-4 py-4 text-black paragraph ">
+                        <p className="p-2 rounded-lg bg-secondary">
                           {exercise.body_type}
                         </p>{" "}
-                        <p className="p-2 rounded-lg bg-tertiary">
+                        <p className="p-2 rounded-lg  bg-secondary">
                           {exercise.equipment}
                         </p>
                         {/* ADD TO WORKOUT BUTTON */}
                         {currentPage === "/dashboard/exerciselist" && (
                           <button
-                            className=" btn-primary"
+                            className=" btn-secondary"
                             onClick={() =>
                               handleAddToWorkout(
                                 exercise._id,
