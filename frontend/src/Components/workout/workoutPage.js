@@ -30,14 +30,9 @@ function WorkoutPage() {
 
   const dispatch = useDispatch();
 
-  // Handle input changes
-  const handleInputChange = (id) => (e) => {
-    e.preventDefault();
-    const { name, value } = e.target;
-
-    // Update exercise data
+  // Update exercise data
+  const updateExerciseData = (id, name, value) => {
     setExerciseData((prevState) => {
-      // Create an updated exercise object
       const updatedExercise = {
         id: exerciseID,
         name: exerciseName,
@@ -47,31 +42,28 @@ function WorkoutPage() {
           { reps: exerciseReps, weight: exerciseWeight, completed: false },
         ],
       };
-
-      // Update the current set with new data
       updatedExercise.sets[id] = {
         ...updatedExercise.sets[id],
         [name]: value,
       };
-
-      // Replace the current exercise in the state with the updated exercise
       const newState = [...prevState];
       newState[currentExerciseIndex] = updatedExercise;
       return newState;
     });
   };
-  console.log(exerciseData);
+
+  // Handle input changes
+  const handleInputChange = (id) => (e) => {
+    const { name, value } = e.target;
+    updateExerciseData(id, name, value);
+  };
 
   // Handle completion of a set
   const handleDone = (rowIndex) => (e) => {
     e.preventDefault();
-
-    // Retrieve reps and weight values for the current set
     const repsValue = exerciseData[currentExerciseIndex]?.sets[rowIndex]?.reps;
     const weightValue =
       exerciseData[currentExerciseIndex]?.sets[rowIndex]?.weight;
-
-    // Validate that both reps and weight values are provided
     if (!repsValue || !weightValue) {
       alert("Complete all fields");
       return;
