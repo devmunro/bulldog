@@ -13,12 +13,7 @@ import { ChartBarIcon } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
 
 export default function Sidebar({handleLogout}) {
-  const [hideSidebar, setHideSideBar] = useState(true);
-
-  const handleSidebar = () => {
-    setHideSideBar(!hideSidebar);
-  };
-
+ 
   return (
     <div className="flex-col">
       <ul className="  lg:block hidden  mt-16 space-y-16 text-sm text-center text-secondary [&>*]:p-4 [&>*]:m-2 [&>*]:rounded-2xl [&>*]:flex  ">

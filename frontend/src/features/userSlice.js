@@ -28,7 +28,6 @@ export const loginUser = createAsyncThunk("auth/logUser", async (userdata) => {
   try {
     const response = await axios.post(`${API_URL}login`, userdata);
 
-    console.log(response.data);
     if (response.data.token) {
       localStorage.setItem("token", JSON.stringify(response.data.token));
 
@@ -68,24 +67,24 @@ export const getUserDetails = createAsyncThunk("auth/getDetails", async () => {
 // LOGOUT
 
 export const logout = createAsyncThunk("auth/logout", async () => {
-  // Clear the localStorage items for user and token
+ // Get the user token for the server call
+ const userToken = JSON.parse(localStorage.getItem("token"));
+ const headers = { Authorization: `Bearer ${userToken}` };
 
-  localStorage.removeItem("user");
-  localStorage.removeItem("token");
-  localStorage.removeItem("defaultWorkout");
-  localStorage.removeItem("currentWorkout");
+ try {
+   await axios.delete(`${API_URL}logout`, { headers });
+   console.log("User has been logged out");
+ } catch (error) {
+   console.log(error);
+ }
 
-  // delete the user token from the server
-  const userToken = JSON.parse(localStorage.getItem("token"));
-  const headers = { Authorization: `Bearer ${userToken}` };
-
-  try {
-    await axios.delete(`${API_URL}logout`, { headers });
-    console.log("User has been logged out");
-    return;
-  } catch (error) {
-    console.log(error);
-  }
+ // Now clear the localStorage items for user and token
+ localStorage.removeItem("user");
+ localStorage.removeItem("token");
+ localStorage.removeItem("defaultWorkout");
+ localStorage.removeItem("currentWorkout");
+ 
+ return;
 });
 
 export const userSlice = createSlice({

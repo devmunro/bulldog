@@ -1,12 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import LoginForm from "./UserForms/userLogin";
 import RegisterForm from "./UserForms/userRegistration";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FirebaseStorage from "../images/firebaseStorage";
+import { useDispatch, useSelector } from "react-redux";
+import { clearState, loginUser } from "../features/userSlice";
 
 export default function Home() {
   const [showModal, setShowModal] = useState(false);
   const [showRegistrationBox, setShowRegistrationBox] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { success } = useSelector((state) => state.auth);
 
   const openModal = () => {
     setShowModal(!showModal);
@@ -15,6 +21,39 @@ export default function Home() {
   const showRegistration = () => {
     setShowRegistrationBox(!showRegistrationBox);
   };
+
+  const loginData = {
+    email: "guest@guest.com",
+    password: "guest",
+  };
+
+  //handle submit
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    userLogin(loginData);
+  };
+
+  //  pass data to redux
+  const userLogin = async (data) => {
+    try {
+      await dispatch(loginUser(data));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    if (success) {
+      navigate("/dashboard");
+    }
+  }, [dispatch, success, navigate]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearState());
+    };
+  }, [dispatch]);
 
   return (
     <div className="defaultFont">
@@ -25,9 +64,14 @@ export default function Home() {
             <Link to="/" className="font-bold sub-heading">
               Active AI
             </Link>
-            <button onClick={openModal} className="btn-secondary">
-              Log In
-            </button>
+            <div className="space-x-2">
+              <button onClick={handleSubmit} className="btn-primary-longer">
+                Sign as Guest
+              </button>
+              <button onClick={openModal} className="btn-secondary">
+                Log In
+              </button>
+            </div>
           </div>
         </header>
       </div>
@@ -63,9 +107,7 @@ export default function Home() {
       <section className="bg-secondary text-tertiary py-20 md:py-24">
         <div className="container mx-auto px-4 md:px-8 lg:px-16">
           <div className="mb-12 text-center">
-            <h2 className="heading mb-4">
-              Why Choose Active AI?
-            </h2>
+            <h2 className="heading mb-4">Why Choose Active AI?</h2>
             <p className="">
               Here are some of the features that make Active AI the best choice
               for your fitness journey.
@@ -73,18 +115,14 @@ export default function Home() {
           </div>
           <div className="  grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className=" text-white bg-primary p-8 rounded-lg shadow-lg flex flex-col items-center">
-              <h3 className="sub-heading mb-4 text-center">
-                Fitness Tracking
-              </h3>
+              <h3 className="sub-heading mb-4 text-center">Fitness Tracking</h3>
               <p className="text-center ">
                 Keep track of your workouts, set goals and monitor your progress
                 with our easy to use fitness tracking system.
               </p>
             </div>
             <div className="text-white bg-primary p-8 rounded-lg shadow-lg flex flex-col items-center">
-              <h3 className="sub-heading mb-4 text-center">
-                Custom Workouts
-              </h3>
+              <h3 className="sub-heading mb-4 text-center">Custom Workouts</h3>
               <p className=" text-center">
                 Create custom workouts or choose from a library of pre-designed
                 workouts tailored to your fitness level and goals.
