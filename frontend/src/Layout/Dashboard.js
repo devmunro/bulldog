@@ -18,14 +18,15 @@ export default function Dashboard() {
   console.log(user);
   //check if authorised
   useEffect(() => {
-    if (token === null) {
+    if (!token) {
+      console.log(user)
       navigate("/"); // if token is null, navigate to the home page
     }
-  }, [navigate, token]);
+  }, [navigate, user, token]);
 
   //find user
   useEffect(() => {
-    if (token !== null) {
+    if (token) {
       dispatch(getUserDetails()); // if token is not null, dispatch the getUserDetails action to fetch the user details
     }
   }, [token, dispatch]);
@@ -36,6 +37,8 @@ export default function Dashboard() {
     dispatch(logout()); // dispatch the logout action to log the user out
     dispatch(resetWorkout());
     console.log("SUCCESSFUL LOGOUT");
+    navigate("/"); // if token is null, navigate to the home page
+
 
   };
 

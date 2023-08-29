@@ -95,8 +95,8 @@ export default function ExerciseList({
 
                       {/* SET REPS AND WEIGHTS SECTION */}
                     {currentPage === "/dashboard/workout" && (
-                      <div className="flex w-full justify-center items-center   bg-primary  ">
-                        <div className=" p-4">
+                      <div className="flex justify-center items-center w-full  bg-primary  ">
+                        <div className="">
                           Sets
                           <input
                             placeholder={exercise.sets || 3}
@@ -112,7 +112,7 @@ export default function ExerciseList({
                           ></input>
                         </div>
 
-                        <div className="p-4">
+                        <div className="">
                           Rep
                           <input
                             placeholder="8"
@@ -128,7 +128,7 @@ export default function ExerciseList({
                           ></input>
                         </div>
 
-                        <div className="p-4">
+                        <div className="">
                           Weight
                           <input
                             placeholder="10"
@@ -194,9 +194,9 @@ export default function ExerciseList({
                 </div>
               );
             })}
-          <div className="fixed top-10  right-10 left-10 z-50 text-center">
+          <div className="fixed top-10 w-full  right-10 left-10 z-50 text-center">
             {showAlert && alert && (
-              <div className="p-4 bg-blue-500 text-white rounded-md transition duration-500 ease-in-out">
+              <div className="p-4 bg-black text-white rounded-md transition duration-500 ease-in-out">
                 {alert}
               </div>
             )}
