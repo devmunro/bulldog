@@ -81,9 +81,7 @@ export default function Home() {
         <div className="relative z-20 py-4 md:py-8 text-white">
           <div className="container mx-auto px-4 md:px-4 lg:px-8">
             <div className="flex justify-center gap-4 px-1 md:px-2 lg:px-4 flex-col md:flex-row items-center">
-              <div className="w-full md:w-1/2">
-                <FirebaseStorage imageBase="homepage.jpg" />
-              </div>
+              
 
               <div className="w-full md:w-1/2 mb-12 md:mb-0">
                 <h1 className="heading mb-4 text-center">
